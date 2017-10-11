@@ -42,5 +42,8 @@
     <Compile Include="ResponseStatus.cs" />
     <Compile Include="ErrorResponseStatus.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Responsible-Icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
