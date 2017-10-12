@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <Version>2.0.0</Version>
     <Description>A Handy package for handling operation responses in a smart way.</Description>
     <Copyright />
     <PackageLicenseUrl>https://github.com/naeemafzal/Responsible/blob/master/LICENSE</PackageLicenseUrl>

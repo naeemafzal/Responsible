@@ -1,17 +1,10 @@
 ﻿namespace Responsible.Core
 {
     /// <summary>
-    ///     ResponseStatus resolves to the Status of Response
+    ///     ErrorResponseStatus resolves to an Error Status of Response
     /// </summary>
-    public enum ResponseStatus
+    public enum ErrorResponseStatus
     {
-        /// <summary>
-        ///     Equivalent to HTTP status 200. System.Net.HttpStatusCode.OK indicates that the
-        ///     request succeeded and that the requested information is in the response. This
-        ///     is the most common status code to receive.
-        /// </summary>
-        Ok = 200,
-
         /// <summary>
         ///     Equivalent to HTTP status 401. System.Net.HttpStatusCode.Unauthorized indicates
         ///     that the requested resource requires authentication. The WWW-Authenticate header
