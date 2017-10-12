@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Responsible.Core
 {
+    /// <summary>
+    /// Interface for a response object
+    /// </summary>
     public interface IResponse
     {
         ///<summary>

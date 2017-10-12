@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace Responsible.Core
 {
+    /// <summary>
+    /// ResponseFactory is used for creating variouse types of responses
+    /// </summary>
     public sealed class ResponseFactory
     {
         ///<summary>
-        ///<para>Creates OK Response</para>
+        ///Creates OK Response
         ///</summary>
         public IResponse Ok()
         {
@@ -19,7 +22,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates OK Response with a message</para>
+        ///Creates OK Response with a message
         ///</summary>
         public IResponse Ok(string message)
         {
@@ -32,7 +35,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates OK Response with a messages</para>
+        ///Creates OK Response with a messages
         ///</summary>
         public IResponse Ok(List<string> messages)
         {
@@ -45,7 +48,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates an Error Response with a message & Error Status</para>
+        ///Creates an Error Response with a message and Error Status
         ///</summary>
         public IResponse Error(string message, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
@@ -58,7 +61,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates an Error Response with messages & Error Status</para>
+        ///Creates an Error Response with messages and Error Status
         ///</summary>
         public IResponse Error(List<string> messages, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
@@ -71,7 +74,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates NotImplemented Response with a message</para>
+        ///Creates NotImplemented Response with a message
         ///</summary>
         public IResponse NotImplemented(string message = "The method or operation is not implemented.")
         {
@@ -84,7 +87,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates NotImplemented Response with messages</para>
+        ///Creates NotImplemented Response with messages
         ///</summary>
         public IResponse NotImplemented(List<string> messages)
         {
@@ -97,7 +100,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with default message of "A system error occured."</para>
+        ///Creates Exception Response with default message of "A system error occured."
         ///</summary>
         public IResponse Exception()
         {
@@ -112,7 +115,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with a message</para>
+        ///Creates Exception Response with a message
         ///</summary>
         public IResponse Exception(string message)
         {
@@ -125,7 +128,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with a messages</para>
+        ///Creates Exception Response with a messages
         ///</summary>
         public IResponse Exception(List<string> messages)
         {
@@ -138,8 +141,8 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with default message of "A system error occured."</para>
-        ///<para>Exception is obtained in the response."</para>
+        ///Creates Exception Response with default message of "A system error occured."
+        ///Exception is obtained in the response."
         ///</summary>
         public IResponse Exception(Exception exception)
         {
@@ -156,8 +159,8 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with a message."</para>
-        ///<para>Exception is obtained in the response."</para>
+        ///Creates Exception Response with a message."
+        ///Exception is obtained in the response."
         ///</summary>
         public IResponse Exception(Exception exception, string message)
         {
@@ -172,8 +175,8 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with messages."</para>
-        ///<para>Exception is obtained in the response."</para>
+        ///Creates Exception Response with messages."
+        ///Exception is obtained in the response."
         ///</summary>
         public IResponse Exception(Exception exception, List<string> messages)
         {
@@ -188,10 +191,13 @@ namespace Responsible.Core
         }
     }
 
+    /// <summary>
+    /// ResponseFactory&lt;T&gt; is used for creating variouse types of responses where &lt;T&gt; is an output
+    /// </summary>
     public sealed class ResponseFactory<T>
     {
         ///<summary>
-        ///<para>Creates OK Response with operation output value</para>
+        ///Creates OK Response with operation output value
         ///</summary>
         public IResponse<T> Ok(T value)
         {
@@ -205,7 +211,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates OK Response with operation output value & a message.</para>
+        ///Creates OK Response with operation output value and a message.
         ///</summary>
         public IResponse<T> Ok(T value, string message)
         {
@@ -219,7 +225,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates OK Response with operation output value & messages.</para>
+        ///Creates OK Response with operation output value and messages.
         ///</summary>
         public IResponse<T> Ok(T value, List<string> messages)
         {
@@ -233,7 +239,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates an Error Response with a message & Error Status.</para>
+        ///Creates an Error Response with a message and Error Status.
         ///</summary>
         public IResponse<T> Error(string message, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
@@ -247,7 +253,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates an Error Response with messages & Error Status.</para>
+        ///Creates an Error Response with messages and Error Status.
         ///</summary>
         public IResponse<T> Error(List<string> messages, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
@@ -261,7 +267,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates NotImplemented Response with a default message of "The method or operation is not implemented".</para>
+        ///Creates NotImplemented Response with a default message of "The method or operation is not implemented".
         ///</summary>
         public IResponse<T> NotImplemented(string message = "The method or operation is not implemented.")
         {
@@ -275,7 +281,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates NotImplemented Response with messages.</para>
+        ///Creates NotImplemented Response with messages.
         ///</summary>
         public IResponse<T> NotImplemented(List<string> messages)
         {
@@ -289,7 +295,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with default message of "A system error occured."</para>
+        ///Creates Exception Response with default message of "A system error occured."
         ///</summary>
         public IResponse<T> Exception()
         {
@@ -305,7 +311,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with a message."</para>
+        ///Creates Exception Response with a message."
         ///</summary>
         public IResponse<T> Exception(string message)
         {
@@ -319,7 +325,7 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with messages."</para>
+        ///Creates Exception Response with messages."
         ///</summary>
         public IResponse<T> Exception(List<string> messages)
         {
@@ -333,8 +339,8 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with default message of "A system error occured."</para>
-        ///<para>Exception is obtained in the response."</para>
+        ///Creates Exception Response with default message of "A system error occured."
+        ///Exception is obtained in the response."
         ///</summary>
         public IResponse<T> Exception(Exception exception)
         {
@@ -352,8 +358,8 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with a message."</para>
-        ///<para>Exception is obtained in the response."</para>
+        ///Creates Exception Response with a message."
+        ///Exception is obtained in the response."
         ///</summary>
         public IResponse<T> Exception(Exception exception, string message)
         {
@@ -369,8 +375,8 @@ namespace Responsible.Core
         }
 
         ///<summary>
-        ///<para>Creates Exception Response with messages."</para>
-        ///<para>Exception is obtained in the response."</para>
+        ///Creates Exception Response with messages."
+        ///Exception is obtained in the response."
         ///</summary>
         public IResponse<T> Exception(Exception exception, List<string> messages)
         {
