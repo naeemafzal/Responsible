@@ -1,6 +1,6 @@
 ﻿namespace Responsible.Core
 {
-    public enum ErrorResponseStatus
+    public enum ResponseStatusError
     {
         Unauthorized = 401,
         NotFound = 404,

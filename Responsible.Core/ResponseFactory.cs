@@ -3,15 +3,9 @@ using System.Collections.Generic;
 
 namespace Responsible.Core
 {
-    /// <summary>
-    /// ResponseFactory is used for creating variouse types of responses
-    /// </summary>
-    public class ResponseFactory
+    public sealed class ResponseFactory
     {
-        ///<summary>
-        ///Creates OK Response
-        ///</summary>
-        public static IResponse Ok()
+        public IResponse Ok()
         {
             return new Response()
             {
@@ -21,10 +15,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates OK Response with a message
-        ///</summary>
-        public static IResponse Ok(string message)
+        public IResponse Ok(string message)
         {
             return new Response()
             {
@@ -34,10 +25,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates OK Response with a messages
-        ///</summary>
-        public static IResponse Ok(List<string> messages)
+        public IResponse Ok(List<string> messages)
         {
             return new Response()
             {
@@ -47,10 +35,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates an Error Response with a message and Error Status
-        ///</summary>
-        public static IResponse Error(string message, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        public IResponse Error(string message, ResponseStatusError status = ResponseStatusError.InternalServerError)
         {
             return new Response()
             {
@@ -60,10 +45,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates an Error Response with messages and Error Status
-        ///</summary>
-        public static IResponse Error(List<string> messages, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        public IResponse Error(List<string> messages, ResponseStatusError status = ResponseStatusError.InternalServerError)
         {
             return new Response()
             {
@@ -73,10 +55,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates NotImplemented Response with a message
-        ///</summary>
-        public static IResponse NotImplemented(string message = "The method or operation is not implemented.")
+        public IResponse NotImplemented(string message = "The method or operation is not implemented.")
         {
             return new Response()
             {
@@ -86,10 +65,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates NotImplemented Response with messages
-        ///</summary>
-        public static IResponse NotImplemented(List<string> messages)
+        public IResponse NotImplemented(List<string> messages)
         {
             return new Response()
             {
@@ -99,91 +75,76 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates Exception Response with default message of "A system error occured."
-        ///</summary>
-        public static IResponse Exception()
+        public IResponse Exception()
         {
             var result = new Response
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
-                Messages = new List<string> { "A system error occured." }
+                Status = ResponseStatus.NotImplemented,
+                Messages = new List<string> {"A system error occured."}
             };
 
             return result;
         }
 
-        ///<summary>
-        ///Creates Exception Response with a message
-        ///</summary>
-        public static IResponse Exception(string message)
+        public IResponse Exception(string message)
         {
             return new Response()
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.NotImplemented,
                 Messages = new List<string>() { message }
             };
         }
 
-        ///<summary>
-        ///Creates Exception Response with a messages
-        ///</summary>
-        public static IResponse Exception(List<string> messages)
+        public IResponse Exception(List<string> messages)
         {
             return new Response()
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.NotImplemented,
                 Messages = messages ?? new List<string>()
             };
         }
 
-        ///<summary>
-        ///Creates Exception Response with default message of "A system error occured."
-        ///Exception is obtained in the response."
-        ///</summary>
-        public static IResponse Exception(Exception exception)
+        public IResponse Exception(Exception exception)
         {
-            var result = new Response
+            var result = new Response()
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.NotImplemented,
                 Exception = exception,
-                HasException = true,
-                Messages = new List<string> { "A system error occured." }
+                HasException = true
             };
 
+            if (exception is NotImplementedException)
+            {
+                result.Messages = new List<string> { exception.Message };
+                return result;
+            }
+
+            result.Messages = new List<string> { "A system error occured." };
             return result;
         }
 
-        ///<summary>
-        ///Creates Exception Response with a message."
-        ///Exception is obtained in the response."
-        ///</summary>
-        public static IResponse Exception(Exception exception, string message)
+        public IResponse Exception(Exception exception, string message)
         {
             return new Response()
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.NotImplemented,
                 Exception = exception,
                 HasException = true,
                 Messages = new List<string>() { message }
             };
         }
 
-        ///<summary>
-        ///Creates Exception Response with messages."
-        ///Exception is obtained in the response."
-        ///</summary>
-        public static IResponse Exception(Exception exception, List<string> messages)
+        public IResponse Exception(Exception exception, List<string> messages)
         {
             return new Response()
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.NotImplemented,
                 Exception = exception,
                 HasException = true,
                 Messages = messages ?? new List<string>()
@@ -191,15 +152,9 @@ namespace Responsible.Core
         }
     }
 
-    /// <summary>
-    /// ResponseFactory&lt;T&gt; is used for creating variouse types of responses where &lt;T&gt; is an output
-    /// </summary>
-    public static class ResponseFactory<T>
+    public sealed class ResponseFactory<T>
     {
-        ///<summary>
-        ///Creates OK Response with operation output value
-        ///</summary>
-        public static IResponse<T> Ok(T value)
+        public IResponse<T> Ok(T value)
         {
             return new Response<T>()
             {
@@ -210,10 +165,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates OK Response with operation output value and a message.
-        ///</summary>
-        public static IResponse<T> Ok(T value, string message)
+        public IResponse<T> Ok(T value, string message)
         {
             return new Response<T>()
             {
@@ -224,10 +176,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates OK Response with operation output value and messages.
-        ///</summary>
-        public static IResponse<T> Ok(T value, List<string> messages)
+        public IResponse<T> Ok(T value, List<string> messages)
         {
             return new Response<T>()
             {
@@ -238,10 +187,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates an Error Response with a message and Error Status.
-        ///</summary>
-        public static IResponse<T> Error(string message, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        public IResponse<T> Error(string message, ResponseStatusError status = ResponseStatusError.InternalServerError)
         {
             return new Response<T>()
             {
@@ -252,10 +198,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates an Error Response with messages and Error Status.
-        ///</summary>
-        public static IResponse<T> Error(List<string> messages, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        public IResponse<T> Error(List<string> messages, ResponseStatusError status = ResponseStatusError.InternalServerError)
         {
             return new Response<T>()
             {
@@ -266,10 +209,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates NotImplemented Response with a default message of "The method or operation is not implemented".
-        ///</summary>
-        public static IResponse<T> NotImplemented(string message = "The method or operation is not implemented.")
+        public IResponse<T> NotImplemented(string message = "The method or operation is not implemented.")
         {
             return new Response<T>()
             {
@@ -280,10 +220,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates NotImplemented Response with messages.
-        ///</summary>
-        public static IResponse<T> NotImplemented(List<string> messages)
+        public IResponse<T> NotImplemented(List<string> messages)
         {
             return new Response<T>()
             {
@@ -294,26 +231,20 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates Exception Response with default message of "A system error occured."
-        ///</summary>
-        public static IResponse<T> Exception()
+        public IResponse<T> Exception()
         {
             var result = new Response<T>
             {
                 Success = false,
                 Status = ResponseStatus.InternalError,
                 Value = default(T),
-                Messages = new List<string> { "A system error occured." }
+                Messages = new List<string> {"A system error occured."}
             };
 
             return result;
         }
 
-        ///<summary>
-        ///Creates Exception Response with a message."
-        ///</summary>
-        public static IResponse<T> Exception(string message)
+        public IResponse<T> Exception(string message)
         {
             return new Response<T>()
             {
@@ -324,10 +255,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates Exception Response with messages."
-        ///</summary>
-        public static IResponse<T> Exception(List<string> messages)
+        public IResponse<T> Exception(List<string> messages)
         {
             return new Response<T>()
             {
@@ -338,30 +266,28 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates Exception Response with default message of "A system error occured."
-        ///Exception is obtained in the response."
-        ///</summary>
-        public static IResponse<T> Exception(Exception exception)
+        public IResponse<T> Exception(Exception exception)
         {
-            var result = new Response<T>
+            var result = new Response<T>()
             {
                 Success = false,
                 Status = ResponseStatus.InternalError,
                 Exception = exception,
                 HasException = true,
-                Value = default(T),
-                Messages = new List<string> { "A system error occured." }
+                Value = default(T)
             };
 
+            if (exception is NotImplementedException)
+            {
+                result.Messages = new List<string> { exception.Message };
+                return result;
+            }
+
+            result.Messages = new List<string> { "A system error occured." };
             return result;
         }
 
-        ///<summary>
-        ///Creates Exception Response with a message."
-        ///Exception is obtained in the response."
-        ///</summary>
-        public static IResponse<T> Exception(Exception exception, string message)
+        public IResponse<T> Exception(Exception exception, string message)
         {
             return new Response<T>()
             {
@@ -374,11 +300,7 @@ namespace Responsible.Core
             };
         }
 
-        ///<summary>
-        ///Creates Exception Response with messages."
-        ///Exception is obtained in the response."
-        ///</summary>
-        public static IResponse<T> Exception(Exception exception, List<string> messages)
+        public IResponse<T> Exception(Exception exception, List<string> messages)
         {
             return new Response<T>()
             {
