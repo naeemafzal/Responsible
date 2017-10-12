@@ -6,12 +6,12 @@ namespace Responsible.Core
     /// <summary>
     /// ResponseFactory is used for creating variouse types of responses
     /// </summary>
-    public sealed class ResponseFactory
+    public class ResponseFactory
     {
         ///<summary>
         ///Creates OK Response
         ///</summary>
-        public IResponse Ok()
+        public static IResponse Ok()
         {
             return new Response()
             {
@@ -24,7 +24,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates OK Response with a message
         ///</summary>
-        public IResponse Ok(string message)
+        public static IResponse Ok(string message)
         {
             return new Response()
             {
@@ -37,7 +37,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates OK Response with a messages
         ///</summary>
-        public IResponse Ok(List<string> messages)
+        public static IResponse Ok(List<string> messages)
         {
             return new Response()
             {
@@ -50,7 +50,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates an Error Response with a message and Error Status
         ///</summary>
-        public IResponse Error(string message, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        public static IResponse Error(string message, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response()
             {
@@ -63,7 +63,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates an Error Response with messages and Error Status
         ///</summary>
-        public IResponse Error(List<string> messages, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        public static IResponse Error(List<string> messages, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response()
             {
@@ -76,7 +76,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates NotImplemented Response with a message
         ///</summary>
-        public IResponse NotImplemented(string message = "The method or operation is not implemented.")
+        public static IResponse NotImplemented(string message = "The method or operation is not implemented.")
         {
             return new Response()
             {
@@ -89,7 +89,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates NotImplemented Response with messages
         ///</summary>
-        public IResponse NotImplemented(List<string> messages)
+        public static IResponse NotImplemented(List<string> messages)
         {
             return new Response()
             {
@@ -102,7 +102,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates Exception Response with default message of "A system error occured."
         ///</summary>
-        public IResponse Exception()
+        public static IResponse Exception()
         {
             var result = new Response
             {
@@ -117,7 +117,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates Exception Response with a message
         ///</summary>
-        public IResponse Exception(string message)
+        public static IResponse Exception(string message)
         {
             return new Response()
             {
@@ -130,7 +130,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates Exception Response with a messages
         ///</summary>
-        public IResponse Exception(List<string> messages)
+        public static IResponse Exception(List<string> messages)
         {
             return new Response()
             {
@@ -144,7 +144,7 @@ namespace Responsible.Core
         ///Creates Exception Response with default message of "A system error occured."
         ///Exception is obtained in the response."
         ///</summary>
-        public IResponse Exception(Exception exception)
+        public static IResponse Exception(Exception exception)
         {
             var result = new Response
             {
@@ -162,7 +162,7 @@ namespace Responsible.Core
         ///Creates Exception Response with a message."
         ///Exception is obtained in the response."
         ///</summary>
-        public IResponse Exception(Exception exception, string message)
+        public static IResponse Exception(Exception exception, string message)
         {
             return new Response()
             {
@@ -178,7 +178,7 @@ namespace Responsible.Core
         ///Creates Exception Response with messages."
         ///Exception is obtained in the response."
         ///</summary>
-        public IResponse Exception(Exception exception, List<string> messages)
+        public static IResponse Exception(Exception exception, List<string> messages)
         {
             return new Response()
             {
@@ -194,12 +194,12 @@ namespace Responsible.Core
     /// <summary>
     /// ResponseFactory&lt;T&gt; is used for creating variouse types of responses where &lt;T&gt; is an output
     /// </summary>
-    public sealed class ResponseFactory<T>
+    public static class ResponseFactory<T>
     {
         ///<summary>
         ///Creates OK Response with operation output value
         ///</summary>
-        public IResponse<T> Ok(T value)
+        public static IResponse<T> Ok(T value)
         {
             return new Response<T>()
             {
@@ -213,7 +213,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates OK Response with operation output value and a message.
         ///</summary>
-        public IResponse<T> Ok(T value, string message)
+        public static IResponse<T> Ok(T value, string message)
         {
             return new Response<T>()
             {
@@ -227,7 +227,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates OK Response with operation output value and messages.
         ///</summary>
-        public IResponse<T> Ok(T value, List<string> messages)
+        public static IResponse<T> Ok(T value, List<string> messages)
         {
             return new Response<T>()
             {
@@ -241,7 +241,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates an Error Response with a message and Error Status.
         ///</summary>
-        public IResponse<T> Error(string message, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        public static IResponse<T> Error(string message, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response<T>()
             {
@@ -255,7 +255,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates an Error Response with messages and Error Status.
         ///</summary>
-        public IResponse<T> Error(List<string> messages, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        public static IResponse<T> Error(List<string> messages, ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response<T>()
             {
@@ -269,7 +269,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates NotImplemented Response with a default message of "The method or operation is not implemented".
         ///</summary>
-        public IResponse<T> NotImplemented(string message = "The method or operation is not implemented.")
+        public static IResponse<T> NotImplemented(string message = "The method or operation is not implemented.")
         {
             return new Response<T>()
             {
@@ -283,7 +283,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates NotImplemented Response with messages.
         ///</summary>
-        public IResponse<T> NotImplemented(List<string> messages)
+        public static IResponse<T> NotImplemented(List<string> messages)
         {
             return new Response<T>()
             {
@@ -297,7 +297,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates Exception Response with default message of "A system error occured."
         ///</summary>
-        public IResponse<T> Exception()
+        public static IResponse<T> Exception()
         {
             var result = new Response<T>
             {
@@ -313,7 +313,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates Exception Response with a message."
         ///</summary>
-        public IResponse<T> Exception(string message)
+        public static IResponse<T> Exception(string message)
         {
             return new Response<T>()
             {
@@ -327,7 +327,7 @@ namespace Responsible.Core
         ///<summary>
         ///Creates Exception Response with messages."
         ///</summary>
-        public IResponse<T> Exception(List<string> messages)
+        public static IResponse<T> Exception(List<string> messages)
         {
             return new Response<T>()
             {
@@ -342,7 +342,7 @@ namespace Responsible.Core
         ///Creates Exception Response with default message of "A system error occured."
         ///Exception is obtained in the response."
         ///</summary>
-        public IResponse<T> Exception(Exception exception)
+        public static IResponse<T> Exception(Exception exception)
         {
             var result = new Response<T>
             {
@@ -361,7 +361,7 @@ namespace Responsible.Core
         ///Creates Exception Response with a message."
         ///Exception is obtained in the response."
         ///</summary>
-        public IResponse<T> Exception(Exception exception, string message)
+        public static IResponse<T> Exception(Exception exception, string message)
         {
             return new Response<T>()
             {
@@ -378,7 +378,7 @@ namespace Responsible.Core
         ///Creates Exception Response with messages."
         ///Exception is obtained in the response."
         ///</summary>
-        public IResponse<T> Exception(Exception exception, List<string> messages)
+        public static IResponse<T> Exception(Exception exception, List<string> messages)
         {
             return new Response<T>()
             {
