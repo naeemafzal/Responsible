@@ -9,12 +9,15 @@
     <PackageLicenseUrl>https://github.com/naeemafzal/Responsible/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/naeemafzal/Responsible</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/Responsible.Core/Images/Responsible-Icon.ico</PackageIconUrl>
-    <RepositoryUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/Responsible.Core/Images/Responsible-Icon.ico</RepositoryUrl>
+    <RepositoryUrl>https://github.com/naeemafzal/Responsible</RepositoryUrl>
     <PackageTags>Responsible Core Response Handler</PackageTags>
     <PackageReleaseNotes>Migrated to .Net Standard</PackageReleaseNotes>
     <Authors>Naeem Afzal</Authors>
     <Company />
     <Product>Responsible.Core</Product>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PackageId>Responsible.Core</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
