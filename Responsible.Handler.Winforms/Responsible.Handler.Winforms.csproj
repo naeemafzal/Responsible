@@ -2,22 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>Responsible.Handler.Console</PackageId>
     <Authors>Naeem Afzal</Authors>
-    <Company />
-    <Description>Handles Responses created by Responsible.Core for Console Applications</Description>
+    <Company>Naeem Afzal</Company>
+    <Description>Handles Responses created by Responsible.Core for Windows Form Applications</Description>
+    <Copyright></Copyright>
     <PackageLicenseUrl>https://github.com/naeemafzal/Responsible/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/naeemafzal/Responsible</PackageProjectUrl>
     <RepositoryUrl>https://github.com/naeemafzal/Responsible</RepositoryUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/Responsible.Core/Images/Responsible-Icon.ico</PackageIconUrl>
-    <PackageTags>Responsible Console Handler</PackageTags>
-    <Version>2.0.0</Version>
+    <PackageTags>Responsible Winforms Handler</PackageTags>
     <PackageReleaseNotes>Migrating to .Net Standard</PackageReleaseNotes>
+    <Version>2.0.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.0\Responsible.Handler.Console.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.3\Responsible.Handler.Winforms.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
