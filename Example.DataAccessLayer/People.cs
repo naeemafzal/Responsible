@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Responsible.Core;
 
-namespace DataAccessLayer
+namespace Example.DataAccessLayer
 {
     public class People
     {

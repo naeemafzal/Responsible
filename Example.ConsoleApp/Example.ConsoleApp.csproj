@@ -49,9 +49,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+    <ProjectReference Include="..\Example.DataAccessLayer\Example.DataAccessLayer.csproj">
       <Project>{199de44c-a217-40e0-bd74-4e8fd709dd7a}</Project>
-      <Name>DataAccessLayer</Name>
+      <Name>Example.DataAccessLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

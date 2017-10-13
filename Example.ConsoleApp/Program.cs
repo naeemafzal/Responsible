@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccessLayer;
+using Example.DataAccessLayer;
 using Responsible.Handler.Console;
 
 namespace Example.ConsoleApp

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using DataAccessLayer;
+using Example.DataAccessLayer;
 using Responsible.Handler.Winforms;
 
 namespace Example.Winforms
