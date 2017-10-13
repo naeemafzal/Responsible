@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFramework>net45</TargetFramework>
     <Authors>Naeem Afzal</Authors>
     <Company>Naeem Afzal</Company>
     <Description>Handles Responses created by Responsible.Core for Windows Form Applications</Description>
@@ -20,8 +20,16 @@
     <DocumentationFile>bin\Debug\netstandard1.3\Responsible.Handler.Winforms.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\Responsible.Handler.Winforms.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Responsible.Core" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
 </Project>

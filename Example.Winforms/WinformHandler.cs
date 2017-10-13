@@ -2,12 +2,12 @@
 using System.Windows.Forms;
 using Responsible.Core;
 
-namespace Responsible.Handler.Winforms
+namespace Example.Winforms
 {
     /// <summary>
     ///     Handle Responses
     /// </summary>
-    public class Handler
+    public class WinformHandler
     {
         /// <summary>
         ///     Handle IResponse objects and Display messages in the response
