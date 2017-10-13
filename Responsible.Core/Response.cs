@@ -17,7 +17,7 @@ namespace Responsible.Core
             get
             {
                 if (Messages != null && Messages.Any())
-                    return string.Join(Environment.NewLine, Messages);
+                    return string.Join(Environment.NewLine, Messages.ToArray());
 
                 return "";
             }
