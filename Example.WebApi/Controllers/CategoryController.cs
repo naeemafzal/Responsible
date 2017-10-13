@@ -11,6 +11,7 @@ namespace Example.WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
+            //Returns an interger with two messages
             var response = ResponseFactory<int>.Ok(id, new List<string>() {$"Id is: {id}", "Message 2"});
             return CreateResponse(response);
         }
