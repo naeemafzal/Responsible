@@ -7,8 +7,11 @@ namespace Example.DataAccessLayer
 {
     public class People
     {
-        //Our in memory database (so to say...)
-        private static readonly List<Person> PeopleList = new List<Person>();
+        //Our in memory database
+        private static readonly List<Person> PeopleList = new List<Person>()
+        {
+            new Person(){ Id = 1, Fullname = "Naeem Afzal" }
+        };
 
         public IResponse AddPerson(Person person)
         {
@@ -53,6 +56,7 @@ namespace Example.DataAccessLayer
         public IResponse UpdatePerson(Person person)
         {
             return ResponseFactory<Person>.NotImplemented();
+
             // Or return a custom message as following
             return ResponseFactory<Person>.NotImplemented("This feature will be available from next month.");
         }
