@@ -195,7 +195,7 @@ namespace Responsible.Core
         /// <summary>
         ///     Creates Custom Response."
         /// </summary>
-        public static IResponse Custom(ResponseStatus status, bool success)
+        public static IResponse Custom(ResponseStatus status)
         {
             return new Response
             {
@@ -208,7 +208,7 @@ namespace Responsible.Core
         /// <summary>
         ///     Creates Custom Response with a message."
         /// </summary>
-        public static IResponse Custom(ResponseStatus status, bool success, string message)
+        public static IResponse Custom(ResponseStatus status, string message)
         {
             return new Response
             {
@@ -466,7 +466,7 @@ namespace Responsible.Core
         /// <summary>
         ///     Creates Custom Response with operation optional output (default(T)) and messages."
         /// </summary>
-        public static IResponse<T> Custom(ResponseStatus status, bool success, List<string> messages, T value = default(T))
+        public static IResponse<T> Custom(ResponseStatus status, List<string> messages, T value = default(T))
         {
             return new Response<T>
             {
