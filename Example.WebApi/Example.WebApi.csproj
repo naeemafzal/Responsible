@@ -81,10 +81,10 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Responsible.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Responsible.Core.1.0.0\lib\net35\1.0.0\Responsible.Core.dll</HintPath>
+      <HintPath>..\packages\Responsible.Core.3.0.1\lib\net35\Responsible.Core.dll</HintPath>
     </Reference>
     <Reference Include="Responsible.WebApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Responsible.WebApi.1.0.0\lib\net45\1.0.0\Responsible.WebApi.dll</HintPath>
+      <HintPath>..\packages\Responsible.WebApi.2.0.0\lib\net45\Responsible.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
