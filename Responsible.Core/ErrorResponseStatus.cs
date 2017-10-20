@@ -22,7 +22,7 @@
         ///     Equivalent to HTTP status 500. System.Net.HttpStatusCode.InternalServerError
         ///     indicates that a generic error has occurred on the server.
         /// </summary>
-        InternalError = 500,
+        InternalServerError = 500,
 
         /// <summary>
         ///     Equivalent to HTTP status 501. System.Net.HttpStatusCode.NotImplemented indicates

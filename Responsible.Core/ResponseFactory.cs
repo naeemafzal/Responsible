@@ -30,7 +30,7 @@ namespace Responsible.Core
             {
                 Success = true,
                 Status = ResponseStatus.Ok,
-                Messages = new List<string> {message}
+                Messages = new List<string> { message }
             };
         }
 
@@ -51,13 +51,13 @@ namespace Responsible.Core
         ///     Creates an Error Response with a message and Error Status
         /// </summary>
         public static IResponse Error(string message,
-            ErrorResponseStatus status = ErrorResponseStatus.InternalError)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response
             {
                 Success = false,
-                Status = (ResponseStatus) status,
-                Messages = new List<string> {message}
+                Status = (ResponseStatus)status,
+                Messages = new List<string> { message }
             };
         }
 
@@ -65,12 +65,12 @@ namespace Responsible.Core
         ///     Creates an Error Response with messages and Error Status
         /// </summary>
         public static IResponse Error(List<string> messages,
-            ErrorResponseStatus status = ErrorResponseStatus.InternalError)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response
             {
                 Success = false,
-                Status = (ResponseStatus) status,
+                Status = (ResponseStatus)status,
                 Messages = messages ?? new List<string>()
             };
         }
@@ -84,7 +84,7 @@ namespace Responsible.Core
             {
                 Success = false,
                 Status = ResponseStatus.NotImplemented,
-                Messages = new List<string> {message}
+                Messages = new List<string> { message }
             };
         }
 
@@ -109,8 +109,8 @@ namespace Responsible.Core
             var result = new Response
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
-                Messages = new List<string> {"A system error occured."}
+                Status = ResponseStatus.InternalServerError,
+                Messages = new List<string> { "A system error occured." }
             };
 
             return result;
@@ -124,8 +124,8 @@ namespace Responsible.Core
             return new Response
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
-                Messages = new List<string> {message}
+                Status = ResponseStatus.InternalServerError,
+                Messages = new List<string> { message }
             };
         }
 
@@ -137,7 +137,7 @@ namespace Responsible.Core
             return new Response
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Messages = messages ?? new List<string>()
             };
         }
@@ -151,10 +151,10 @@ namespace Responsible.Core
             var result = new Response
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Exception = exception,
                 HasException = true,
-                Messages = new List<string> {"A system error occured."}
+                Messages = new List<string> { "A system error occured." }
             };
 
             return result;
@@ -169,10 +169,10 @@ namespace Responsible.Core
             return new Response
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Exception = exception,
                 HasException = true,
-                Messages = new List<string> {message}
+                Messages = new List<string> { message }
             };
         }
 
@@ -185,13 +185,53 @@ namespace Responsible.Core
             return new Response
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Exception = exception,
                 HasException = true,
                 Messages = messages ?? new List<string>()
             };
         }
+
+        /// <summary>
+        ///     Creates Custom Response."
+        /// </summary>
+        public static IResponse Custom(ResponseStatus status, bool success)
+        {
+            return new Response
+            {
+                Success = (int)status >= 200 && (int)status <= 299,
+                Status = status,
+                Messages = new List<string>()
+            };
+        }
+
+        /// <summary>
+        ///     Creates Custom Response with a message."
+        /// </summary>
+        public static IResponse Custom(ResponseStatus status, bool success, string message)
+        {
+            return new Response
+            {
+                Success = (int)status >= 200 && (int)status <= 299,
+                Status = status,
+                Messages = new List<string> { message }
+            };
+        }
+
+        /// <summary>
+        ///     Creates Custom Response with messages."
+        /// </summary>
+        public static IResponse Custom(ResponseStatus status, List<string> messages)
+        {
+            return new Response
+            {
+                Success = (int)status >= 200 && (int)status <= 299,
+                Status = status,
+                Messages = messages ?? new List<string>()
+            };
+        }
     }
+
 
     /// <summary>
     ///     ResponseFactory&lt;T&gt; is used for creating variouse types of responses where &lt;T&gt; is an output
@@ -221,7 +261,7 @@ namespace Responsible.Core
             {
                 Success = true,
                 Status = ResponseStatus.Ok,
-                Messages = new List<string> {message},
+                Messages = new List<string> { message },
                 Value = value
             };
         }
@@ -244,13 +284,13 @@ namespace Responsible.Core
         ///     Creates an Error Response with a message and Error Status.
         /// </summary>
         public static IResponse<T> Error(string message,
-            ErrorResponseStatus status = ErrorResponseStatus.InternalError)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response<T>
             {
                 Success = false,
-                Status = (ResponseStatus) status,
-                Messages = new List<string> {message},
+                Status = (ResponseStatus)status,
+                Messages = new List<string> { message },
                 Value = default(T)
             };
         }
@@ -259,12 +299,12 @@ namespace Responsible.Core
         ///     Creates an Error Response with messages and Error Status.
         /// </summary>
         public static IResponse<T> Error(List<string> messages,
-            ErrorResponseStatus status = ErrorResponseStatus.InternalError)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response<T>
             {
                 Success = false,
-                Status = (ResponseStatus) status,
+                Status = (ResponseStatus)status,
                 Messages = messages ?? new List<string>(),
                 Value = default(T)
             };
@@ -279,7 +319,7 @@ namespace Responsible.Core
             {
                 Success = false,
                 Status = ResponseStatus.NotImplemented,
-                Messages = new List<string> {message},
+                Messages = new List<string> { message },
                 Value = default(T)
             };
         }
@@ -306,9 +346,9 @@ namespace Responsible.Core
             var result = new Response<T>
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Value = default(T),
-                Messages = new List<string> {"A system error occured."}
+                Messages = new List<string> { "A system error occured." }
             };
 
             return result;
@@ -322,8 +362,8 @@ namespace Responsible.Core
             return new Response<T>
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
-                Messages = new List<string> {message},
+                Status = ResponseStatus.InternalServerError,
+                Messages = new List<string> { message },
                 Value = default(T)
             };
         }
@@ -336,7 +376,7 @@ namespace Responsible.Core
             return new Response<T>
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Messages = messages ?? new List<string>(),
                 Value = default(T)
             };
@@ -351,11 +391,11 @@ namespace Responsible.Core
             var result = new Response<T>
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Exception = exception,
                 HasException = true,
                 Value = default(T),
-                Messages = new List<string> {"A system error occured."}
+                Messages = new List<string> { "A system error occured." }
             };
 
             return result;
@@ -370,10 +410,10 @@ namespace Responsible.Core
             return new Response<T>
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Exception = exception,
                 HasException = true,
-                Messages = new List<string> {message},
+                Messages = new List<string> { message },
                 Value = default(T)
             };
         }
@@ -387,11 +427,53 @@ namespace Responsible.Core
             return new Response<T>
             {
                 Success = false,
-                Status = ResponseStatus.InternalError,
+                Status = ResponseStatus.InternalServerError,
                 Exception = exception,
                 HasException = true,
                 Messages = messages ?? new List<string>(),
                 Value = default(T)
+            };
+        }
+
+        /// <summary>
+        ///     Creates Custom Response with operation optional output (default(T))."
+        /// </summary>
+        public static IResponse<T> Custom(ResponseStatus status, T value = default(T))
+        {
+            return new Response<T>
+            {
+                Success = (int)status >= 200 && (int)status <= 299,
+                Status = status,
+                Messages = new List<string>(),
+                Value = value
+            };
+        }
+
+        /// <summary>
+        ///     Creates Custom Response with operation optional output (default(T)) and a message."
+        /// </summary>
+        public static IResponse<T> Custom(ResponseStatus status, string message, T value = default(T))
+        {
+            return new Response<T>
+            {
+                Success = (int)status >= 200 && (int)status <= 299,
+                Status = status,
+                Messages = new List<string> { message },
+                Value = value
+            };
+        }
+
+        /// <summary>
+        ///     Creates Custom Response with operation optional output (default(T)) and messages."
+        /// </summary>
+        public static IResponse<T> Custom(ResponseStatus status, bool success, List<string> messages, T value = default(T))
+        {
+            return new Response<T>
+            {
+                Success = (int)status >= 200 && (int)status <= 299,
+                Status = status,
+                Messages = messages ?? new List<string>(),
+                Value = value
             };
         }
     }
