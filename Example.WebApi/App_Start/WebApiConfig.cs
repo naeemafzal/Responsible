@@ -15,13 +15,13 @@ namespace Example.WebApi
 
             RouteTable.Routes.MapRoute(
                 "WithActionApi",
-                "api/{controller}/{action}/{id}"
+                "{controller}/{action}/{id}"
             );
 
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }
