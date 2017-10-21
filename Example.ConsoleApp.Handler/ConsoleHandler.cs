@@ -2,7 +2,7 @@
 using System.Linq;
 using Responsible.Core;
 
-namespace Example.ConsoleApp
+namespace Example.ConsoleApp.Handler
 {
     /// <summary>
     /// Handle Responses

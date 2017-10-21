@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{11BCD3A1-1EAA-4349-9081-931299509ACB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Example.ConsoleApp</RootNamespace>
-    <AssemblyName>Example.ConsoleApp</AssemblyName>
+    <RootNamespace>Example.ConsoleApp.Handler</RootNamespace>
+    <AssemblyName>Example.ConsoleApp.Handler</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

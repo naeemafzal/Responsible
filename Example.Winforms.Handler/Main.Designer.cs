@@ -1,4 +1,4 @@
-﻿namespace Example.Winforms
+﻿namespace Example.Winforms.Handler
 {
     partial class Main
     {

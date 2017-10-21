@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Responsible.Core;
 
-namespace Example.Winforms
+namespace Example.Winforms.Handler
 {
     /// <summary>
     ///     Handle Responses
