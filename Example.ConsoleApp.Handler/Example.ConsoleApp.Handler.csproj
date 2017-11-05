@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Responsible.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Responsible.Core.1.0.0\lib\net35\1.0.0\Responsible.Core.dll</HintPath>
+      <HintPath>..\packages\Responsible.Core.3.0.1\lib\net35\Responsible.Core.dll</HintPath>
     </Reference>
     <Reference Include="Responsible.Handler.Console, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Responsible.Handler.Console.1.0.0\lib\net35\1.0.0\Responsible.Handler.Console.dll</HintPath>
