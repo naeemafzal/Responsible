@@ -6,10 +6,10 @@
     <Authors>Naeem Afzal</Authors>
     <Version>3.0.1</Version>
     <Description>Handles Responses created by Responsible.Core for Web Api.</Description>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/naeemafzal/Responsible</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/Responsible.Core/Images/Responsible-Icon.ico</PackageIconUrl>
-    <RepositoryUrl>https://github.com/naeemafzal/Responsible</RepositoryUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.WebApi</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/Responsible-Icon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.WebApi</RepositoryUrl>
     <PackageTags>Responsible Response Responses WebApi Web Api Handle</PackageTags>
   </PropertyGroup>
 

@@ -6,10 +6,10 @@
     <Authors>Naeem Afzal</Authors>
     <Version>3.0.6</Version>
     <Description>A Handy package for creating operation responses in a smart way.</Description>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/naeemafzal/Responsible</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/Responsible.Core/Images/Responsible-Icon.ico</PackageIconUrl>
-    <RepositoryUrl>https://github.com/naeemafzal/Responsible</RepositoryUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Core</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/Responsible-Icon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Core</RepositoryUrl>
     <PackageTags>Responsible Response Responses Handle</PackageTags>
   </PropertyGroup>
 

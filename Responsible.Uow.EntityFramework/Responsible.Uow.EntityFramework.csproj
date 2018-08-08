@@ -6,10 +6,10 @@
     <Authors>Naeem Afzal</Authors>
     <Version>1.2.1</Version>
     <Description>A Handy package for warapping EntityFrameWork in UnitOfWork.</Description>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/naeemafzal/Responsible</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/Responsible.Core/Images/Responsible-Icon.ico</PackageIconUrl>
-    <RepositoryUrl>https://github.com/naeemafzal/Responsible</RepositoryUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Uow.EntityFramework</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/Responsible-Icon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Uow.EntityFramework</RepositoryUrl>
     <PackageTags>Entity FrameWork Wrapper Responsible Response Responses Handle</PackageTags>
   </PropertyGroup>
 
