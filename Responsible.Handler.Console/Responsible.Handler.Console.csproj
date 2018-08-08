@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net45</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Naeem Afzal</Authors>
+    <Version>1.0.1</Version>
+    <Description>Handles Responses created by Responsible.Core for Console Applications.</Description>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/naeemafzal/Responsible</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/Responsible.Core/Images/Responsible-Icon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/naeemafzal/Responsible</RepositoryUrl>
+    <PackageTags>Console Responsible Response Responses Handler</PackageTags>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DocumentationFile>bin\Debug\net45\Responsible.Handler.Console.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\Responsible.Handler.Console.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Responsible.Core" Version="3.0.6" />
+  </ItemGroup>
+
+</Project>

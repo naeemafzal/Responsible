@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net45</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Naeem Afzal</Authors>
+    <Version>1.2.1</Version>
+    <Description>A Handy package for warapping EntityFrameWork in UnitOfWork.</Description>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/naeemafzal/Responsible</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/Responsible.Core/Images/Responsible-Icon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/naeemafzal/Responsible</RepositoryUrl>
+    <PackageTags>Entity FrameWork Wrapper Responsible Response Responses Handle</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DocumentationFile>bin\Debug\net45\Responsible.Uow.EntityFramework.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\Responsible.Uow.EntityFramework.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.1.3" />
+    <PackageReference Include="Responsible.Core" Version="3.0.6" />
+  </ItemGroup>
+</Project>

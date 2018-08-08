@@ -10,11 +10,12 @@ namespace Responsible.Core
     {
         /// <summary>
         ///     <para>Defines the success of an operation.</para>
+        ///     <para>Success is true when Status code is bigger than or equals to 200 and smaller than or equals to 299.</para>
         /// </summary>
         bool Success { get; }
 
         /// <summary>
-        ///     <para>Resolves to the success of an operation.</para>
+        ///     <para>Resolves to the status of an operation's success.</para>
         ///     <para>Status is handy for Web response Handling.</para>
         /// </summary>
         ResponseStatus Status { get; }
@@ -30,21 +31,23 @@ namespace Responsible.Core
         bool HasException { get; }
 
         /// <summary>
-        ///     <para>Stores an exception if occured.</para>
+        ///     <para>Stores an exception if occured and captured.</para>
         /// </summary>
         Exception Exception { get; }
 
         /// <summary>
-        ///     <para>Gets all messages as a Single Message, seperated by Environment.NewLine.</para>
+        ///     <para>Gets all messages as a Single Message, seperated by Environment.NewLine <see cref="Environment.NewLine"/>.</para>
         /// </summary>
         string SingleMessage { get; }
     }
 
+    /// <summary>
+    ///     Interface for a response object with a value
+    /// </summary>
     public interface IResponse<out T> : IResponse
     {
         /// <summary>
-        ///     <para>Contains the output of the operation.</para>
-        ///     <para>It will resolve to Default value for Non-Nullable Types.</para>
+        ///     <para>Resolves to an output of T.</para>
         /// </summary>
         T Value { get; }
     }

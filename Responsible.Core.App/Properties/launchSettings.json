@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Responsible.Core.App": {
+      "commandName": "Project"
+    }
+  }
+}
