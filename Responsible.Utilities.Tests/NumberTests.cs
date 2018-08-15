@@ -293,53 +293,5 @@ namespace Responsible.Utilities.Tests
             result = one.IsSameAs(two);
             Assert.IsFalse(result);
         }
-
-        [TestMethod]
-        public void Decimal_Compare()
-        {
-            decimal one = 5.9m;
-            decimal two = 5.9m;
-
-            //Same
-            var result = one.IsSameAs(two);
-            Assert.IsTrue(result, "Actual value is false");
-
-            two = 6;
-
-            //Not same
-            result = one.IsSameAs(two);
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void Decimal_Compare_Nullable()
-        {
-            decimal? one = 5.9m;
-            decimal? two = 5.9m;
-
-            //Same
-            var result = one.IsSameAs(two);
-            Assert.IsTrue(result, "Actual value is false");
-
-            one = null;
-            two = null;
-
-            //Same
-            result = one.IsSameAs(two);
-            Assert.IsTrue(result, "Actual value is false");
-
-            two = 6;
-
-            //Not same
-            result = one.IsSameAs(two);
-            Assert.IsFalse(result);
-
-            one = 5;
-            two = null;
-
-            //Not same
-            result = one.IsSameAs(two);
-            Assert.IsFalse(result);
-        }
     }
 }
