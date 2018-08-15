@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard1.0;net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Naeem Afzal</Authors>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <Description>A Handy package for data handling.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Utilities</PackageProjectUrl>

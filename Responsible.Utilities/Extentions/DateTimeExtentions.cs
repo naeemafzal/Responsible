@@ -12,9 +12,12 @@ namespace Responsible.Utilities.Extentions
         /// </summary>
         /// <param name="value"></param>
         /// <param name="other"></param>
-        /// <param name="ignoreTime">Flag to ignore time and only compare date</param>
+        /// <param name="ignoreTime">Flag to ignore time in comaprison</param>
+        /// <param name="ignoreSeconds">Flag to ignore seconds in comaprison</param>
+        /// <param name="ignoreMillisecond">Flag to ignore Millisecond in comaprison</param>
         /// <returns></returns>
-        public static bool IsSameAs(this DateTime? value, DateTime? other, bool ignoreTime = false)
+        public static bool IsSameAs(this DateTime? value, DateTime? other, bool ignoreTime = false,
+            bool ignoreSeconds = false, bool ignoreMillisecond = false)
         {
             if (!value.HasValue && !other.HasValue)
             {
@@ -31,12 +34,7 @@ namespace Responsible.Utilities.Extentions
                 return false;
             }
 
-            if (ignoreTime)
-            {
-                return value.Value.Date == other.Value.Date;
-            }
-
-            return value.Value == other.Value;
+            return value.Value.IsSameAs(other.Value, ignoreTime, ignoreSeconds, ignoreMillisecond);
         }
 
         /// <summary>
@@ -44,13 +42,28 @@ namespace Responsible.Utilities.Extentions
         /// </summary>
         /// <param name="value"></param>
         /// <param name="other"></param>
-        /// <param name="ignoreTime">Flag to ignore time and only compare date</param>
+        /// <param name="ignoreTime">Flag to ignore time in comaprison</param>
+        /// <param name="ignoreSeconds">Flag to ignore seconds in comaprison</param>
+        /// <param name="ignoreMillisecond">Flag to ignore Millisecond in comaprison</param>
         /// <returns></returns>
-        public static bool IsSameAs(this DateTime value, DateTime other, bool ignoreTime = false)
+        public static bool IsSameAs(this DateTime value, DateTime other, bool ignoreTime = false,
+            bool ignoreSeconds = false, bool ignoreMillisecond = false)
         {
             if (ignoreTime)
             {
                 return value.Date == other.Date;
+            }
+
+            if (ignoreSeconds)
+            {
+                return new DateTime(value.Year, value.Month, value.Day, value.Hour, value.Minute, 0, 0) ==
+                       new DateTime(other.Year, other.Month, other.Day, other.Hour, other.Minute, 0, 0);
+            }
+
+            if (ignoreMillisecond)
+            {
+                return new DateTime(value.Year, value.Month, value.Day, value.Hour, value.Minute, value.Second, 0) ==
+                       new DateTime(other.Year, other.Month, other.Day, other.Hour, other.Minute, other.Second, 0);
             }
 
             return value == other;

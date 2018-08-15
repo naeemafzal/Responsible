@@ -30,6 +30,50 @@ namespace Responsible.Utilities.Tests
         }
 
         [TestMethod]
+        public void CompareDates_IgnoreTime_True()
+        {
+            var one = DateTime.Now;
+            var two = DateTime.Now.AddMinutes(1);
+
+            var result = one.IsSameAs(two, true);
+
+            Assert.IsTrue(result, "Result should be true.");
+        }
+
+        [TestMethod]
+        public void CompareDates_IgnoreTime_False()
+        {
+            var one = DateTime.Now;
+            var two = DateTime.Now.AddSeconds(5);
+
+            var result = one.IsSameAs(two);
+
+            Assert.IsFalse(result, "Result should be false.");
+        }
+
+        [TestMethod]
+        public void CompareDates_IgnoreSeconds_True()
+        {
+            var one = DateTime.Now;
+            var two = DateTime.Now.AddMinutes(1);
+
+            var result = one.IsSameAs(two, true, true);
+
+            Assert.IsTrue(result, "Result should be true.");
+        }
+
+        [TestMethod]
+        public void CompareDates_IgnoreMillisecondsSeconds_True()
+        {
+            var one = DateTime.Now;
+            var two = DateTime.Now.AddMilliseconds(5);
+
+            var result = one.IsSameAs(two, false, false, true);
+
+            Assert.IsTrue(result, "Result should be true.");
+        }
+
+        [TestMethod]
         public void BritishDateFormat_DateOnly()
         {
             var one = new DateTime(2018, 5, 1, 5, 5, 5);
