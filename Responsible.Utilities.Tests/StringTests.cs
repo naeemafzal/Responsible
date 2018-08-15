@@ -77,7 +77,7 @@ namespace Responsible.Utilities.Tests
         public void StringContainsText_CaseInsensitive_True()
         {
             var result = StringSource.ContainsText(false, "xyz", "ABC");
-            Assert.IsFalse(result, "Result should be true.");
+            Assert.IsTrue(result, "Result should be true.");
         }
     }
 }

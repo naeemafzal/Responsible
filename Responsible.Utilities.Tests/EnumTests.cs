@@ -42,46 +42,6 @@ namespace Responsible.Utilities.Tests
             Assert.IsTrue(result.ContainsValue(WeekDays.Sunday.ToString()), "Does not contain value");
         }
 
-        [TestMethod]
-        public void WeekDay_Distionary_Extention()
-        {
-            var result = WeekDays.Monday.EnumDictionary();
-
-            Assert.AreEqual(7, result.Count, "Dictionary count is not same");
-
-            Assert.IsTrue(result.ContainsKey(1), "Does not contain key");
-            Assert.IsTrue(result.ContainsKey(2), "Does not contain key");
-            Assert.IsTrue(result.ContainsKey(3), "Does not contain key");
-            Assert.IsTrue(result.ContainsKey(4), "Does not contain key");
-            Assert.IsTrue(result.ContainsKey(5), "Does not contain key");
-            Assert.IsTrue(result.ContainsKey(6), "Does not contain key");
-            Assert.IsTrue(result.ContainsKey(7), "Does not contain key");
-
-            Assert.IsTrue(result.ContainsValue(WeekDays.Monday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.ContainsValue(WeekDays.Tuesday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.ContainsValue(WeekDays.Wednesday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.ContainsValue(WeekDays.Thursday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.ContainsValue(WeekDays.Friday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.ContainsValue(WeekDays.Saturday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.ContainsValue(WeekDays.Sunday.ToString()), "Does not contain value");
-        }
-
-
-        [TestMethod]
-        public void WeekDay_StringList()
-        {
-            var result = WeekDays.Monday.EnumStringList();
-
-            Assert.AreEqual(7, result.Count, "List count is not same");
-
-            Assert.IsTrue(result.Contains(WeekDays.Monday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.Contains(WeekDays.Tuesday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.Contains(WeekDays.Wednesday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.Contains(WeekDays.Thursday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.Contains(WeekDays.Friday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.Contains(WeekDays.Saturday.ToString()), "Does not contain value");
-            Assert.IsTrue(result.Contains(WeekDays.Sunday.ToString()), "Does not contain value");
-        }
 
         [TestMethod]
         public void WeekDay_RecordIdentities()
