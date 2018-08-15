@@ -110,7 +110,9 @@ namespace Responsible.Utilities.Extentions
                 return false;
             }
 
-            return predicates.All(value.Contains);
+            return caseSensitive
+                ? predicates.All(value.Contains)
+                : predicates.Select(x => string.IsNullOrWhiteSpace(x) ? x : x.ToLower()).All(value.ToLower().Contains);
         }
 
         /// <summary>
