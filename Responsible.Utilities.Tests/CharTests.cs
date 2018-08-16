@@ -32,7 +32,7 @@ namespace Responsible.Utilities.Tests
             var characterBigA = 'A';
             var characterSmallA = 'a';
 
-            var result = characterBigA.IsExactlySameAs(characterSmallA);
+            var result = characterBigA.IsSameAs(characterSmallA, true);
             Assert.IsFalse(result, "Both characters should not be same.");
         }
 
@@ -42,7 +42,7 @@ namespace Responsible.Utilities.Tests
             var characterBigA = 'A';
             var characterBigA_2 = 'A';
 
-            var result = characterBigA.IsExactlySameAs(characterBigA_2);
+            var result = characterBigA.IsSameAs(characterBigA_2, true);
             Assert.IsTrue(result, "Both characters should be same.");
         }
 

@@ -10,21 +10,16 @@
         /// </summary>
         /// <param name="value"></param>
         /// <param name="other"></param>
+        /// <param name="caseSensitive">Define if the comparison is case sensitive</param>
         /// <returns></returns>
-        public static bool IsSameAs(this char value, char other)
+        public static bool IsSameAs(this char? value, char other, bool caseSensitive = false)
         {
-            return char.ToUpperInvariant(value) == char.ToUpperInvariant(other);
-        }
+            if (!value.HasValue)
+            {
+                return false;
+            }
 
-        /// <summary>
-        /// Compares two chars case sensitive
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public static bool IsExactlySameAs(this char value, char other)
-        {
-            return value.Equals(other);
+            return value.Value.IsSameAs(other, caseSensitive);
         }
 
         /// <summary>
@@ -32,34 +27,40 @@
         /// </summary>
         /// <param name="value"></param>
         /// <param name="other"></param>
+        /// <param name="caseSensitive">Define if the comparison is case sensitive</param>
         /// <returns></returns>
-        public static bool IsSameAs(this char? value, char? other)
+        public static bool IsSameAs(this char value, char? other, bool caseSensitive = false)
         {
-            if (!value.HasValue && !other.HasValue)
-            {
-                return true;
-            }
-
-            if (!value.HasValue)
-            {
-                return false;
-            }
-
             if (!other.HasValue)
             {
                 return false;
             }
 
-            return char.ToUpperInvariant(value.Value) == char.ToUpperInvariant(other.Value);
+            return value.IsSameAs(other.Value, caseSensitive);
         }
 
         /// <summary>
-        /// Compares two chars case sensitive
+        /// Compares two chars case insensitive
         /// </summary>
         /// <param name="value"></param>
         /// <param name="other"></param>
+        /// <param name="caseSensitive">Define if the comparison is case sensitive</param>
         /// <returns></returns>
-        public static bool IsExactlySameAs(this char? value, char? other)
+        public static bool IsSameAs(this char value, char other, bool caseSensitive = false)
+        {
+            return caseSensitive ? 
+                value.Equals(other) :
+                char.ToUpperInvariant(value) == char.ToUpperInvariant(other);
+        }
+
+        /// <summary>
+        /// Compares two chars case insensitive
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <param name="caseSensitive">Define if the comparison is case sensitive</param>
+        /// <returns></returns>
+        public static bool IsSameAs(this char? value, char? other, bool caseSensitive = false)
         {
             if (!value.HasValue && !other.HasValue)
             {
@@ -76,7 +77,9 @@
                 return false;
             }
 
-            return value.Value == other.Value;
+            return caseSensitive ?
+                value.Value.Equals(other.Value) :
+                char.ToUpperInvariant(value.Value) == char.ToUpperInvariant(other.Value);
         }
     }
 }

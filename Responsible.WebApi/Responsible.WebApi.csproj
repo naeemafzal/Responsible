@@ -4,7 +4,7 @@
     <TargetFrameworks>net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Naeem Afzal</Authors>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Description>Handles Responses created by Responsible.Core for Web Api.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.WebApi</PackageProjectUrl>
@@ -26,6 +26,6 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-    <PackageReference Include="Responsible.Core" Version="3.0.6" />
+    <PackageReference Include="Responsible.Core" Version="3.0.7" />
   </ItemGroup>
 </Project>

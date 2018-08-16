@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard1.0;net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Naeem Afzal</Authors>
-    <Version>3.0.6</Version>
+    <Version>3.0.7</Version>
     <Description>A Handy package for creating operation responses in a smart way.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Core</PackageProjectUrl>

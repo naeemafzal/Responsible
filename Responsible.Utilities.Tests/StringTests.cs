@@ -79,5 +79,19 @@ namespace Responsible.Utilities.Tests
             var result = StringSource.ContainsText(false, "xyz", "ABC");
             Assert.IsTrue(result, "Result should be true.");
         }
+
+        [TestMethod]
+        public void String_IsSame_CaseSensitive()
+        {
+            var result = StringSource.IsSameAs("Abc abc xyz XYz");
+            Assert.IsTrue(result, "Result should be true.");
+        }
+
+        [TestMethod]
+        public void String_IsSame_CaseInSensitive()
+        {
+            var result = StringSource.IsSameAs("Abc abc xyz XYz", true);
+            Assert.IsFalse(result, "Result should be false.");
+        }
     }
 }

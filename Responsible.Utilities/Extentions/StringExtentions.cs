@@ -16,54 +16,29 @@ namespace Responsible.Utilities.Extentions
         /// </summary>
         /// <param name="value"></param>
         /// <param name="other"></param>
+        /// <param name="caseSensitive">Define if the comparison is case sensitive</param>
         /// <param name="trim">Trim inputs for comparison, by default it is false</param>
         /// <returns></returns>
-        public static bool IsSameAs(this string value, string other, bool trim = false)
+        public static bool IsSameAs(this string value, string other, bool caseSensitive = false)
         {
-            if (value == null && other == null)
+            if (string.IsNullOrWhiteSpace(value) && string.IsNullOrWhiteSpace(other))
             {
                 return true;
             }
 
-            if (value == null)
+            if (string.IsNullOrWhiteSpace(value))
             {
                 return false;
             }
 
-            if (other == null)
+            if (string.IsNullOrWhiteSpace(other))
             {
                 return false;
             }
 
-            return trim
-                ? string.Equals(value.Trim(), other.Trim(), StringComparison.CurrentCultureIgnoreCase)
+            return caseSensitive
+                ? string.Equals(value, other, StringComparison.Ordinal)
                 : string.Equals(value, other, StringComparison.CurrentCultureIgnoreCase);
-        }
-
-        /// <summary>
-        /// Compares two string case sensitive
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public static bool IsExactlySameAs(this string value, string other)
-        {
-            if (value == null && other == null)
-            {
-                return true;
-            }
-
-            if (value == null)
-            {
-                return false;
-            }
-
-            if (other == null)
-            {
-                return false;
-            }
-
-            return value.Equals(other);
         }
 
         /// <summary>

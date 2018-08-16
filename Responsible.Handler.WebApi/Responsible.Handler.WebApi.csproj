@@ -4,7 +4,7 @@
     <TargetFrameworks>net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Naeem Afzal</Authors>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <Description>Query/Handle Http Request created by Responsible.Core for Web Api.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Handler.WebApi</PackageProjectUrl>
@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Responsible.Core" Version="3.0.6" />
+    <PackageReference Include="Responsible.Core" Version="3.0.7" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />

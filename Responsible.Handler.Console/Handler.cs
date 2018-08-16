@@ -22,7 +22,7 @@ namespace Responsible.Handler.Console
             var consoleTextColour =  System.Console.ForegroundColor;
             if (response == null)
             {
-                WriteColourfullMessages($"{operationTitle} - Provided response is null.", ConsoleColor.Red, consoleTextColour);
+                WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}Provided response is null.", ConsoleColor.Red, consoleTextColour);
                 return;
             }
 
@@ -35,7 +35,7 @@ namespace Responsible.Handler.Console
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                WriteColourfullMessages($"{operationTitle} - {message}", ConsoleColor.Red, consoleTextColour);
+                WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}{message}", ConsoleColor.Red, consoleTextColour);
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace Responsible.Handler.Console
                 message = successMessage;
             }
 
-            WriteColourfullMessages($"{operationTitle} - {message}", ConsoleColor.Green, consoleTextColour);
+            WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}{message}", ConsoleColor.Green, consoleTextColour);
         }
 
         private static void WriteColourfullMessages(string message, ConsoleColor textColour, ConsoleColor defaulColour)
