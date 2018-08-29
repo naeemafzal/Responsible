@@ -13,7 +13,7 @@ namespace WindowsForms.App.Logic
         {
             using (var client = new ResponsibleHttpClient(_webApiAddress))
             {
-                var customerResponse = client.Get<List<Customer>>($"Customers/Search/{search}");
+                var customerResponse = client.Get<List<Customer>>($"Customers/Searchh/{search}");
                 return customerResponse;
             }
         }

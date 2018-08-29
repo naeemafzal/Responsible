@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using WebApplication.Api.Filters;
+using Responsible.WebApi.ResponsibleAttributes;
 using WebApplication.Api.Logic;
 using WebApplication.Api.Models;
 

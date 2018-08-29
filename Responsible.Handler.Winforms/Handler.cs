@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using Responsible.Core;
+using Responsible.Handler.Winforms.CustomDialogs;
 
 namespace Responsible.Handler.Winforms
 {
@@ -9,9 +10,9 @@ namespace Responsible.Handler.Winforms
     public static class Handler
     {
         /// <summary>
-        /// Handles displayinf relevent messages to the user from the inputs
+        /// Handles displaying relevent messages to the user from the inputs
         /// </summary>
-        /// <param name="operationTitle">The <see cref="MessageBox"/> title</param>
+        /// <param name="operationTitle">The title of the message box</param>
         /// <param name="response">The <see cref="IResponse"/> to handle</param>
         /// <param name="showSuccessMessage">Defines if the <see cref="IResponse.Success"/> is true then show a success message</param>
         /// <param name="ignoreResponseMessage">If <see cref="IResponse.Success"/> is true and ignoreResponseMessage is also true then messages from response are ignored</param>
@@ -21,8 +22,13 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                MessageBox.Show("Provided response is null.", operationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SimpleMessageBox.DisplayMessage(operationTitle, "Provided response is null.", MessageBoxType.Error);
                 return;
+            }
+
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
             }
 
             var message = response.SingleMessage;
@@ -34,7 +40,7 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                MessageBox.Show(message, operationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SimpleMessageBox.DisplayMessage(operationTitle, message, MessageBoxType.Error);
                 return;
             }
 
@@ -48,7 +54,28 @@ namespace Responsible.Handler.Winforms
                 message = successMessage;
             }
 
-            MessageBox.Show(message, operationTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SimpleMessageBox.DisplayMessage(operationTitle, message, MessageBoxType.Success);
+        }
+
+        /// <summary>
+        /// Handles displaying relevent messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="message">The message text</param>
+        /// <param name="messageBoxType">The type of message box</param>
+        public static void HandleResponse(string operationTitle, string message, MessageBoxType messageBoxType)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            if (message == null)
+            {
+                message = string.Empty;
+            }
+
+            SimpleMessageBox.DisplayMessage(operationTitle, message, messageBoxType);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using WebApplication.Api.Filters;
+using Responsible.WebApi.ResponsibleAttributes;
 
 namespace WebApplication.Api
 {

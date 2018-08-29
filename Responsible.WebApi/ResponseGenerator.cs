@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using Responsible.Core;
+using Responsible.WebApi.Extentions;
 
 namespace Responsible.WebApi
 {
@@ -15,6 +16,7 @@ namespace Responsible.WebApi
     public static class ResponseGenerator
     {
         #region IResponse Handlers
+
         /// <summary>
         /// Creates a HttpResponseMessage from <see cref="IResponse"/> IResponse
         /// </summary>
@@ -27,7 +29,8 @@ namespace Responsible.WebApi
             {
                 throw new NullReferenceException("Provided response is null.");
             }
-            return MultipartContent(request, (HttpStatusCode)response.Status, response.Messages.ToList());
+
+            return CreateResponsibleMessage(request, (HttpStatusCode)response.Status, response.Messages.ToList());
         }
 
         /// <summary>
@@ -42,11 +45,15 @@ namespace Responsible.WebApi
             {
                 throw new NullReferenceException("Provided response is null.");
             }
-            return MultipartContent(request, (HttpStatusCode)response.Status, response.Messages.ToList(), response.Value);
+
+            return CreateResponsibleMessage(request, (HttpStatusCode)response.Status, response.Messages.ToList(),
+                response.Value);
         }
+
         #endregion
 
         #region Custom Handlers
+
         /// <summary>
         ///     Creates OK Response
         /// </summary>
@@ -55,7 +62,7 @@ namespace Responsible.WebApi
         /// <returns><see cref="HttpResponseMessage"/></returns>
         public static HttpResponseMessage CreateResponseOk(HttpRequestMessage request, List<string> messages)
         {
-            return MultipartContent(request, HttpStatusCode.OK, messages);
+            return CreateResponsibleMessage(request, HttpStatusCode.OK, messages);
         }
 
         /// <summary>
@@ -65,9 +72,10 @@ namespace Responsible.WebApi
         /// <param name="value">Generic value</param>
         /// <param name="messages"></param>
         /// <returns><see cref="HttpResponseMessage"/></returns>
-        public static HttpResponseMessage CreateResponseOk<T>(HttpRequestMessage request, List<string> messages, T value)
+        public static HttpResponseMessage CreateResponseOk<T>(HttpRequestMessage request, List<string> messages,
+            T value)
         {
-            return MultipartContent(request, HttpStatusCode.OK, messages, value);
+            return CreateResponsibleMessage(request, HttpStatusCode.OK, messages, value);
         }
 
         /// <summary>
@@ -77,9 +85,10 @@ namespace Responsible.WebApi
         /// <param name="messages">List of <see cref="string"/></param>
         /// <param name="status"><see cref="ErrorResponseStatus"/></param>
         /// <returns><see cref="HttpResponseMessage"/></returns>
-        public static HttpResponseMessage CreateResponseError(HttpRequestMessage request, ErrorResponseStatus status, List<string> messages)
+        public static HttpResponseMessage CreateResponseError(HttpRequestMessage request, ErrorResponseStatus status,
+            List<string> messages)
         {
-            return MultipartContent(request, (HttpStatusCode)status, messages);
+            return CreateResponsibleMessage(request, (HttpStatusCode)status, messages);
         }
 
         /// <summary>
@@ -90,9 +99,10 @@ namespace Responsible.WebApi
         /// <param name="status"><see cref="HttpStatusCode"/></param>
         /// <param name="messages">List of <see cref="string"/></param>
         /// <returns><see cref="HttpResponseMessage"/></returns>
-        public static HttpResponseMessage CreateResponseError<T>(HttpRequestMessage request, ErrorResponseStatus status, List<string> messages, T value)
+        public static HttpResponseMessage CreateResponseError<T>(HttpRequestMessage request, ErrorResponseStatus status,
+            List<string> messages, T value)
         {
-            return MultipartContent(request, (HttpStatusCode)status, messages, value);
+            return CreateResponsibleMessage(request, (HttpStatusCode)status, messages, value);
         }
 
         /// <summary>
@@ -102,9 +112,10 @@ namespace Responsible.WebApi
         /// <param name="status"><see cref="HttpStatusCode"/></param>
         /// <param name="messages">List of <see cref="string"/></param>
         /// <returns><see cref="HttpResponseMessage"/></returns>
-        public static HttpResponseMessage CreateResponseCustom(HttpRequestMessage request, HttpStatusCode status, List<string> messages)
+        public static HttpResponseMessage CreateResponseCustom(HttpRequestMessage request, HttpStatusCode status,
+            List<string> messages)
         {
-            return MultipartContent(request, status, messages);
+            return CreateResponsibleMessage(request, status, messages);
         }
 
         /// <summary>
@@ -115,122 +126,140 @@ namespace Responsible.WebApi
         /// <param name="messages">List of <see cref="string"/></param>
         /// <param name="value">Generic optional value, Defaults to Default of T</param>
         /// <returns><see cref="HttpResponseMessage"/></returns>
-        public static HttpResponseMessage CreateResponseCustom<T>(HttpRequestMessage request, HttpStatusCode status, List<string> messages, T value)
+        public static HttpResponseMessage CreateResponseCustom<T>(HttpRequestMessage request, HttpStatusCode status,
+            List<string> messages, T value)
         {
-            return MultipartContent(request, status, messages, value);
+            return CreateResponsibleMessage(request, status, messages, value);
         }
+
         #endregion
 
-        private static HttpResponseMessage MultipartContent(HttpRequestMessage request, HttpStatusCode httpStatusCode, List<string> messages)
+        private static HttpResponseMessage CreateResponsibleMessage(HttpRequestMessage request,
+            HttpStatusCode httpStatusCode, List<string> messages)
         {
-            if (request == null)
-            {
-                throw new NullReferenceException("Request object is null. Unable to create response.");
-            }
-
             if (messages == null)
             {
                 messages = new List<string>();
             }
 
-            MultipartContent content;
-            var acceptsXml = "application/xml".Equals(GetAcceptType(request));
-            if (acceptsXml)
+            HttpResponseMessage responseMessage;
+            var acceptsXml = request.AcceptsXml();
+
+            if (request.IsResponsibleRequest())
             {
-                content = new MultipartContent
+                MultipartContent content;
+                if (acceptsXml)
                 {
-                    new ObjectContent<List<ServiceMessage>>(
-                        messages.Select(m => new ServiceMessage { Message = m }).ToList(),
-                        new XmlMediaTypeFormatter())
-                };
-            }
-            else
-            {
-                content = new MultipartContent
+                    content = new MultipartContent
+                    {
+                        new ObjectContent<List<ServiceMessage>>(
+                            messages.Select(m => new ServiceMessage {Message = m}).ToList(),
+                            new XmlMediaTypeFormatter())
+                    };
+                }
+                else
                 {
-                    new ObjectContent<List<ServiceMessage>>(
-                        messages.Select(m => new ServiceMessage { Message = m }).ToList(),
-                        new JsonMediaTypeFormatter())
-                };
+                    content = new MultipartContent
+                    {
+                        new ObjectContent<List<ServiceMessage>>(
+                            messages.Select(m => new ServiceMessage {Message = m}).ToList(),
+                            new JsonMediaTypeFormatter())
+                    };
+                }
+
+                responseMessage = request.CreateResponse(httpStatusCode);
+                responseMessage.Content = content;
+                responseMessage.Content.Headers.Add(nameof(StaticResources.ResponsibleMediaType),
+                    StaticResources.ResponsibleMediaType);
+                return responseMessage;
             }
 
-            var responseResult = request.CreateResponse(httpStatusCode);
-            responseResult.Content = content;
-            return responseResult;
+            responseMessage = request.CreateResponse(httpStatusCode);
+            return responseMessage;
         }
 
-        private static HttpResponseMessage MultipartContent<T>(HttpRequestMessage request, HttpStatusCode httpStatusCode, List<string> messages, T value)
+        private static HttpResponseMessage CreateResponsibleMessage<T>(HttpRequestMessage request,
+            HttpStatusCode httpStatusCode, List<string> messages, T value)
         {
-            if (request == null)
-            {
-                throw new NullReferenceException("Request object is null. Unable to create response.");
-            }
-
             if (messages == null)
             {
                 messages = new List<string>();
             }
 
-            MultipartContent content;
-            var acceptsXml = "application/xml".Equals(GetAcceptType(request));
-            if (acceptsXml)
+            HttpResponseMessage responseMessage;
+            var acceptsXml = request.AcceptsXml();
+            var acceptsJson = request.AcceptsJSon();
+
+            if (request.IsResponsibleRequest())
             {
-                content = new MultipartContent
+                MultipartContent content;
+                if (acceptsXml)
                 {
-                    new ObjectContent<List<ServiceMessage>>(
-                        messages.Select(m => new ServiceMessage { Message = m }).ToList(),
-                        new XmlMediaTypeFormatter())
-                };
+                    content = new MultipartContent
+                    {
+                        new ObjectContent<List<ServiceMessage>>(
+                            messages.Select(m => new ServiceMessage {Message = m}).ToList(),
+                            new XmlMediaTypeFormatter())
+                    };
+                }
+                else
+                {
+                    content = new MultipartContent
+                    {
+                        new ObjectContent<List<ServiceMessage>>(
+                            messages.Select(m => new ServiceMessage {Message = m}).ToList(),
+                            new JsonMediaTypeFormatter())
+                    };
+                }
+
+                if (value != null && value is Stream)
+                {
+                    var streamContent = value as Stream;
+                    content.Add(new StreamContent(streamContent));
+                }
+                else if (value != null && value is byte[])
+                {
+                    var bytes = value as byte[];
+                    content.Add(new ByteArrayContent(bytes));
+                }
+                else
+                {
+                    if (value != null)
+                    {
+                        content.Add(acceptsXml
+                            ? new ObjectContent<T>(value, new XmlMediaTypeFormatter())
+                            : new ObjectContent<T>(value, new JsonMediaTypeFormatter()));
+                    }
+                }
+
+                responseMessage = request.CreateResponse(httpStatusCode);
+                responseMessage.Content = content;
+                responseMessage.Content.Headers.Add(nameof(StaticResources.ResponsibleMediaType),
+                    StaticResources.ResponsibleMediaType);
+                return responseMessage;
+            }
+
+            if (value != null)
+            {
+                if (acceptsXml)
+                {
+                    responseMessage = request.CreateResponse(httpStatusCode, value, new XmlMediaTypeFormatter());
+                }
+                else if (acceptsJson)
+                {
+                    responseMessage = request.CreateResponse(httpStatusCode, value, new JsonMediaTypeFormatter());
+                }
+                else
+                {
+                    responseMessage = request.CreateResponse(httpStatusCode, value);
+                }
             }
             else
             {
-                content = new MultipartContent
-                {
-                    new ObjectContent<List<ServiceMessage>>(
-                        messages.Select(m => new ServiceMessage { Message = m }).ToList(),
-                        new JsonMediaTypeFormatter())
-                };
+                responseMessage = request.CreateResponse(httpStatusCode);
             }
 
-            if (value is Stream)
-            {
-                var streamContent = value as Stream;
-                content.Add(new StreamContent(streamContent));
-            }
-            else if (value is byte[])
-            {
-                var bytes = value as byte[];
-                content.Add(new ByteArrayContent(bytes));
-            }
-            else
-            {
-                if (value != null)
-                {
-                    content.Add(acceptsXml ? new ObjectContent<T>(value, new XmlMediaTypeFormatter()) : new ObjectContent<T>(value, new JsonMediaTypeFormatter()));
-                }
-            }
-
-            var responseResult = request.CreateResponse(httpStatusCode);
-            responseResult.Content = content;
-            return responseResult;
-        }
-
-        private static string GetAcceptType(HttpRequestMessage request)
-        {
-            try
-            {
-                if (!request.Headers.Contains("Accept"))
-                {
-                    return null;
-                }
-
-                var contentType = request.Headers.GetValues("Accept").FirstOrDefault();
-                return contentType;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            return responseMessage;
         }
     }
 }
