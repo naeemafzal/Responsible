@@ -71,7 +71,24 @@ namespace Responsible.Handler.Winforms.CustomDialogs
         {
             _titleLabel.Text = _title;
             _messageTextBox.Text = _message;
+            SetScrollOnMessageBox();
             AnimateAsync();
+        }
+
+        private void SetScrollOnMessageBox()
+        {
+            var textBoxRect = TextRenderer.MeasureText(_messageTextBox.Text, _messageTextBox.Font,
+                new Size(_messageTextBox.Width, _messageTextBox.MaxLength),
+                (TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl));
+
+            try
+            {
+                _messageTextBox.ScrollBars = textBoxRect.Height > _messageTextBox.Height ? ScrollBars.Vertical : ScrollBars.None;
+            }
+            catch (Exception)
+            {
+                //ignored
+            }
         }
 
         private void OkRoundedButton_Click(object sender, EventArgs e)
