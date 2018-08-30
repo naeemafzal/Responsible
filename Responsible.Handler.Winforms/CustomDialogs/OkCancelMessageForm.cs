@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Responsible.Handler.Winforms.CustomDialogs
 {
-    internal class SimpleMessageForm : Form
+    internal class OkCancelMessageForm : Form
     {
         private PictureBox _pictureBox;
         private Panel _topPanel;
@@ -17,6 +17,7 @@ namespace Responsible.Handler.Winforms.CustomDialogs
         private Panel _messagePanel;
         private RoundedButton _okRoundedButton;
         private TextBox _messageTextBox;
+        private RoundedButton _cancelRoundedButton;
 
         private readonly string _title;
         private readonly string _message;
@@ -33,17 +34,18 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             int nHeightEllipse // width of ellipse
         );
 
-        public SimpleMessageForm(string title, string message, Bitmap gifImage, Color okButtonColour)
+        public OkCancelMessageForm(string title, string message, Bitmap gifImage, Color okButtonColour, Color cancelButtonColour)
         {
             InitializeComponent();
             FormBorderStyle = FormBorderStyle.None;
             Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
 
-            _okRoundedButton.ButtonPenColour = okButtonColour;
-
             _title = title;
             _message = message;
             _gifImage = gifImage;
+
+            _okRoundedButton.ButtonPenColour = okButtonColour;
+            _cancelRoundedButton.ButtonPenColour = cancelButtonColour;
         }
 
         private async void AnimateAsync()
@@ -67,7 +69,7 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             });
         }
 
-        private void SimpleMessage_Shown(object sender, EventArgs e)
+        private void OkCancelMessage_Shown(object sender, EventArgs e)
         {
             _titleLabel.Text = _title;
             _messageTextBox.Text = _message;
@@ -93,6 +95,13 @@ namespace Responsible.Handler.Winforms.CustomDialogs
 
         private void OkRoundedButton_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void CancelRoundedButtonClick(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 
@@ -104,9 +113,10 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             _titleLabel = new Label();
             _panelDetail = new Panel();
             _messagePanel = new Panel();
-            _bottomPanel = new Panel();
             _messageTextBox = new TextBox();
+            _bottomPanel = new Panel();
             _okRoundedButton = new RoundedButton();
+            _cancelRoundedButton = new RoundedButton();
             _topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(_pictureBox)).BeginInit();
             _titlePanel.SuspendLayout();
@@ -165,7 +175,7 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             _panelDetail.Dock = DockStyle.Fill;
             _panelDetail.Location = new Point(0, 186);
             _panelDetail.Name = "_panelDetail";
-            _panelDetail.Size = new Size(540, 180);
+            _panelDetail.Size = new Size(540, 174);
             _panelDetail.TabIndex = 3;
             // 
             // MessagePanel
@@ -175,18 +185,8 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             _messagePanel.Dock = DockStyle.Fill;
             _messagePanel.Location = new Point(0, 0);
             _messagePanel.Name = "_messagePanel";
-            _messagePanel.Size = new Size(540, 97);
+            _messagePanel.Size = new Size(540, 91);
             _messagePanel.TabIndex = 2;
-            // 
-            // BottomPanel
-            // 
-            _bottomPanel.BackColor = Color.FromArgb(254, 252, 254);
-            _bottomPanel.Controls.Add(_okRoundedButton);
-            _bottomPanel.Dock = DockStyle.Bottom;
-            _bottomPanel.Location = new Point(0, 97);
-            _bottomPanel.Name = "_bottomPanel";
-            _bottomPanel.Size = new Size(540, 83);
-            _bottomPanel.TabIndex = 1;
             // 
             // MessageTextBox
             // 
@@ -198,13 +198,24 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             _messageTextBox.Name = "_messageTextBox";
             _messageTextBox.ReadOnly = true;
             _messageTextBox.ScrollBars = ScrollBars.Both;
-            _messageTextBox.Size = new Size(540, 97);
+            _messageTextBox.Size = new Size(540, 91);
             _messageTextBox.TabIndex = 0;
             _messageTextBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // OkRoundedButton
+            // BottomPanel
             // 
-            _okRoundedButton.Location = new Point(200, 10);
+            _bottomPanel.BackColor = Color.FromArgb(254, 252, 254);
+            _bottomPanel.Controls.Add(_cancelRoundedButton);
+            _bottomPanel.Controls.Add(_okRoundedButton);
+            _bottomPanel.Dock = DockStyle.Bottom;
+            _bottomPanel.Location = new Point(0, 91);
+            _bottomPanel.Name = "_bottomPanel";
+            _bottomPanel.Size = new Size(540, 83);
+            _bottomPanel.TabIndex = 1;
+            // 
+            // OKRoundedButton
+            // 
+            _okRoundedButton.Location = new Point(119, 10);
             _okRoundedButton.Name = "_okRoundedButton";
             _okRoundedButton.Size = new Size(140, 64);
             _okRoundedButton.TabIndex = 0;
@@ -212,7 +223,17 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             _okRoundedButton.UseVisualStyleBackColor = true;
             _okRoundedButton.Click += OkRoundedButton_Click;
             // 
-            // Mine
+            // CancelRoundedButton
+            // 
+            _cancelRoundedButton.Location = new Point(286, 10);
+            _cancelRoundedButton.Name = "_cancelRoundedButton";
+            _cancelRoundedButton.Size = new Size(140, 64);
+            _cancelRoundedButton.TabIndex = 1;
+            _cancelRoundedButton.Text = "Cancel";
+            _cancelRoundedButton.UseVisualStyleBackColor = true;
+            _cancelRoundedButton.Click += CancelRoundedButtonClick;
+            // 
+            // OkCancelMessageForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -226,10 +247,10 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             Margin = new Padding(4, 5, 4, 5);
             MaximumSize = new Size(540, 360);
             MinimumSize = new Size(540, 360);
-            Name = "SimpleMessageForm";
+            Name = "OkCancelMessageForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "SimpleMessageForm";
-            Shown += SimpleMessage_Shown;
+            Text = "Mine";
+            Shown += OkCancelMessage_Shown;
             _topPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(_pictureBox)).EndInit();
             _titlePanel.ResumeLayout(false);

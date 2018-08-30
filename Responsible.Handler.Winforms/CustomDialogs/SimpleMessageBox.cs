@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using Responsible.Handler.Winforms.Properties;
 
 namespace Responsible.Handler.Winforms.CustomDialogs
@@ -12,6 +13,27 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             simpleMessageForm.ShowDialog();
         }
 
+        internal static DialogResult DisplayCustomMessage(string title, string message, MessageBoxType messageBoxType, MessageBoxButtons messageBoxButtons)
+        {
+            switch (messageBoxButtons)
+            {
+                case MessageBoxButtons.Ok:
+                    {
+                        DisplayMessage(title, message, messageBoxType);
+                        return DialogResult.OK;
+                    }
+                case MessageBoxButtons.OkCancel:
+                    using (var okCancelMessageForm = new OkCancelMessageForm(title, message, GetGifImage(messageBoxType),
+                        Color.Green, Color.DarkGoldenrod))
+                    {
+                        okCancelMessageForm.ShowDialog();
+                        return okCancelMessageForm.DialogResult;
+                    }
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(messageBoxButtons), messageBoxButtons, null);
+            }
+        }
+        
         internal static Bitmap GetGifImage(MessageBoxType messageBoxType)
         {
             try
@@ -24,6 +46,8 @@ namespace Responsible.Handler.Winforms.CustomDialogs
                         return Resources.cross;
                     case MessageBoxType.Warning:
                         return Resources.warning;
+                    case MessageBoxType.Question:
+                        return Resources.question;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(messageBoxType), messageBoxType, null);
                 }
@@ -37,7 +61,9 @@ namespace Responsible.Handler.Winforms.CustomDialogs
                     case MessageBoxType.Error:
                         return SystemIcons.Error.ToBitmap();
                     case MessageBoxType.Warning:
-                        return SystemIcons.Asterisk.ToBitmap();
+                        return SystemIcons.Exclamation.ToBitmap();
+                    case MessageBoxType.Question:
+                        return SystemIcons.Question.ToBitmap();
                     default:
                         throw new ArgumentOutOfRangeException(nameof(messageBoxType), messageBoxType, null);
                 }

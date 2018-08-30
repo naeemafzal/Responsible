@@ -63,7 +63,9 @@ namespace Responsible.Handler.Winforms
         /// <param name="operationTitle">The title of the message box</param>
         /// <param name="message">The message text</param>
         /// <param name="messageBoxType">The type of message box</param>
-        public static void HandleResponse(string operationTitle, string message, MessageBoxType messageBoxType)
+        /// <param name="messageBoxButtons"></param>
+        public static DialogResult ShowMessage(string operationTitle, string message, MessageBoxType messageBoxType,
+            MessageBoxButtons messageBoxButtons)
         {
             if (string.IsNullOrWhiteSpace(operationTitle))
             {
@@ -75,7 +77,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            SimpleMessageBox.DisplayMessage(operationTitle, message, messageBoxType);
+            return SimpleMessageBox.DisplayCustomMessage(operationTitle, message, messageBoxType, messageBoxButtons);
         }
     }
 }

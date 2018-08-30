@@ -18,6 +18,11 @@
         /// <summary>
         /// Defines a Warning Message
         /// </summary>
-        Warning = 3
+        Warning = 3,
+
+        /// <summary>
+        /// Defines a Question Message
+        /// </summary>
+        Question = 4
     }
 }
