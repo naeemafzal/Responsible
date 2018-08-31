@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Linq;
+using System.Windows.Forms;
 using Responsible.Core;
 using Responsible.Handler.Winforms.CustomDialogs;
 
@@ -34,6 +36,7 @@ namespace Responsible.Handler.Winforms
 
         /// <summary>
         /// Handles displaying relevent messages to the user from the inputs
+        /// <see cref="IResponse.Messages"/> are displayed as a bullet point list
         /// </summary>
         /// <param name="operationTitle">The title of the message box</param>
         /// <param name="response">The <see cref="IResponse"/> to handle</param>
@@ -54,7 +57,13 @@ namespace Responsible.Handler.Winforms
                 operationTitle = "Operation";
             }
 
-            var message = response.SingleMessage;
+            var message = string.Empty;
+            if (response.Messages != null && response.Messages.Any())
+            {
+                message = response.Messages.Count() == 1
+                    ? response.SingleMessage
+                    : string.Join($"{Environment.NewLine}", response.Messages.Select(x => $"\u2022 {x}"));
+            }
 
             if (!response.Success)
             {
