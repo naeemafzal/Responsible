@@ -21,7 +21,7 @@ namespace WindowsForms.App
         private void SearchCustomers()
         {
             var filterResponse = CustomerLogic.Filter(SearchTextBox.Text);
-            Handler.HandleResponse("Loading Customers", filterResponse);
+            ResponsibleMessage.HandleResponse("Loading Customers", filterResponse);
             CustomersDataGridView.DataSource = filterResponse.Value;
         }
 
@@ -33,7 +33,7 @@ namespace WindowsForms.App
                 Lastname = LastnameTextBox.Text
             };
             var addResponse = CustomerLogic.Add(customerToAdd);
-            Handler.HandleResponse("Adding Customer", addResponse, true);
+            ResponsibleMessage.HandleResponse("Adding Customer", addResponse, true);
             if (addResponse.Success)
             {
                 SearchCustomers();
