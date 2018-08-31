@@ -14,10 +14,10 @@ namespace Responsible.Handler.Winforms
         /// </summary>
         /// <param name="operationTitle">The title of the message box</param>
         /// <param name="message">The message text</param>
-        /// <param name="messageBoxType">The type of message box</param>
-        /// <param name="messageBoxButtons"></param>
-        public static DialogResult ShowMessage(string operationTitle, string message, MessageBoxType messageBoxType,
-            MessageBoxButtons messageBoxButtons)
+        /// <param name="responsibleMessageBoxType">The type of message box</param>
+        /// <param name="responsibleMessageBoxButtons"></param>
+        public static DialogResult ShowMessage(string operationTitle, string message, ResponsibleMessageBoxType responsibleMessageBoxType,
+            ResponsibleMessageBoxButtons responsibleMessageBoxButtons)
         {
             if (string.IsNullOrWhiteSpace(operationTitle))
             {
@@ -29,7 +29,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return SimpleMessageBox.DisplayCustomMessage(operationTitle, message, messageBoxType, messageBoxButtons);
+            return SimpleMessageBox.DisplayCustomMessage(operationTitle, message, responsibleMessageBoxType, responsibleMessageBoxButtons);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                SimpleMessageBox.DisplayMessage(operationTitle, "Provided response is null.", MessageBoxType.Error);
+                SimpleMessageBox.DisplayMessage(operationTitle, "Provided response is null.", ResponsibleMessageBoxType.Error);
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                SimpleMessageBox.DisplayMessage(operationTitle, message, MessageBoxType.Error);
+                SimpleMessageBox.DisplayMessage(operationTitle, message, ResponsibleMessageBoxType.Error);
                 return;
             }
 
@@ -77,7 +77,7 @@ namespace Responsible.Handler.Winforms
                 message = successMessage;
             }
 
-            SimpleMessageBox.DisplayMessage(operationTitle, message, MessageBoxType.Success);
+            SimpleMessageBox.DisplayMessage(operationTitle, message, ResponsibleMessageBoxType.Success);
         }
     }
 }

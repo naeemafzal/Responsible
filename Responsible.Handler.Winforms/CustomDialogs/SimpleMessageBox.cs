@@ -7,46 +7,54 @@ namespace Responsible.Handler.Winforms.CustomDialogs
 {
     internal class SimpleMessageBox
     {
-        internal static void DisplayMessage(string title, string message, MessageBoxType messageBoxType)
+        internal static void DisplayMessage(string title, string message,
+            ResponsibleMessageBoxType responsibleMessageBoxType)
         {
-            var simpleMessageForm = new SimpleMessageForm(title, message, GetGifImage(messageBoxType), GetOkButtonColour(messageBoxType));
-            simpleMessageForm.ShowDialog();
+            using (var simpleMessageForm = new SimpleMessageForm(title, message, GetGifImage(responsibleMessageBoxType),
+                GetOkButtonColour(responsibleMessageBoxType)))
+            {
+                simpleMessageForm.ShowDialog();
+            }
         }
 
-        internal static DialogResult DisplayCustomMessage(string title, string message, MessageBoxType messageBoxType, MessageBoxButtons messageBoxButtons)
+        internal static DialogResult DisplayCustomMessage(string title, string message,
+            ResponsibleMessageBoxType responsibleMessageBoxType,
+            ResponsibleMessageBoxButtons responsibleMessageBoxButtons)
         {
-            switch (messageBoxButtons)
+            switch (responsibleMessageBoxButtons)
             {
-                case MessageBoxButtons.Ok:
-                    {
-                        DisplayMessage(title, message, messageBoxType);
-                        return DialogResult.OK;
-                    }
-                case MessageBoxButtons.OkCancel:
-                    using (var okCancelMessageForm = new OkCancelMessageForm(title, message, GetGifImage(messageBoxType),
+                case ResponsibleMessageBoxButtons.Ok:
+                {
+                    DisplayMessage(title, message, responsibleMessageBoxType);
+                    return DialogResult.OK;
+                }
+                case ResponsibleMessageBoxButtons.OkCancel:
+                    using (var okCancelMessageForm = new OkCancelMessageForm(title, message,
+                        GetGifImage(responsibleMessageBoxType),
                         Color.Green, Color.DarkGoldenrod))
                     {
                         okCancelMessageForm.ShowDialog();
                         return okCancelMessageForm.DialogResult;
                     }
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(messageBoxButtons), messageBoxButtons, null);
+                    throw new ArgumentOutOfRangeException(nameof(responsibleMessageBoxButtons),
+                        responsibleMessageBoxButtons, null);
             }
         }
-        
-        internal static Bitmap GetGifImage(MessageBoxType messageBoxType)
+
+        internal static Bitmap GetGifImage(ResponsibleMessageBoxType messageBoxType)
         {
             try
             {
                 switch (messageBoxType)
                 {
-                    case MessageBoxType.Success:
+                    case ResponsibleMessageBoxType.Success:
                         return Resources.tick;
-                    case MessageBoxType.Error:
+                    case ResponsibleMessageBoxType.Error:
                         return Resources.cross;
-                    case MessageBoxType.Warning:
+                    case ResponsibleMessageBoxType.Warning:
                         return Resources.warning;
-                    case MessageBoxType.Question:
+                    case ResponsibleMessageBoxType.Question:
                         return Resources.question;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(messageBoxType), messageBoxType, null);
@@ -56,13 +64,13 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             {
                 switch (messageBoxType)
                 {
-                    case MessageBoxType.Success:
+                    case ResponsibleMessageBoxType.Success:
                         return SystemIcons.Information.ToBitmap();
-                    case MessageBoxType.Error:
+                    case ResponsibleMessageBoxType.Error:
                         return SystemIcons.Error.ToBitmap();
-                    case MessageBoxType.Warning:
+                    case ResponsibleMessageBoxType.Warning:
                         return SystemIcons.Exclamation.ToBitmap();
-                    case MessageBoxType.Question:
+                    case ResponsibleMessageBoxType.Question:
                         return SystemIcons.Question.ToBitmap();
                     default:
                         throw new ArgumentOutOfRangeException(nameof(messageBoxType), messageBoxType, null);
@@ -70,15 +78,15 @@ namespace Responsible.Handler.Winforms.CustomDialogs
             }
         }
 
-        internal static Color GetOkButtonColour(MessageBoxType messageBoxType)
+        internal static Color GetOkButtonColour(ResponsibleMessageBoxType messageBoxType)
         {
             switch (messageBoxType)
             {
-                case MessageBoxType.Success:
+                case ResponsibleMessageBoxType.Success:
                     return Color.Green;
-                case MessageBoxType.Error:
+                case ResponsibleMessageBoxType.Error:
                     return Color.Red;
-                case MessageBoxType.Warning:
+                case ResponsibleMessageBoxType.Warning:
                     return Color.SaddleBrown;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(messageBoxType), messageBoxType, null);

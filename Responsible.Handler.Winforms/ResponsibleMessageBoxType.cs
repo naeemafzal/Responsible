@@ -3,7 +3,7 @@
     /// <summary>
     /// Message Box Type
     /// </summary>
-    public enum MessageBoxType
+    public enum ResponsibleMessageBoxType
     {
         /// <summary>
         /// Defines a Success Message
