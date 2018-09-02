@@ -9,7 +9,7 @@ namespace Responsible.Handler.Winforms
     /// <summary>
     /// Handles Messages
     /// </summary>
-    public class ResponsibleMessage
+    public class ResponsibleMessages
     {
         /// <summary>
         /// Handles displaying relevent messages to the user from the inputs
@@ -43,13 +43,13 @@ namespace Responsible.Handler.Winforms
         /// <param name="showSuccessMessage">Defines if the <see cref="IResponse.Success"/> is true then show a success message</param>
         /// <param name="ignoreResponseMessage">If <see cref="IResponse.Success"/> is true and ignoreResponseMessage is also true then messages from response are ignored</param>
         /// <param name="successMessage">If <see cref="IResponse.Success"/> and ignoreResponseMessage are true then successMessage is used in <see cref="MessageBox"/> message</param>
-        public static void HandleResponse(string operationTitle, IResponse response, bool showSuccessMessage = false,
+        public static bool HandleResponse(string operationTitle, IResponse response, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
             if (response == null)
             {
                 SimpleMessageBox.DisplayMessage(operationTitle, "Provided response is null.", ResponsibleMessageBoxType.Error);
-                return;
+                return false;
             }
 
             if (string.IsNullOrWhiteSpace(operationTitle))
@@ -73,12 +73,12 @@ namespace Responsible.Handler.Winforms
                 }
 
                 SimpleMessageBox.DisplayMessage(operationTitle, message, ResponsibleMessageBoxType.Error);
-                return;
+                return response.Success;
             }
 
             if (!showSuccessMessage)
             {
-                return;
+                return response.Success;
             }
 
             if (ignoreResponseMessage)
@@ -87,6 +87,7 @@ namespace Responsible.Handler.Winforms
             }
 
             SimpleMessageBox.DisplayMessage(operationTitle, message, ResponsibleMessageBoxType.Success);
+            return response.Success;
         }
     }
 }
