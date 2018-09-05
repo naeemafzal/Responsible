@@ -85,6 +85,13 @@ namespace Responsible.Handler.Winforms
             {
                 message = successMessage;
             }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(message))
+                {
+                    message = successMessage;
+                }
+            }         
 
             SimpleMessageBox.DisplayMessage(operationTitle, message, ResponsibleMessageBoxType.Success);
             return response.Success;

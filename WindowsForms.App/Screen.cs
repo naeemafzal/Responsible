@@ -32,8 +32,9 @@ namespace WindowsForms.App
                 Firstname = FirstnameTextBox.Text,
                 Lastname = LastnameTextBox.Text
             };
+
             var addResponse = CustomerLogic.Add(customerToAdd);
-            ResponsibleMessages.HandleResponse("Adding Customer", addResponse, true);
+            ResponsibleMessages.HandleResponse("Adding Customer", addResponse, true, false, "Customer Added!!");
             if (addResponse.Success)
             {
                 SearchCustomers();
