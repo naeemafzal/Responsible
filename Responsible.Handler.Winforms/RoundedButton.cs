@@ -2,7 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace Responsible.Handler.Winforms.CustomDialogs
+namespace Responsible.Handler.Winforms
 {
     internal class RoundedButton : Button
     {
@@ -21,7 +21,6 @@ namespace Responsible.Handler.Winforms.CustomDialogs
                 e.Graphics.DrawPath(pen, graphPath);
             }
         }
-
 
         GraphicsPath GetRoundPath(RectangleF rect, int radius)
         {

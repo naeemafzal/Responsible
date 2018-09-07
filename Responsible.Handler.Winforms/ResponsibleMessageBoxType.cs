@@ -23,6 +23,11 @@
         /// <summary>
         /// Defines a Question Message
         /// </summary>
-        Question = 4
+        Question = 4,
+
+        /// <summary>
+        /// Defines a Info Message
+        /// </summary>
+        Info = 5
     }
 }

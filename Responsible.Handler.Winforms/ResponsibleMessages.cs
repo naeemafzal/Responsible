@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Responsible.Core;
-using Responsible.Handler.Winforms.CustomDialogs;
 
 namespace Responsible.Handler.Winforms
 {
@@ -18,7 +18,8 @@ namespace Responsible.Handler.Winforms
         /// <param name="message">The message text</param>
         /// <param name="responsibleMessageBoxType">The type of message box</param>
         /// <param name="responsibleMessageBoxButtons"></param>
-        public static DialogResult ShowMessage(string operationTitle, string message, ResponsibleMessageBoxType responsibleMessageBoxType,
+        public static DialogResult ShowMessage(string operationTitle, string message,
+            ResponsibleMessageBoxType responsibleMessageBoxType,
             ResponsibleMessageBoxButtons responsibleMessageBoxButtons)
         {
             if (string.IsNullOrWhiteSpace(operationTitle))
@@ -31,7 +32,33 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return SimpleMessageBox.DisplayCustomMessage(operationTitle, message, responsibleMessageBoxType, responsibleMessageBoxButtons);
+            return SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, message, responsibleMessageBoxType,
+                responsibleMessageBoxButtons);
+        }
+
+        /// <summary>
+        /// Handles displaying relevent messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="messages">The message list</param>
+        /// <param name="responsibleMessageBoxType">The type of message box</param>
+        /// <param name="responsibleMessageBoxButtons"></param>
+        public static DialogResult ShowMessage(string operationTitle, List<string> messages,
+            ResponsibleMessageBoxType responsibleMessageBoxType,
+            ResponsibleMessageBoxButtons responsibleMessageBoxButtons)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            if (messages == null)
+            {
+                messages = new List<string>();
+            }
+
+            return SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, SingleMessage(messages),
+                responsibleMessageBoxType, responsibleMessageBoxButtons);
         }
 
         /// <summary>
@@ -48,7 +75,8 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                SimpleMessageBox.DisplayMessage(operationTitle, "Provided response is null.", ResponsibleMessageBoxType.Error);
+                SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, "Provided response is null.",
+                    ResponsibleMessageBoxType.Error, ResponsibleMessageBoxButtons.Ok);
                 return false;
             }
 
@@ -60,9 +88,7 @@ namespace Responsible.Handler.Winforms
             var message = string.Empty;
             if (response.Messages != null && response.Messages.Any())
             {
-                message = response.Messages.Count() == 1
-                    ? response.SingleMessage
-                    : string.Join($"{Environment.NewLine}", response.Messages.Select(x => $"\u2022 {x}"));
+                message = SingleMessage(response.Messages.ToList());
             }
 
             if (!response.Success)
@@ -72,7 +98,8 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                SimpleMessageBox.DisplayMessage(operationTitle, message, ResponsibleMessageBoxType.Error);
+                SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, message,
+                    ResponsibleMessageBoxType.Error, ResponsibleMessageBoxButtons.Ok);
                 return response.Success;
             }
 
@@ -93,8 +120,21 @@ namespace Responsible.Handler.Winforms
                 }
             }         
 
-            SimpleMessageBox.DisplayMessage(operationTitle, message, ResponsibleMessageBoxType.Success);
+            SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, message, ResponsibleMessageBoxType.Success,
+                ResponsibleMessageBoxButtons.Ok);
             return response.Success;
+        }
+
+        private static string SingleMessage(List<string> messages)
+        {
+            if (messages == null || !messages.Any())
+            {
+                return string.Empty;
+            }
+
+            return messages.Count == 1
+                ? messages[0]
+                : string.Join($"{Environment.NewLine}", messages.Select(x => $"\u2022 {x}"));
         }
     }
 }

@@ -13,6 +13,26 @@
         /// <summary>
         /// OkCancel buttons
         /// </summary>
-        OkCancel = 2
+        OkCancel = 2,
+
+        /// <summary>
+        /// AbortRetryIgnore buttons
+        /// </summary>
+        AbortRetryIgnore = 3,
+
+        /// <summary>
+        /// YesNoCancel buttons
+        /// </summary>
+        YesNoCancel = 4,
+
+        /// <summary>
+        /// YesNo buttons
+        /// </summary>
+        YesNo = 5,
+
+        /// <summary>
+        /// RetryCancel buttons
+        /// </summary>
+        RetryCancel = 6
     }
 }
