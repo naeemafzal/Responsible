@@ -9,7 +9,7 @@ namespace Responsible.Handler.Winforms
     /// <summary>
     /// Handles Messages
     /// </summary>
-    public class ResponsibleMessages
+    public class SweetAlerts
     {
         /// <summary>
         /// Handles displaying relevent messages to the user from the inputs
@@ -18,7 +18,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="message">The message text</param>
         /// <param name="responsibleMessageBoxType">The type of message box</param>
         /// <param name="responsibleMessageBoxButtons"></param>
-        public static DialogResult ShowMessage(string operationTitle, string message,
+        public static DialogResult Alert(string operationTitle, string message,
             ResponsibleMessageBoxType responsibleMessageBoxType,
             ResponsibleMessageBoxButtons responsibleMessageBoxButtons)
         {
@@ -43,7 +43,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="messages">The message list</param>
         /// <param name="responsibleMessageBoxType">The type of message box</param>
         /// <param name="responsibleMessageBoxButtons"></param>
-        public static DialogResult ShowMessage(string operationTitle, List<string> messages,
+        public static DialogResult Alert(string operationTitle, List<string> messages,
             ResponsibleMessageBoxType responsibleMessageBoxType,
             ResponsibleMessageBoxButtons responsibleMessageBoxButtons)
         {
@@ -70,7 +70,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="showSuccessMessage">Defines if the <see cref="IResponse.Success"/> is true then show a success message</param>
         /// <param name="ignoreResponseMessage">If <see cref="IResponse.Success"/> is true and ignoreResponseMessage is also true then messages from response are ignored</param>
         /// <param name="successMessage">If <see cref="IResponse.Success"/> and ignoreResponseMessage are true then successMessage is used in <see cref="MessageBox"/> message</param>
-        public static bool HandleResponse(string operationTitle, IResponse response, bool showSuccessMessage = false,
+        public static bool AlertResponse(string operationTitle, IResponse response, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
             if (response == null)
