@@ -16,11 +16,10 @@ namespace Responsible.Handler.Winforms
         /// </summary>
         /// <param name="operationTitle">The title of the message box</param>
         /// <param name="message">The message text</param>
-        /// <param name="responsibleMessageBoxType">The type of message box</param>
-        /// <param name="responsibleMessageBoxButtons"></param>
-        public static DialogResult Alert(string operationTitle, string message,
-            ResponsibleMessageBoxType responsibleMessageBoxType,
-            ResponsibleMessageBoxButtons responsibleMessageBoxButtons)
+        /// <param name="alertButtons"></param>
+        /// <param name="alertType">The type of message box</param>
+        public static DialogResult Alert(string operationTitle, string message, AlertButtons alertButtons,
+            AlertType alertType)
         {
             if (string.IsNullOrWhiteSpace(operationTitle))
             {
@@ -32,8 +31,8 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, message, responsibleMessageBoxType,
-                responsibleMessageBoxButtons);
+            return AlertDisplayHandler.Alert(operationTitle, message, alertType,
+                alertButtons);
         }
 
         /// <summary>
@@ -41,11 +40,10 @@ namespace Responsible.Handler.Winforms
         /// </summary>
         /// <param name="operationTitle">The title of the message box</param>
         /// <param name="messages">The message list</param>
-        /// <param name="responsibleMessageBoxType">The type of message box</param>
-        /// <param name="responsibleMessageBoxButtons"></param>
-        public static DialogResult Alert(string operationTitle, List<string> messages,
-            ResponsibleMessageBoxType responsibleMessageBoxType,
-            ResponsibleMessageBoxButtons responsibleMessageBoxButtons)
+        /// <param name="alertButtons"></param>
+        /// <param name="alertType">The type of message box</param>
+        public static DialogResult Alert(string operationTitle, List<string> messages, AlertButtons alertButtons,
+            AlertType alertType)
         {
             if (string.IsNullOrWhiteSpace(operationTitle))
             {
@@ -57,8 +55,8 @@ namespace Responsible.Handler.Winforms
                 messages = new List<string>();
             }
 
-            return SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, SingleMessage(messages),
-                responsibleMessageBoxType, responsibleMessageBoxButtons);
+            return AlertDisplayHandler.Alert(operationTitle, SingleMessage(messages),
+                alertType, alertButtons);
         }
 
         /// <summary>
@@ -75,8 +73,8 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, "Provided response is null.",
-                    ResponsibleMessageBoxType.Error, ResponsibleMessageBoxButtons.Ok);
+                AlertDisplayHandler.Alert(operationTitle, "Provided response is null.",
+                    AlertType.Error, AlertButtons.Ok);
                 return false;
             }
 
@@ -98,8 +96,8 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, message,
-                    ResponsibleMessageBoxType.Error, ResponsibleMessageBoxButtons.Ok);
+                AlertDisplayHandler.Alert(operationTitle, message,
+                    AlertType.Error, AlertButtons.Ok);
                 return response.Success;
             }
 
@@ -118,10 +116,10 @@ namespace Responsible.Handler.Winforms
                 {
                     message = successMessage;
                 }
-            }         
+            }
 
-            SimpleResponsibleMessageBox.DisplayCustomMessage(operationTitle, message, ResponsibleMessageBoxType.Success,
-                ResponsibleMessageBoxButtons.Ok);
+            AlertDisplayHandler.Alert(operationTitle, message, AlertType.Success,
+                AlertButtons.Ok);
             return response.Success;
         }
 

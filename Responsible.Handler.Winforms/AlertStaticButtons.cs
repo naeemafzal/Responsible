@@ -3,58 +3,58 @@ using System.Windows.Forms;
 
 namespace Responsible.Handler.Winforms
 {
-    internal class ResponsibleButtons
+    internal class AlertStaticButtons
     {
-        internal static ResponsibleButtonViewModel OkButton(Color penColour) => new ResponsibleButtonViewModel
+        internal static AlertButtonViewModel OkButton(Color penColour) => new AlertButtonViewModel
         {
             DialogResult = DialogResult.OK,
             Title = "OK",
             PenColour = penColour
         };
 
-        internal static ResponsibleButtonViewModel OkButton() => new ResponsibleButtonViewModel
+        internal static AlertButtonViewModel OkButton() => new AlertButtonViewModel
         {
             DialogResult = DialogResult.OK,
             Title = "OK",
             PenColour = Color.Green
         };
 
-        internal static ResponsibleButtonViewModel CancelButton() => new ResponsibleButtonViewModel
+        internal static AlertButtonViewModel CancelButton() => new AlertButtonViewModel
         {
             DialogResult = DialogResult.Cancel,
             Title = "Cancel",
             PenColour = Color.Yellow
         };
 
-        internal static ResponsibleButtonViewModel AbortButton() => new ResponsibleButtonViewModel
+        internal static AlertButtonViewModel AbortButton() => new AlertButtonViewModel
         {
             DialogResult = DialogResult.Abort,
             Title = "Abort",
             PenColour = Color.Red
         };
 
-        internal static ResponsibleButtonViewModel RetryButton() => new ResponsibleButtonViewModel
+        internal static AlertButtonViewModel RetryButton() => new AlertButtonViewModel
         {
             DialogResult = DialogResult.Retry,
             Title = "Retry",
             PenColour = Color.DarkGoldenrod
         };
 
-        internal static ResponsibleButtonViewModel IgnoreButton() => new ResponsibleButtonViewModel
+        internal static AlertButtonViewModel IgnoreButton() => new AlertButtonViewModel
         {
             DialogResult = DialogResult.Ignore,
             Title = "Ignore",
             PenColour = Color.Yellow
         };
 
-        internal static ResponsibleButtonViewModel YesButton() => new ResponsibleButtonViewModel
+        internal static AlertButtonViewModel YesButton() => new AlertButtonViewModel
         {
             DialogResult = DialogResult.Yes,
             Title = "Yes",
             PenColour = Color.Green
         };
 
-        internal static ResponsibleButtonViewModel NoButton() => new ResponsibleButtonViewModel
+        internal static AlertButtonViewModel NoButton() => new AlertButtonViewModel
         {
             DialogResult = DialogResult.No,
             Title = "No",

@@ -3,7 +3,7 @@
     /// <summary>
     /// Buttons to display in the message box
     /// </summary>
-    public enum ResponsibleMessageBoxButtons
+    public enum AlertButtons
     {
         /// <summary>
         /// Ok Button

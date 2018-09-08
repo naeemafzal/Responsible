@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Responsible.Handler.Winforms
 {
-    internal class ResponsibleMessageForm : Form
+    internal class AlertForm : Form
     {
-        public ResponsibleMessageForm()
+        public AlertForm()
         {
             InitializeComponent();
         }
 
-        internal ResponsibleMessageForm SetDetail(string title, string message, Bitmap gifImage, List<ResponsibleButtonViewModel> buttons)
+        internal AlertForm SetDetail(string title, string message, Bitmap gifImage, List<AlertButtonViewModel> buttons)
         {
             _title = title;
             _message = message;
@@ -24,7 +22,7 @@ namespace Responsible.Handler.Winforms
             return this;
         }
 
-        private void AddButtons(List<ResponsibleButtonViewModel> buttons)
+        private void AddButtons(List<AlertButtonViewModel> buttons)
         {
             TableLayoutPanel.ColumnStyles.Clear();
             TableLayoutPanel.ColumnCount = buttons.Count;
@@ -289,7 +287,7 @@ namespace Responsible.Handler.Winforms
             {
                 _messageTextBox.ScrollBars = textBoxRect.Height > _messageTextBox.Height ? ScrollBars.Vertical : ScrollBars.None;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 //ignored
             }
@@ -297,7 +295,7 @@ namespace Responsible.Handler.Winforms
 
         private async void AnimateAsync()
         {
-            await Task.Run(() => Task.Delay(System.TimeSpan.FromSeconds(0.5)));
+            await Task.Run(() => Task.Delay(TimeSpan.FromSeconds(0.5)));
             await Task.Run(async () => await SetGifAsync());
         }
 

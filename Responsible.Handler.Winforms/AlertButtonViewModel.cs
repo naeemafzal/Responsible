@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Responsible.Handler.Winforms
 {
-    internal class ResponsibleButtonViewModel
+    internal class AlertButtonViewModel
     {
         public string Title { get; set; }
         public Color PenColour { get; set; }
