@@ -21,7 +21,7 @@ namespace WindowsForms.App
         private void SearchCustomers()
         {
             var filterResponse = CustomerLogic.Filter(SearchTextBox.Text);
-            ResponsibleMessages.HandleResponse("Loading Customers", filterResponse);
+            SweetAlerts.AlertResponse("Loading Customers", filterResponse);
             CustomersDataGridView.DataSource = filterResponse.Value;
         }
 
@@ -34,7 +34,7 @@ namespace WindowsForms.App
             };
 
             var addResponse = CustomerLogic.Add(customerToAdd);
-            ResponsibleMessages.HandleResponse("Adding Customer", addResponse, true, false, "Customer Added!!");
+            SweetAlerts.AlertResponse("Adding Customer", addResponse, true, false, "Customer Added!!");
             if (addResponse.Success)
             {
                 SearchCustomers();
