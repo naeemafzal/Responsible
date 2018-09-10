@@ -4,7 +4,7 @@
     <TargetFrameworks>net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Naeem Afzal</Authors>
-    <Version>1.2.3</Version>
+    <Version>1.2.4</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>A Handy package for warapping EntityFrameWork in UnitOfWork.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
@@ -24,6 +24,6 @@
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.1.3" />
-    <PackageReference Include="Responsible.Core" Version="3.0.8" />
+    <PackageReference Include="Responsible.Core" Version="3.0.9" />
   </ItemGroup>
 </Project>

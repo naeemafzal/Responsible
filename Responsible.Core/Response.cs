@@ -8,6 +8,7 @@ namespace Responsible.Core
     {
         public ResponseStatus Status { get; internal set; }
         public bool Success => (int)Status >= 200 && (int)Status <= 299;
+        public bool Cancelled { get; internal set; }
         public IEnumerable<string> Messages { get; internal set; }
         public Exception Exception { get; internal set; }
         public bool HasException => Exception != null;

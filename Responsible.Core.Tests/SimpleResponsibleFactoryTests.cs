@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Responsible.Core.Tests
@@ -44,6 +45,16 @@ namespace Responsible.Core.Tests
 
             Assert.IsFalse(errorResponse.Success);
             Assert.AreEqual(ResponseStatus.NotFound, errorResponse.Status);
+        }
+
+        [TestMethod]
+        public void Response_Operation_Cancelled()
+        {
+            var cancelledResponse = ResponseFactory.Exception(new OperationCanceledException("Operation has been cancelled"));
+
+            Assert.IsFalse(cancelledResponse.Success);
+            Assert.IsTrue(cancelledResponse.Cancelled);
+            Assert.AreEqual(ResponseStatus.BadRequest, cancelledResponse.Status);
         }
     }
 }

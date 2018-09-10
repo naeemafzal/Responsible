@@ -15,6 +15,11 @@ namespace Responsible.Core
         bool Success { get; }
 
         /// <summary>
+        ///     <para>Defines if an operation is cancelled.</para>
+        /// </summary>
+        bool Cancelled { get; }
+
+        /// <summary>
         ///     <para>Resolves to the status of an operation's success.</para>
         ///     <para>Status is handy for Web response Handling.</para>
         /// </summary>

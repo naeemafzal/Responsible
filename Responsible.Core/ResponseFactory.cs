@@ -185,6 +185,12 @@ namespace Responsible.Core
                 result.Messages = exception.GetExceptionMessages();
             }
 
+            if (exception is OperationCanceledException)
+            {
+                result.Cancelled = true;
+                result.Status = ResponseStatus.BadRequest;
+            }
+
             return result;
         }
 
@@ -195,12 +201,20 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse Exception(Exception exception, string message)
         {
-            return new Response
+            var result = new Response
             {
                 Status = ResponseStatus.InternalServerError,
                 Exception = exception,
                 Messages = new List<string> { message }
             };
+
+            if (exception is OperationCanceledException)
+            {
+                result.Cancelled = true;
+                result.Status = ResponseStatus.BadRequest;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -210,12 +224,20 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse Exception(Exception exception, List<string> messages)
         {
-            return new Response
+            var result = new Response
             {
                 Status = ResponseStatus.InternalServerError,
                 Exception = exception,
                 Messages = messages ?? new List<string>()
             };
+
+            if (exception is OperationCanceledException)
+            {
+                result.Cancelled = true;
+                result.Status = ResponseStatus.BadRequest;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -269,7 +291,8 @@ namespace Responsible.Core
             {
                 Exception = response.Exception,
                 Messages = response.Messages == null || !response.Messages.Any() ? new List<string>() : response.Messages.ToList(),
-                Status = response.Status
+                Status = response.Status,
+                Cancelled = response.Cancelled
             };
         }
     }
@@ -340,7 +363,7 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse<T> Error()
         {
-            var result =  new Response<T>
+            var result = new Response<T>
             {
                 Status = ResponseStatus.InternalServerError,
                 Messages = new List<string> { "An error has occured" },
@@ -505,6 +528,12 @@ namespace Responsible.Core
                 result.Messages = exception.GetExceptionMessages();
             }
 
+            if (exception is OperationCanceledException)
+            {
+                result.Cancelled = true;
+                result.Status = ResponseStatus.BadRequest;
+            }
+
             //Initialise constructor for IEnumerable items etc List, Dictionary
             result.Value = TrySettingDefaultForIEnumerable(result.Value);
 
@@ -524,6 +553,12 @@ namespace Responsible.Core
                 Messages = new List<string> { message }
             };
 
+            if (exception is OperationCanceledException)
+            {
+                result.Cancelled = true;
+                result.Status = ResponseStatus.BadRequest;
+            }
+
             //Initialise constructor for IEnumerable items etc List, Dictionary
             result.Value = TrySettingDefaultForIEnumerable(result.Value);
 
@@ -542,6 +577,12 @@ namespace Responsible.Core
                 Exception = exception,
                 Messages = messages ?? new List<string>()
             };
+
+            if (exception is OperationCanceledException)
+            {
+                result.Cancelled = true;
+                result.Status = ResponseStatus.BadRequest;
+            }
 
             //Initialise constructor for IEnumerable items etc List, Dictionary
             result.Value = TrySettingDefaultForIEnumerable(result.Value);
@@ -621,13 +662,14 @@ namespace Responsible.Core
             {
                 Exception = response.Exception,
                 Messages = response.Messages == null || !response.Messages.Any() ? new List<string>() : response.Messages.ToList(),
-                Status = response.Status
+                Status = response.Status,
+                Cancelled = response.Cancelled
             };
 
-            var typeTestConversionObject = response as Response<T>;
-            if (typeTestConversionObject != null)
+            var sameTypeConversion = response as Response<T>;
+            if (sameTypeConversion != null)
             {
-                result.Value = typeTestConversionObject.Value;
+                result.Value = sameTypeConversion.Value;
             }
 
             //Initialise constructor for IEnumerable items etc List, Dictionary
@@ -652,7 +694,8 @@ namespace Responsible.Core
                 Exception = response.Exception,
                 Messages = response.Messages == null || !response.Messages.Any() ? new List<string>() : response.Messages.ToList(),
                 Status = response.Status,
-                Value = value
+                Value = value,
+                Cancelled = response.Cancelled
             };
 
             //Initialise constructor for IEnumerable items etc List, Dictionary
@@ -669,7 +712,7 @@ namespace Responsible.Core
                 {
                     if (typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(typeof(T).GetTypeInfo()))
                     {
-                        return (T) Activator.CreateInstance(typeof(T));
+                        return (T)Activator.CreateInstance(typeof(T));
                     }
                 }
             }
