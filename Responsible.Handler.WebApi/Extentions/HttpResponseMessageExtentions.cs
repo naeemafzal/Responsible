@@ -107,6 +107,11 @@ namespace Responsible.Handler.WebApi.Extentions
             }
             catch (Exception ex)
             {
+                if (ex is OperationCanceledException)
+                {
+                    return ResponseFactory.Exception(ex);
+                }
+
                 return ResponseFactory.Exception(ex,
                     new List<string> { StaticResources.ExecutionFailureMessage, ex.Message });
             }

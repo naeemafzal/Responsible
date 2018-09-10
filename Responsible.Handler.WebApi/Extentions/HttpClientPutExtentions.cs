@@ -24,6 +24,11 @@ namespace Responsible.Handler.WebApi.Extentions
             }
             catch (Exception ex)
             {
+                if (ex is OperationCanceledException)
+                {
+                    return ResponseFactory.Exception(ex);
+                }
+
                 return ResponseFactory.Exception(ex,
                     new List<string> { StaticResources.ExecutionFailureMessage, ex.Message });
             }
@@ -45,6 +50,11 @@ namespace Responsible.Handler.WebApi.Extentions
             }
             catch (Exception ex)
             {
+                if (ex is OperationCanceledException)
+                {
+                    return ResponseFactory.Exception(ex);
+                }
+
                 return ResponseFactory.Exception(ex,
                     new List<string> { StaticResources.ExecutionFailureMessage, ex.Message });
             }
@@ -64,6 +74,11 @@ namespace Responsible.Handler.WebApi.Extentions
             }
             catch (Exception ex)
             {
+                if (ex is OperationCanceledException)
+                {
+                    return ResponseFactory<TOutput>.Exception(ex);
+                }
+
                 return ResponseFactory<TOutput>.Exception(ex,
                     new List<string> { StaticResources.ExecutionFailureMessage, ex.Message });
             }
@@ -85,6 +100,11 @@ namespace Responsible.Handler.WebApi.Extentions
             }
             catch (Exception ex)
             {
+                if (ex is OperationCanceledException)
+                {
+                    return ResponseFactory<TOutput>.Exception(ex);
+                }
+
                 return ResponseFactory<TOutput>.Exception(ex,
                     new List<string> { StaticResources.ExecutionFailureMessage, ex.Message });
             }
