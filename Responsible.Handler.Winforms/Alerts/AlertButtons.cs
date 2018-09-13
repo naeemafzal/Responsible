@@ -1,4 +1,4 @@
-﻿namespace Responsible.Handler.Winforms
+﻿namespace Responsible.Handler.Winforms.Alerts
 {
     /// <summary>
     /// Buttons to display in the message box

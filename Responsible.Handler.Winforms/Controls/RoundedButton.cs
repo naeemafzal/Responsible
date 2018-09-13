@@ -2,7 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace Responsible.Handler.Winforms
+namespace Responsible.Handler.Winforms.Controls
 {
     internal class RoundedButton : Button
     {

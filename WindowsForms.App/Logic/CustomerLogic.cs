@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using WindowsForms.App.Models;
 using Responsible.Core;
 using Responsible.Handler.WebApi;
@@ -13,6 +15,7 @@ namespace WindowsForms.App.Logic
         {
             using (var client = new ResponsibleHttpClient(_webApiAddress))
             {
+                Thread.Sleep(TimeSpan.FromSeconds(3));
                 var customerResponse = client.Get<List<Customer>>($"Customers/Search/{search}");
                 return customerResponse;
             }
@@ -20,6 +23,7 @@ namespace WindowsForms.App.Logic
 
         internal static IResponse<int> Add(Customer customer)
         {
+            Thread.Sleep(TimeSpan.FromSeconds(3));
             using (var client = new ResponsibleHttpClient(_webApiAddress))
             {
                 var addResponse = client.Put<Customer, int>("Customers/Add", customer, MediaFormat.JSon);

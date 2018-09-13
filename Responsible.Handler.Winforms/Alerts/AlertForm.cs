@@ -1,16 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Responsible.Handler.Winforms.Controls;
 
-namespace Responsible.Handler.Winforms
+namespace Responsible.Handler.Winforms.Alerts
 {
     internal class AlertForm : Form
     {
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn
+        (
+            int nLeftRect,     // x-coordinate of upper-left corner
+            int nTopRect,      // y-coordinate of upper-left corner
+            int nRightRect,    // x-coordinate of lower-right corner
+            int nBottomRect,   // y-coordinate of lower-right corner
+            int nWidthEllipse, // height of ellipse
+            int nHeightEllipse // width of ellipse
+        );
+
+        private void SetRounForm()
+        {
+            FormBorderStyle = FormBorderStyle.None;
+            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
+        }
+
         public AlertForm()
         {
             InitializeComponent();
+            SetRounForm();
         }
 
         private readonly System.ComponentModel.IContainer components = null;
@@ -160,8 +180,9 @@ namespace Responsible.Handler.Winforms
             MaximumSize = new Size(540, 360);
             MinimumSize = new Size(540, 360);
             Name = "SweetAlertMessageForm";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Sweet Alert";
+            DoubleBuffered = true;
             Shown += new EventHandler(Form_Shown);
             FormClosing += AlertForm_FormClosing;
             _topPanel.ResumeLayout(false);
@@ -172,7 +193,6 @@ namespace Responsible.Handler.Winforms
             _messagePanel.PerformLayout();
             _bottomPanel.ResumeLayout(false);
             ResumeLayout(false);
-
         }
 
         private PictureBox _pictureBox;

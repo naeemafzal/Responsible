@@ -20,8 +20,7 @@ namespace WindowsForms.App
 
         private void SearchCustomers()
         {
-            var filterResponse = CustomerLogic.Filter(SearchTextBox.Text);
-            SweetAlerts.AlertResponse("Loading Customers", filterResponse);
+            var filterResponse = ResponsibleProcessor.Process("Loading Customers", ()=> CustomerLogic.Filter(SearchTextBox.Text), true);
             CustomersDataGridView.DataSource = filterResponse.Value;
         }
 
@@ -33,8 +32,7 @@ namespace WindowsForms.App
                 Lastname = LastnameTextBox.Text
             };
 
-            var addResponse = CustomerLogic.Add(customerToAdd);
-            SweetAlerts.AlertResponse("Adding Customer", addResponse, true, false, "Customer Added!!");
+            var addResponse = ResponsibleProcessor.Process("Adding Customer", ()=> CustomerLogic.Add(customerToAdd), true, true);
             if (addResponse.Success)
             {
                 SearchCustomers();

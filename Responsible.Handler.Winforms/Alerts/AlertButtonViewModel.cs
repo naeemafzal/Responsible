@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace Responsible.Handler.Winforms
+namespace Responsible.Handler.Winforms.Alerts
 {
     internal class AlertButtonViewModel
     {

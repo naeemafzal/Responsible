@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Responsible.Handler.Winforms.Properties;
 
-namespace Responsible.Handler.Winforms
+namespace Responsible.Handler.Winforms.Alerts
 {
     internal class AlertFormFactory
     {
