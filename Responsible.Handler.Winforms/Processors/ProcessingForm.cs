@@ -191,14 +191,7 @@ namespace Responsible.Handler.Winforms.Processors
                 {
                     if (Retryable)
                     {
-                        var messages = new List<string> { "Could not complete action. Would you like to try again?" };
-                        if (Response.Messages.Any())
-                        {
-                            messages.Add("Error Detail:");
-                            messages.AddRange(Response.Messages);
-                        }
-
-                        var retrySelection = SweetAlerts.Alert(OperationTitle, messages, AlertButtons.RetryCancel, AlertType.Error);
+                        var retrySelection = SweetAlerts.Alert(OperationTitle, Response.Messages.ToList(), AlertButtons.RetryCancel, AlertType.Error);
                         if (retrySelection != DialogResult.Retry) return;
                         continue;
                     }

@@ -87,8 +87,8 @@
     <Reference Include="Responsible.Core, Version=3.0.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Responsible.Core.3.0.9\lib\net45\Responsible.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Responsible.WebApi, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Responsible.WebApi.4.0.2\lib\net45\Responsible.WebApi.dll</HintPath>
+    <Reference Include="Responsible.WebApi, Version=4.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Responsible.WebApi.4.0.3\lib\net45\Responsible.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
