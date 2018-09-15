@@ -174,11 +174,11 @@ namespace Responsible.Handler.Winforms.Processors
             });
         }
 
-        internal ProcessingForm SetDetail(string title, Bitmap gifImage)
+        internal ProcessingForm SetDetail(string title)
         {
             _title = title;
-            _gifImage = gifImage;
-            Icon = Icon.FromHandle(new Bitmap(gifImage).GetHicon());
+            _gifImage = Properties.Resources.rolling;
+            Icon = Icon.FromHandle(new Bitmap(_gifImage).GetHicon());
             return this;
         }
 

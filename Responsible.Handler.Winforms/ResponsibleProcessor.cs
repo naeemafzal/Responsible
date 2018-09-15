@@ -25,7 +25,7 @@ namespace Responsible.Handler.Winforms
         {
             using (var form = new ActionExecutor(operationTitle, retryable,
                 showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(action).SetDetail(operationTitle, Properties.Resources.rolling))
+                successMessage).SetAction(action).SetDetail(operationTitle))
             {
                 form.ShowDialog();
                 return form.Response;
@@ -48,7 +48,7 @@ namespace Responsible.Handler.Winforms
         {
             using (var form = new FuncOutputResponseExecutor(operationTitle, retryable,
                 showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle, Properties.Resources.rolling))
+                successMessage).SetAction(func).SetDetail(operationTitle))
             {
                 form.ShowDialog();
                 return form.Response;
@@ -71,7 +71,7 @@ namespace Responsible.Handler.Winforms
         {
             using (var form = new FuncOutputExecutor<TOutput>(operationTitle, retryable,
                 showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle, Properties.Resources.rolling))
+                successMessage).SetAction(func).SetDetail(operationTitle))
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
@@ -95,7 +95,7 @@ namespace Responsible.Handler.Winforms
         {
             using (var form = new FuncOutputResponseExecutor<TOutput>(operationTitle, retryable,
                 showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle, Properties.Resources.rolling))
+                successMessage).SetAction(func).SetDetail(operationTitle))
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
