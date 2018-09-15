@@ -40,8 +40,8 @@
     <Reference Include="Responsible.Handler.WebApi, Version=4.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Responsible.Handler.WebApi.4.0.3\lib\net45\Responsible.Handler.WebApi.dll</HintPath>
     </Reference>
-    <Reference Include="Responsible.Handler.Winforms, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Responsible.Handler.Winforms.2.0.7\lib\net45\Responsible.Handler.Winforms.dll</HintPath>
+    <Reference Include="Responsible.Handler.Winforms, Version=2.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Responsible.Handler.Winforms.2.0.8\lib\net45\Responsible.Handler.Winforms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
