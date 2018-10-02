@@ -180,7 +180,7 @@ namespace Responsible.Handler.Winforms.Alerts
             MaximumSize = new Size(540, 360);
             MinimumSize = new Size(540, 360);
             Name = "SweetAlertMessageForm";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Sweet Alert";
             DoubleBuffered = true;
             Shown += new EventHandler(Form_Shown);
