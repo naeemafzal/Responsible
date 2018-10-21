@@ -27,4 +27,27 @@ namespace Responsible.Handler.Winforms.Executors
             return await ResponsibleAwaiter.ExecuteActionAsync(Action);
         }
     }
+
+    internal class ActionExecutorTask : ProcessingForm
+    {
+        protected Func<Task> Action { get; private set; }
+        internal ActionExecutorTask() { }
+
+        internal ActionExecutorTask(string operationTitle, bool retryable,
+            bool showSuccessMessage = false, bool ignoreResponseMessage = false,
+            string successMessage = "Processed successfully") :
+            base(operationTitle, retryable, showSuccessMessage, ignoreResponseMessage, successMessage)
+        { }
+
+        internal ActionExecutorTask SetAction(Func<Task> action)
+        {
+            Action = action;
+            return this;
+        }
+
+        protected override async Task<IResponse> ExecuteRequestAsync()
+        {
+            return await ResponsibleAwaiter.ExecuteActionAsync(Action);
+        }
+    }
 }
