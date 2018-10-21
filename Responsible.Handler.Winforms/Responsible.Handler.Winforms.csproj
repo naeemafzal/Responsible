@@ -6,7 +6,7 @@
     <Authors>Naeem Afzal</Authors>
     <Version>2.0.9</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Description>Hanles IResponses and extract message boxes accordingly.</Description>
+    <Description>Handles IResponses and extract message boxes accordingly.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Handler.Winforms</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/Responsible-Icon.ico</PackageIconUrl>
