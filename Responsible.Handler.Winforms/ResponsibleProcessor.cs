@@ -20,7 +20,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse Process(string operationTitle, Action action, bool retryable,
+        public static IResponse Process(string operationTitle, Action action, bool retryable = true,
             bool showSuccessMessage = false, bool ignoreResponseMessage = false,
             string successMessage = "Processed successfully")
         {
@@ -44,7 +44,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
         public static IResponse Process(string operationTitle, Func<IResponse> func,
-            bool retryable, bool showSuccessMessage = false,
+            bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
             using (var form = new FuncOutputResponseExecutor(operationTitle, retryable,
@@ -67,7 +67,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
         public static IResponse<TOutput> Process<TOutput>(string operationTitle, Func<TOutput> func,
-            bool retryable, bool showSuccessMessage = false,
+            bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
             using (var form = new FuncOutputExecutor<TOutput>(operationTitle, retryable,
@@ -91,7 +91,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
         public static IResponse<TOutput> Process<TOutput>(string operationTitle, Func<IResponse<TOutput>> func,
-            bool retryable, bool showSuccessMessage = false,
+            bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
             using (var form = new FuncOutputResponseExecutor<TOutput>(operationTitle, retryable,
@@ -118,7 +118,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse ProcessAsync(string operationTitle, Func<Task> action, bool retryable,
+        public static IResponse ProcessAsync(string operationTitle, Func<Task> action, bool retryable = true,
             bool showSuccessMessage = false, bool ignoreResponseMessage = false,
             string successMessage = "Processed successfully")
         {
@@ -142,7 +142,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
         public static IResponse ProcessAsync(string operationTitle, Func<Task<IResponse>> func,
-            bool retryable, bool showSuccessMessage = false,
+            bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
             using (var form = new FuncOutputResponseExecutorTask(operationTitle, retryable,
@@ -165,7 +165,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
         public static IResponse<TOutput> ProcessAsync<TOutput>(string operationTitle, Func<Task<TOutput>> func,
-            bool retryable, bool showSuccessMessage = false,
+            bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
             using (var form = new FuncOutputExecutorTask<TOutput>(operationTitle, retryable,
@@ -189,7 +189,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
         public static IResponse<TOutput> ProcessAsync<TOutput>(string operationTitle, Func<Task<IResponse<TOutput>>> func,
-            bool retryable, bool showSuccessMessage = false,
+            bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
             using (var form = new FuncOutputResponseExecutorTask<TOutput>(operationTitle, retryable,
