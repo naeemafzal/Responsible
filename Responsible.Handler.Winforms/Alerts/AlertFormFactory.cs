@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
 using Responsible.Handler.Winforms.Properties;
 
 namespace Responsible.Handler.Winforms.Alerts
@@ -12,12 +13,12 @@ namespace Responsible.Handler.Winforms.Alerts
             AlertButtons alertButtons)
         {
             var image = GetGifImage(alertType);
-
+            var sound = GetPopupSound(alertType);
             switch (alertButtons)
             {
                 case AlertButtons.Ok:
                     {
-                        return new AlertForm().SetDetail(title, message, image,
+                        return new AlertForm().SetDetail(title, message, image, sound,
                             new List<AlertButtonViewModel>
                             {
                                 AlertStaticButtons.OkButton(GetOkButtonPenColour(alertType))
@@ -25,7 +26,7 @@ namespace Responsible.Handler.Winforms.Alerts
                     }
                 case AlertButtons.OkCancel:
                     {
-                        return new AlertForm().SetDetail(title, message, image,
+                        return new AlertForm().SetDetail(title, message, image, sound,
                             new List<AlertButtonViewModel>
                             {
                             AlertStaticButtons.OkButton(),
@@ -34,7 +35,7 @@ namespace Responsible.Handler.Winforms.Alerts
                     }
                 case AlertButtons.AbortRetryIgnore:
                     {
-                        return new AlertForm().SetDetail(title, message, image,
+                        return new AlertForm().SetDetail(title, message, image, sound,
                             new List<AlertButtonViewModel>
                             {
                             AlertStaticButtons.OkButton(),
@@ -44,7 +45,7 @@ namespace Responsible.Handler.Winforms.Alerts
                     }
                 case AlertButtons.YesNoCancel:
                     {
-                        return new AlertForm().SetDetail(title, message, image,
+                        return new AlertForm().SetDetail(title, message, image, sound,
                             new List<AlertButtonViewModel>
                             {
                             AlertStaticButtons.YesButton(),
@@ -54,7 +55,7 @@ namespace Responsible.Handler.Winforms.Alerts
                     }
                 case AlertButtons.YesNo:
                     {
-                        return new AlertForm().SetDetail(title, message, image,
+                        return new AlertForm().SetDetail(title, message, image, sound,
                             new List<AlertButtonViewModel>
                             {
                             AlertStaticButtons.YesButton(),
@@ -63,7 +64,7 @@ namespace Responsible.Handler.Winforms.Alerts
                     }
                 case AlertButtons.RetryCancel:
                     {
-                        return new AlertForm().SetDetail(title, message, image,
+                        return new AlertForm().SetDetail(title, message, image, sound,
                             new List<AlertButtonViewModel>
                             {
                             AlertStaticButtons.RetryButton(),
@@ -112,6 +113,25 @@ namespace Responsible.Handler.Winforms.Alerts
                     default:
                         throw new ArgumentOutOfRangeException(nameof(messageBoxType), messageBoxType, null);
                 }
+            }
+        }
+
+        internal static SystemSound GetPopupSound(AlertType alertType)
+        {
+            switch (alertType)
+            {
+                case AlertType.Success:
+                    return SystemSounds.Asterisk;
+                case AlertType.Error:
+                    return SystemSounds.Hand;
+                case AlertType.Warning:
+                    return SystemSounds.Hand;
+                case AlertType.Question:
+                    return SystemSounds.Question;
+                case AlertType.Info:
+                    return SystemSounds.Asterisk;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(alertType), alertType, null);
             }
         }
 

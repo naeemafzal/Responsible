@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -207,6 +208,7 @@ namespace Responsible.Handler.Winforms.Alerts
 
         private string _title;
         private string _message;
+        private SystemSound _systemSound;
         private Bitmap _gifImage;
         private bool _canCloseAlert;
         #endregion
@@ -218,7 +220,17 @@ namespace Responsible.Handler.Winforms.Alerts
             _titleLabel.Text = _title;
             _messageTextBox.Text = _message;
             SetScrollOnMessageBox();
+            PlaySound();
             AnimateAsync();
+        }
+
+        private void PlaySound()
+        {
+            try
+            {
+                _systemSound.Play();
+            }
+            catch { }
         }
 
         private void AlertForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -263,11 +275,12 @@ namespace Responsible.Handler.Winforms.Alerts
             });
         }
 
-        internal AlertForm SetDetail(string title, string message, Bitmap gifImage, List<AlertButtonViewModel> buttons)
+        internal AlertForm SetDetail(string title, string message, Bitmap gifImage, SystemSound systemSound, List<AlertButtonViewModel> buttons)
         {
             _title = title;
             _message = message;
             _gifImage = gifImage;
+            _systemSound = systemSound;
             AddButtons(buttons);
             Icon = Icon.FromHandle(new Bitmap(gifImage).GetHicon());
             return this;
