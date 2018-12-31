@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Responsible.Uow.EntityFrame
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Responsible.WebApi", "Responsible.WebApi\Responsible.WebApi.csproj", "{36D53AA9-2897-428C-A72E-BAA5B6CF2FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Responsible.DependencyResolver", "Responsible.DependencyResolver\Responsible.DependencyResolver.csproj", "{5AD9CA74-0737-4B92-B38F-252A84498DBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Responsible.DependencyResolver", "Responsible.DependencyResolver\Responsible.DependencyResolver.csproj", "{5AD9CA74-0737-4B92-B38F-252A84498DBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

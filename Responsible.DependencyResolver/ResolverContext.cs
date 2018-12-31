@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Autofac;
 
 namespace Responsible.DependencyResolver
 {
     internal class ResolverContext
     {
-        public bool ExtractAllAssembliesFromExecutionLocation { get; set; }
-        public List<string> RootAssembliesNamesToExtractAssembliesFrom { get; set; } = new List<string>();
+        public List<string> RootAssembliesNames { get; private set; } = new List<string>();
+        public bool ContainerPrepared { get; private set; }
+
         private IContainer _container;
 
         public IContainer Container
         {
             get
             {
-                if (_container != null)
+                if (ContainerPrepared)
                 {
                     return _container;
                 }
@@ -25,12 +27,11 @@ namespace Responsible.DependencyResolver
                 PrepareContainer();
                 return _container;
             }
-            set => _container = value;
         }
 
-        internal void PrepareContainer()
+        private void PrepareContainer()
         {
-            if (_container != null)
+            if (ContainerPrepared)
             {
                 return;
             }
@@ -41,21 +42,22 @@ namespace Responsible.DependencyResolver
                 builder.RegisterAssemblyModules(assembly);
             }
 
-            Container = builder.Build();
+            _container = builder.Build();
+            ContainerPrepared = true;
         }
 
         private IEnumerable<Assembly> GetAssembliesForContainer()
         {
-            if (ExtractAllAssembliesFromExecutionLocation)
+            if (!RootAssembliesNames.Any())
             {
                 var allAssembliesInCurrentDomain = AppDomain.CurrentDomain.GetAssemblies();
 
                 //Filter from given Root assembly names
-                if (RootAssembliesNamesToExtractAssembliesFrom.Any())
+                if (RootAssembliesNames.Any())
                 {
                     var filtered =
                         (from assemblyToSelect in allAssembliesInCurrentDomain
-                         from nameToFilter in RootAssembliesNamesToExtractAssembliesFrom
+                         from nameToFilter in RootAssembliesNames
                          let lowerNameToFilter = nameToFilter.ToLower()
                          let lowerNameAssemblyToSelect = assemblyToSelect.FullName.ToLower()
                          where lowerNameAssemblyToSelect.StartsWith(lowerNameToFilter)
@@ -88,9 +90,42 @@ namespace Responsible.DependencyResolver
             return files.Select(x => Assembly.LoadFrom(x.FullName));
         }
 
+        internal void AssignContainer(IContainer container)
+        {
+            if (ContainerPrepared)
+            {
+                throw new InvalidOperationException("The container is already assigned.");
+            }
+
+            _container = container ??
+                         throw new NullReferenceException("The provided container is null.");
+            ContainerPrepared = true;
+        }
+
+        internal void SetRootAssemblyNames(params string[] values)
+        {
+            if (ContainerPrepared)
+            {
+                throw new InvalidOperationException(
+                    "Unable to set Root Assembly names when Context is alread built.");
+            }
+
+            if (values == null) return;
+            if (!values.Any()) return;
+
+
+            RootAssembliesNames =
+                new List<string>(values.Where(x => !string.IsNullOrWhiteSpace(x)));
+        }
+
+        internal void Initialise()
+        {
+            PrepareContainer();
+        }
+
         internal T Resolve<T>()
         {
-            if (_container == null)
+            if (!ContainerPrepared)
             {
                 PrepareContainer();
             }
@@ -100,7 +135,7 @@ namespace Responsible.DependencyResolver
 
         internal T ResolveNamed<T>(string name)
         {
-            if (_container == null)
+            if (!ContainerPrepared)
             {
                 PrepareContainer();
             }
@@ -110,9 +145,17 @@ namespace Responsible.DependencyResolver
 
         internal void Reset()
         {
+            ContainerPrepared = false;
             _container = null;
-            ExtractAllAssembliesFromExecutionLocation = false;
-            RootAssembliesNamesToExtractAssembliesFrom = new List<string>();
+        }
+
+        internal string GetContextDetail()
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"{nameof(ContainerPrepared)}: {ContainerPrepared}");
+            builder.AppendLine($"{nameof(RootAssembliesNames)}: {string.Join(",", RootAssembliesNames)}");
+
+            return builder.ToString();
         }
     }
 }

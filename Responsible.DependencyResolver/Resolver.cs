@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autofac;
+﻿using Autofac;
 
 namespace Responsible.DependencyResolver
 {
@@ -18,24 +15,20 @@ namespace Responsible.DependencyResolver
         public static IContainer Container => ResolverContext.Container;
 
         /// <summary>
-        /// Set a flag to extract dependencies from domain
-        /// </summary>
-        /// <param name="loadFromDomain"></param>
-        public static void LoadFromDomain(bool loadFromDomain)
-        {
-            ResolverContext.ExtractAllAssembliesFromExecutionLocation = loadFromDomain;
-        }
-
-        /// <summary>
-        /// Set values for Root assemblies. Passing in Microsoft will get all dependencies from Microsoft.*
+        /// Set values for Root assemblies. Passing in Micr will register all <see cref="Module"/> and <see cref="Registrar"/> from Micr*
         /// </summary>
         /// <param name="values"></param>
         public static void SetRootAssemblyNames(params string[] values)
         {
-            if (values == null) return;
-            if (!values.Any()) return;
-            ResolverContext.RootAssembliesNamesToExtractAssembliesFrom =
-                new List<string>(values.Where(x => !string.IsNullOrWhiteSpace(x)));
+            ResolverContext.SetRootAssemblyNames(values);
+        }
+
+        /// <summary>
+        /// Prepares the underlining <see cref="Autofac.IContainer"/> 
+        /// </summary>
+        public static void Initialise()
+        {
+            ResolverContext.Initialise();
         }
 
         /// <summary>
@@ -44,18 +37,14 @@ namespace Responsible.DependencyResolver
         /// <param name="container"></param>
         public static void AssignContainer(IContainer container)
         {
-            if (ResolverContext.Container != null)
-            {
-                throw new InvalidOperationException("The container is already assigned.");
-            }
-
-            ResolverContext.Container = container;
+            ResolverContext.AssignContainer(container);
         }
 
         /// <summary>
         /// Resolve a type
         /// </summary>
         /// <typeparam name="T">Type to resolve</typeparam>
+        /// <exception cref="Autofac.Core.Registration.ComponentNotRegisteredException">Thrown when the requested Component cannot be resolved</exception>
         /// <returns>Resolved Type</returns>
         public static T Resolve<T>()
         {
@@ -67,6 +56,7 @@ namespace Responsible.DependencyResolver
         /// </summary>
         /// <typeparam name="T">Type to resolve</typeparam>
         /// <param name="name">Name used to resolve the type</param>
+        /// <exception cref="Autofac.Core.Registration.ComponentNotRegisteredException">Thrown when the requested Component cannot be resolved</exception>
         /// <returns>Resolved Type</returns>
         public static T ResolveNamed<T>(string name)
         {
@@ -79,6 +69,15 @@ namespace Responsible.DependencyResolver
         public static void Reset()
         {
             ResolverContext.Reset();
+        }
+
+        /// <summary>
+        /// Gets detail of Current Resolver Context
+        /// </summary>
+        /// <returns></returns>
+        public static string GetContextDetail()
+        {
+            return ResolverContext.GetContextDetail();
         }
     }
 }
