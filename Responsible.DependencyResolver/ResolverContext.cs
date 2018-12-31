@@ -48,7 +48,7 @@ namespace Responsible.DependencyResolver
 
         private IEnumerable<Assembly> GetAssembliesForContainer()
         {
-            if (!RootAssembliesNames.Any())
+            if (RootAssembliesNames.Any())
             {
                 var allAssembliesInCurrentDomain = AppDomain.CurrentDomain.GetAssemblies();
 
