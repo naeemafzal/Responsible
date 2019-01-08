@@ -12,7 +12,6 @@ namespace Responsible.Core
         public IEnumerable<string> Messages { get; internal set; } = new List<string>();
         public Exception Exception { get; internal set; }
         public bool HasException => Exception != null;
-        internal bool IsTitleMessageAdded { get; set; }
 
         public string SingleMessage
         {
@@ -23,19 +22,6 @@ namespace Responsible.Core
 
                 return string.Empty;
             }
-        }
-
-        internal void AddTitleMessage(string message)
-        {
-            if (IsTitleMessageAdded)
-            {
-                return;
-            }
-
-            var messages = Messages.ToList();
-            messages.Insert(0, message);
-            Messages = new List<string>(messages);
-            IsTitleMessageAdded = true;
         }
     }
 
