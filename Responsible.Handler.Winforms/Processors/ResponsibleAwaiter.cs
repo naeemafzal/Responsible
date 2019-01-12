@@ -23,7 +23,7 @@ namespace Responsible.Handler.Winforms.Processors
                 return ResponseFactory.Exception(ex);
             }
         }
-        
+
         internal static async Task<IResponse> ExecuteFuncOutputResponseAsync(Func<IResponse> func)
         {
             try
@@ -54,6 +54,11 @@ namespace Responsible.Handler.Winforms.Processors
                 }
 
                 var result = await Task.Run(func);
+                var taskDetail = result as Task;
+                if (taskDetail != null && taskDetail.Status == TaskStatus.Canceled)
+                {
+                    throw new OperationCanceledException();
+                }
 
                 return ResponseFactory<TOutput>.Ok(result);
             }
@@ -81,9 +86,6 @@ namespace Responsible.Handler.Winforms.Processors
                 return ResponseFactory<TOutput>.Exception(ex);
             }
         }
-
-
-
 
         internal static async Task<IResponse> ExecuteActionAsync(Func<Task> action)
         {

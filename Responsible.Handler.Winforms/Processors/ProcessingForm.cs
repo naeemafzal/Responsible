@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Responsible.Core;
 using Responsible.Handler.Winforms.Alerts;
+using Responsible.Handler.Winforms.Controls;
 
 namespace Responsible.Handler.Winforms.Processors
 {
@@ -27,13 +29,15 @@ namespace Responsible.Handler.Winforms.Processors
         internal IResponse Response { get; private set; }
         internal bool CanFormBeClosed { get; private set; }
 
+        private CancellationTokenSource _cancellationTokenSource;
+
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
         (
-            int nLeftRect,     // x-coordinate of upper-left corner
-            int nTopRect,      // y-coordinate of upper-left corner
-            int nRightRect,    // x-coordinate of lower-right corner
-            int nBottomRect,   // y-coordinate of lower-right corner
+            int nLeftRect, // x-coordinate of upper-left corner
+            int nTopRect, // y-coordinate of upper-left corner
+            int nRightRect, // x-coordinate of lower-right corner
+            int nBottomRect, // y-coordinate of lower-right corner
             int nWidthEllipse, // height of ellipse
             int nHeightEllipse // width of ellipse
         );
@@ -182,6 +186,12 @@ namespace Responsible.Handler.Winforms.Processors
             return this;
         }
 
+        internal ProcessingForm SetCancellationTokenSource(CancellationTokenSource cancellationTokenSource)
+        {
+            _cancellationTokenSource = cancellationTokenSource;
+            return this;
+        }
+
         private async Task ExecuteAsync()
         {
             while (true)
@@ -191,13 +201,15 @@ namespace Responsible.Handler.Winforms.Processors
                 {
                     if (Retryable)
                     {
-                        var retrySelection = SweetAlerts.Alert(OperationTitle, Response.Messages.ToList(), AlertButtons.RetryCancel, AlertType.Error);
+                        var retrySelection = SweetAlerts.Alert(OperationTitle, Response.Messages.ToList(),
+                            AlertButtons.RetryCancel, AlertType.Error);
                         if (retrySelection != DialogResult.Retry) return;
                         continue;
                     }
                 }
 
-                SweetAlerts.AlertResponse(OperationTitle, Response, ShowSuccessMessage, IgnoreResponseMessage, SuccessMessage);
+                SweetAlerts.AlertResponse(OperationTitle, Response, ShowSuccessMessage, IgnoreResponseMessage,
+                    SuccessMessage);
                 break;
             }
         }
@@ -210,9 +222,55 @@ namespace Responsible.Handler.Winforms.Processors
 
         private async void WaitingForm_Load(object sender, EventArgs e)
         {
+            AddCancelButton();
             await ExecuteAsync();
             CanFormBeClosed = true;
             Close();
+        }
+
+        private void AddCancelButton()
+        {
+            if (_cancellationTokenSource != null)
+            {
+                var bottomPanel = new Panel
+                {
+                    Size = new Size(540, 83),
+                    Dock = DockStyle.Bottom
+                };
+
+                var tableLayoutPanel = new TableLayoutPanel();
+                tableLayoutPanel.ColumnStyles.Clear();
+                tableLayoutPanel.ColumnCount = 1;
+                tableLayoutPanel.TabIndex = 0;
+                tableLayoutPanel.Dock = DockStyle.Fill;
+                tableLayoutPanel.Name = "TableLayoutPanel";
+                tableLayoutPanel.RowCount = 1;
+                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+                tableLayoutPanel.Location = new Point(0, 0);
+
+                var cancelButton = new RoundedButton
+                {
+                    Anchor = AnchorStyles.None,
+                    MaximumSize = new Size(130, 60),
+                    MinimumSize = new Size(130, 60),
+                    Name = "CancelButton",
+                    Size = new Size(130, 60),
+                    TabIndex = 0,
+                    Text = @"Cancel",
+                    UseVisualStyleBackColor = true,
+                    ButtonPenColour = Color.Gray
+                };
+
+                cancelButton.Click += CancelButton_Click;
+                tableLayoutPanel.Controls.Add(cancelButton, 0, 0);
+                bottomPanel.Controls.Add(tableLayoutPanel);
+                Controls.Add(bottomPanel);
+            }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            _cancellationTokenSource.Cancel();
         }
     }
 }
