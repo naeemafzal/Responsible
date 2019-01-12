@@ -10,6 +10,8 @@ namespace Responsible.Handler.Winforms
     /// </summary>
     public class ResponsibleProcessor
     {
+        #region Standard Executions
+
         /// <summary>
         /// Executes an action
         /// </summary>
@@ -103,13 +105,12 @@ namespace Responsible.Handler.Winforms
             }
         }
 
+        #endregion
 
-
-
-
+        #region Async Executions
 
         /// <summary>
-        /// Executes an action
+        /// Executes an <see cref="Task"/>
         /// </summary>
         /// <param name="operationTitle">The title of the messagbox</param>
         /// <param name="action">The action to execute</param>
@@ -118,7 +119,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse ProcessAsync(string operationTitle, Func<Task> action, bool retryable = true,
+        public static IResponse ProcessTask(string operationTitle, Func<Task> action, bool retryable = true,
             bool showSuccessMessage = false, bool ignoreResponseMessage = false,
             string successMessage = "Processed successfully")
         {
@@ -132,7 +133,7 @@ namespace Responsible.Handler.Winforms
         }
 
         /// <summary>
-        /// Executes a function
+        /// Executes a <see cref="Func{Task}"/> which returns an <see cref="IResponse"/>
         /// </summary>
         /// <param name="operationTitle">The title of the messagbox</param>
         /// <param name="func">The function to execute</param>
@@ -141,7 +142,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse ProcessAsync(string operationTitle, Func<Task<IResponse>> func,
+        public static IResponse ProcessTask(string operationTitle, Func<Task<IResponse>> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
@@ -155,7 +156,7 @@ namespace Responsible.Handler.Winforms
         }
 
         /// <summary>
-        /// Executes a function
+        /// Executes a <see cref="Func{Task}"/> which returns a <see cref="Task{TOutput}"/>
         /// </summary>
         /// <param name="operationTitle">The title of the messagbox</param>
         /// <param name="func">The function to execute</param>
@@ -164,7 +165,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse<TOutput> ProcessAsync<TOutput>(string operationTitle, Func<Task<TOutput>> func,
+        public static IResponse<TOutput> ProcessTask<TOutput>(string operationTitle, Func<Task<TOutput>> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
@@ -179,7 +180,7 @@ namespace Responsible.Handler.Winforms
 
 
         /// <summary>
-        /// Executes a function
+        /// Executes a <see cref="Func{Task}"/> which returns an <see cref="IResponse{TOutput}"/>
         /// </summary>
         /// <param name="operationTitle">The title of the messagbox</param>
         /// <param name="func">The function to execute</param>
@@ -188,7 +189,7 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse<TOutput> ProcessAsync<TOutput>(string operationTitle, Func<Task<IResponse<TOutput>>> func,
+        public static IResponse<TOutput> ProcessTask<TOutput>(string operationTitle, Func<Task<IResponse<TOutput>>> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
@@ -200,5 +201,7 @@ namespace Responsible.Handler.Winforms
                 return form.Response as IResponse<TOutput>;
             }
         }
+
+        #endregion
     }
 }
