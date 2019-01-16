@@ -156,7 +156,7 @@ namespace Responsible.Handler.Winforms.Processors
         /// </summary>
         /// <param name="cancellationTokenSource"><see cref="CancellationTokenSource"/> to cancel</param>
         /// <returns><see cref="Processor"/></returns>
-        public Processor CanCancel(CancellationTokenSource cancellationTokenSource)
+        public Processor CanBeCanceled(CancellationTokenSource cancellationTokenSource)
         {
             CancellationTokenSource = cancellationTokenSource;
             return this;

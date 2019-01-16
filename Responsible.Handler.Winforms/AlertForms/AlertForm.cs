@@ -9,7 +9,6 @@ namespace Responsible.Handler.Winforms.AlertForms
     {
         internal string FormTitle { get; set; }
         internal Bitmap FormImage { get; set; }
-        internal string FormMessageTitle { get; set; }
         internal string FormMessage { get; set; }
         internal bool IsErrorAlert { get; set; }
 
@@ -22,24 +21,14 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         private void AlertForm_Load(object sender, System.EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(FormMessageTitle) || !string.IsNullOrWhiteSpace(FormMessage))
+            if (!string.IsNullOrWhiteSpace(FormMessage))
             {
                 AddMessageBox();
-                if (!string.IsNullOrWhiteSpace(FormMessageTitle))
-                {
-                    //Only add messages title when it is different than the form title
-                    if ((!string.IsNullOrWhiteSpace(FormTitle) ? FormTitle.ToLower() : string.Empty) !=
-                        (!string.IsNullOrWhiteSpace(FormMessageTitle) ? FormMessageTitle.ToLower() : string.Empty))
-                    {
-                        var color = IsErrorAlert ? Color.Red : Color.Green;
-                        AddTextToRichTextBox(FormMessageTitle, new Font("Segoe UI", 18, FontStyle.Bold), color,
-                            HorizontalAlignment.Center);
-                    }
-                }
 
                 if (!string.IsNullOrWhiteSpace(FormMessage))
                 {
-                    AddTextToRichTextBox(FormMessage, new Font("Segoe UI", 12), Color.Black, HorizontalAlignment.Center);
+                    var color = IsErrorAlert ? Color.Red : Color.Black;
+                    AddTextToRichTextBox(FormMessage, new Font("Segoe UI", 15), color, HorizontalAlignment.Center);
                 }
             }
 

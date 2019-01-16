@@ -324,12 +324,12 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         protected void AddMessageBox()
         {
-            AddToHeight(150);
+            AddToHeight(100);
             MessagesPanel = new Panel
             {
-                Name = "TitlePanel",
+                Name = "MessagesPanel",
                 Dock = DockStyle.Top,
-                Size = new Size(140, 150),
+                Size = new Size(140, 100),
                 BackColor = Color.FromArgb(254, 252, 254),
                 BorderStyle = BorderStyle.None
             };

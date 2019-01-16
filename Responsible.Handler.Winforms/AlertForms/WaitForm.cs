@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -22,10 +21,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         internal string FormTitle { get; set; }
         internal Bitmap FormImage { get; set; }
-        internal string FormMessageTitle { get; set; }
-        internal string FormMessage { get; set; }
 
-        internal List<AlertButtonViewModel> FormButtons = new List<AlertButtonViewModel>();
 
         protected WaitForm()
         {

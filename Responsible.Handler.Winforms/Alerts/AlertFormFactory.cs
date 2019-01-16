@@ -24,7 +24,6 @@ namespace Responsible.Handler.Winforms.Alerts
                         {
                             FormTitle = title,
                             FormImage = image,
-                            FormMessageTitle = title,
                             FormMessage = message,
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
@@ -40,7 +39,6 @@ namespace Responsible.Handler.Winforms.Alerts
                         {
                             FormTitle = title,
                             FormImage = image,
-                            FormMessageTitle = title,
                             FormMessage = message,
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
@@ -57,7 +55,6 @@ namespace Responsible.Handler.Winforms.Alerts
                         {
                             FormTitle = title,
                             FormImage = image,
-                            FormMessageTitle = title,
                             FormMessage = message,
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
@@ -75,7 +72,6 @@ namespace Responsible.Handler.Winforms.Alerts
                         {
                             FormTitle = title,
                             FormImage = image,
-                            FormMessageTitle = title,
                             FormMessage = message,
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
@@ -93,7 +89,6 @@ namespace Responsible.Handler.Winforms.Alerts
                         {
                             FormTitle = title,
                             FormImage = image,
-                            FormMessageTitle = title,
                             FormMessage = message,
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
@@ -110,7 +105,6 @@ namespace Responsible.Handler.Winforms.Alerts
                         {
                             FormTitle = title,
                             FormImage = image,
-                            FormMessageTitle = title,
                             FormMessage = message,
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
