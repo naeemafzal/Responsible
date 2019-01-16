@@ -39,14 +39,14 @@ namespace Responsible.Handler.Winforms.AlertForms
             e.Cancel = !CanFormBeClosed;
         }
 
-        private async void AlertForm_Shown(object sender, System.EventArgs e)
+        private async void AlertForm_Shown(object sender, EventArgs e)
         {
             await ExecuteAsync();
             CanFormBeClosed = true;
             Close();
         }
 
-        private void AlertForm_Load(object sender, System.EventArgs e)
+        private void AlertForm_Load(object sender, EventArgs e)
         {
             if (CancellationTokenSource != null)
             {

@@ -6,6 +6,9 @@ using Responsible.Handler.Winforms.Executors;
 
 namespace Responsible.Handler.Winforms.Processors
 {
+    /// <summary>
+    /// Extenstion for <see cref="Processor"/>
+    /// </summary>
     public static class TaskProcessors
     {
         /// <summary>

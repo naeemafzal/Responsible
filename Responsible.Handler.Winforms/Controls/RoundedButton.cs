@@ -14,7 +14,7 @@ namespace Responsible.Handler.Winforms.Controls
             var rect = new RectangleF(0, 0, Width, Height);
             var graphPath = GetRoundPath(rect, 20);
 
-            this.Region = new Region(graphPath);
+            Region = new Region(graphPath);
             using (var pen = new Pen(ButtonPenColour, 1.75f))
             {
                 pen.Alignment = PenAlignment.Inset;

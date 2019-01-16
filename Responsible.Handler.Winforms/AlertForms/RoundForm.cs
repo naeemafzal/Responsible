@@ -102,7 +102,7 @@ namespace Responsible.Handler.Winforms.AlertForms
             base.Dispose(disposing);
         }
 
-        private void RoundForm_Shown(object sender, System.EventArgs e)
+        private void RoundForm_Shown(object sender, EventArgs e)
         {
             PlaySound();
         }

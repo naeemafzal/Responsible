@@ -18,11 +18,6 @@ namespace Responsible.Handler.Winforms.AlertForms
         public AlertForm()
         {
             Load += AlertForm_Load;
-            Shown += AlertForm_Shown;
-        }
-
-        private void AlertForm_Shown(object sender, System.EventArgs e)
-        {
         }
 
         private void AlertForm_Load(object sender, System.EventArgs e)
@@ -32,9 +27,14 @@ namespace Responsible.Handler.Winforms.AlertForms
                 AddMessageBox();
                 if (!string.IsNullOrWhiteSpace(FormMessageTitle))
                 {
-                    var color = IsErrorAlert ? Color.Red : Color.Green;
-                    AddTextToRichTextBox(FormMessageTitle, new Font("Segoe UI", 18, FontStyle.Bold), color,
-                        HorizontalAlignment.Center);
+                    //Only add messages title when it is different than the form title
+                    if ((!string.IsNullOrWhiteSpace(FormTitle) ? FormTitle.ToLower() : string.Empty) !=
+                        (!string.IsNullOrWhiteSpace(FormMessageTitle) ? FormMessageTitle.ToLower() : string.Empty))
+                    {
+                        var color = IsErrorAlert ? Color.Red : Color.Green;
+                        AddTextToRichTextBox(FormMessageTitle, new Font("Segoe UI", 18, FontStyle.Bold), color,
+                            HorizontalAlignment.Center);
+                    }
                 }
 
                 if (!string.IsNullOrWhiteSpace(FormMessage))
