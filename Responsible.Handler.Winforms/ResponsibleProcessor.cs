@@ -23,13 +23,21 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
+        [Obsolete("Please use Processor class", false)]
         public static IResponse Process(string operationTitle, Action action, bool retryable = true,
             bool showSuccessMessage = false, bool ignoreResponseMessage = false,
             string successMessage = "Processed successfully")
         {
-            using (var form = new ActionExecutor(operationTitle, retryable,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(action).SetDetail(operationTitle))
+            using (var form = new ActionExecutor
+            {
+                FormTitle = operationTitle,
+                CanRetry = retryable,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Action = action,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response;
@@ -46,13 +54,21 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
+        [Obsolete("Please use Processor class", false)]
         public static IResponse Process(string operationTitle, Func<IResponse> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputResponseExecutor(operationTitle, retryable,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle))
+            using (var form = new FuncOutputResponseExecutor()
+            {
+                FormTitle = operationTitle,
+                CanRetry = retryable,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response;
@@ -69,13 +85,21 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
+        [Obsolete("Please use Processor class", false)]
         public static IResponse<TOutput> Process<TOutput>(string operationTitle, Func<TOutput> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputExecutor<TOutput>(operationTitle, retryable,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle))
+            using (var form = new FuncOutputExecutor<TOutput>
+            {
+                FormTitle = operationTitle,
+                CanRetry = retryable,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
@@ -93,13 +117,21 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
+        [Obsolete("Please use Processor class", false)]
         public static IResponse<TOutput> Process<TOutput>(string operationTitle, Func<IResponse<TOutput>> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputResponseExecutor<TOutput>(operationTitle, retryable,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle))
+            using (var form = new FuncOutputResponseExecutor<TOutput>
+            {
+                FormTitle = operationTitle,
+                CanRetry = retryable,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
@@ -120,14 +152,22 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
+        [Obsolete("Please use Processor class", false)]
         public static IResponse Process(string operationTitle, Action action, CancellationTokenSource cancellationTokenSource,
             bool showSuccessMessage = false, bool ignoreResponseMessage = false,
             string successMessage = "Processed successfully")
         {
-            using (var form = new ActionExecutor(operationTitle, false,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(action).SetDetail(operationTitle)
-                .SetCancellationTokenSource(cancellationTokenSource))
+            using (var form = new ActionExecutor()
+            {
+                FormTitle = operationTitle,
+                CanRetry = false,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Action = action,
+                CancellationTokenSource = cancellationTokenSource,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response;
@@ -144,14 +184,22 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
+        [Obsolete("Please use Processor class", false)]
         public static IResponse Process(string operationTitle, Func<IResponse> func,
             CancellationTokenSource cancellationTokenSource, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputResponseExecutor(operationTitle, false,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle).
-                SetCancellationTokenSource(cancellationTokenSource))
+            using (var form = new FuncOutputResponseExecutor()
+            {
+                FormTitle = operationTitle,
+                CanRetry = false,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                CancellationTokenSource = cancellationTokenSource,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response;
@@ -168,14 +216,22 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
+        [Obsolete("Please use Processor class", false)]
         public static IResponse<TOutput> Process<TOutput>(string operationTitle, Func<TOutput> func,
             CancellationTokenSource cancellationTokenSource, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputExecutor<TOutput>(operationTitle, false,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle).
-                SetCancellationTokenSource(cancellationTokenSource))
+            using (var form = new FuncOutputExecutor<TOutput>
+            {
+                FormTitle = operationTitle,
+                CanRetry = false,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                CancellationTokenSource = cancellationTokenSource,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
@@ -193,14 +249,22 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
+        [Obsolete("Please use Processor class", false)]
         public static IResponse<TOutput> Process<TOutput>(string operationTitle, Func<IResponse<TOutput>> func,
             CancellationTokenSource cancellationTokenSource, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputResponseExecutor<TOutput>(operationTitle, false,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle).
-                SetCancellationTokenSource(cancellationTokenSource))
+            using (var form = new FuncOutputResponseExecutor<TOutput>
+            {
+                FormTitle = operationTitle,
+                CanRetry = false,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                CancellationTokenSource = cancellationTokenSource,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
@@ -221,13 +285,21 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse ProcessTask(string operationTitle, Func<Task> action, bool retryable = true,
+        [Obsolete("Please use Processor class", false)]
+        public static IResponse ProcessAsync(string operationTitle, Func<Task> action, bool retryable = true,
             bool showSuccessMessage = false, bool ignoreResponseMessage = false,
             string successMessage = "Processed successfully")
         {
-            using (var form = new ActionExecutorTask(operationTitle, retryable,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(action).SetDetail(operationTitle))
+            using (var form = new ActionExecutorTask
+            {
+                FormTitle = operationTitle,
+                CanRetry = retryable,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Action = action,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response;
@@ -244,13 +316,21 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse ProcessTask(string operationTitle, Func<Task<IResponse>> func,
+        [Obsolete("Please use Processor class", false)]
+        public static IResponse ProcessAsync(string operationTitle, Func<Task<IResponse>> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputResponseExecutorTask(operationTitle, retryable,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle))
+            using (var form = new FuncOutputResponseExecutorTask
+            {
+                FormTitle = operationTitle,
+                CanRetry = retryable,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response;
@@ -267,13 +347,21 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse<TOutput> ProcessTask<TOutput>(string operationTitle, Func<Task<TOutput>> func,
+        [Obsolete("Please use Processor class", false)]
+        public static IResponse<TOutput> ProcessAsync<TOutput>(string operationTitle, Func<Task<TOutput>> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputExecutorTask<TOutput>(operationTitle, retryable,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle))
+            using (var form = new FuncOutputExecutorTask<TOutput>
+            {
+                FormTitle = operationTitle,
+                CanRetry = retryable,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
@@ -291,13 +379,21 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse<TOutput> ProcessTask<TOutput>(string operationTitle, Func<Task<IResponse<TOutput>>> func,
+        [Obsolete("Please use Processor class", false)]
+        public static IResponse<TOutput> ProcessAsync<TOutput>(string operationTitle, Func<Task<IResponse<TOutput>>> func,
             bool retryable = true, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputResponseExecutorTask<TOutput>(operationTitle, retryable,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle))
+            using (var form = new FuncOutputResponseExecutorTask<TOutput>
+            {
+                FormTitle = operationTitle,
+                CanRetry = retryable,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
@@ -318,14 +414,22 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse ProcessTask(string operationTitle, Func<Task> action,
+        [Obsolete("Please use Processor class", false)]
+        public static IResponse ProcessAsync(string operationTitle, Func<Task> action,
             CancellationTokenSource cancellationTokenSource, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new ActionExecutorTask(operationTitle, false,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(action).SetDetail(operationTitle).
-                SetCancellationTokenSource(cancellationTokenSource))
+            using (var form = new ActionExecutorTask
+            {
+                FormTitle = operationTitle,
+                CanRetry = false,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Action = action,
+                CancellationTokenSource = cancellationTokenSource,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response;
@@ -342,14 +446,22 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse ProcessTask(string operationTitle, Func<Task<IResponse>> func,
+        [Obsolete("Please use Processor class", false)]
+        public static IResponse ProcessAsync(string operationTitle, Func<Task<IResponse>> func,
             CancellationTokenSource cancellationTokenSource, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputResponseExecutorTask(operationTitle, false,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle).
-                SetCancellationTokenSource(cancellationTokenSource))
+            using (var form = new FuncOutputResponseExecutorTask
+            {
+                FormTitle = operationTitle,
+                CanRetry = false,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                CancellationTokenSource = cancellationTokenSource,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response;
@@ -366,14 +478,22 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse<TOutput> ProcessTask<TOutput>(string operationTitle, Func<Task<TOutput>> func,
+        [Obsolete("Please use Processor class", false)]
+        public static IResponse<TOutput> ProcessAsync<TOutput>(string operationTitle, Func<Task<TOutput>> func,
             CancellationTokenSource cancellationTokenSource, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputExecutorTask<TOutput>(operationTitle, false,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle).
-                SetCancellationTokenSource(cancellationTokenSource))
+            using (var form = new FuncOutputExecutorTask<TOutput>
+            {
+                FormTitle = operationTitle,
+                CanRetry = false,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                CancellationTokenSource = cancellationTokenSource,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;
@@ -391,14 +511,22 @@ namespace Responsible.Handler.Winforms
         /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
         /// <param name="successMessage">The message to show when execution passes</param>
         /// <returns><see cref="IResponse"/></returns>
-        public static IResponse<TOutput> ProcessTask<TOutput>(string operationTitle, Func<Task<IResponse<TOutput>>> func,
+        [Obsolete("Please use Processor class", false)]
+        public static IResponse<TOutput> ProcessAsync<TOutput>(string operationTitle, Func<Task<IResponse<TOutput>>> func,
             CancellationTokenSource cancellationTokenSource, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            using (var form = new FuncOutputResponseExecutorTask<TOutput>(operationTitle, false,
-                showSuccessMessage, ignoreResponseMessage,
-                successMessage).SetAction(func).SetDetail(operationTitle).
-                SetCancellationTokenSource(cancellationTokenSource))
+            using (var form = new FuncOutputResponseExecutorTask<TOutput>
+            {
+                FormTitle = operationTitle,
+                CanRetry = false,
+                ShowSuccessMessage = showSuccessMessage,
+                IgnoreResponseMessage = ignoreResponseMessage,
+                SuccessMessage = successMessage,
+                Func = func,
+                CancellationTokenSource = cancellationTokenSource,
+                FormImage = Properties.Resources.rolling
+            })
             {
                 form.ShowDialog();
                 return form.Response as IResponse<TOutput>;

@@ -4,8 +4,9 @@ using Responsible.Core;
 
 namespace Responsible.Handler.Winforms.Processors
 {
-    internal class ResponsibleAwaiter
+    internal static class ResponsibleAwaiter
     {
+        
         internal static async Task<IResponse> ExecuteActionAsync(Action action)
         {
             try
@@ -24,6 +25,7 @@ namespace Responsible.Handler.Winforms.Processors
             }
         }
 
+        
         internal static async Task<IResponse> ExecuteFuncOutputResponseAsync(Func<IResponse> func)
         {
             try
@@ -43,6 +45,7 @@ namespace Responsible.Handler.Winforms.Processors
             }
         }
 
+        
         internal static async Task<IResponse<TOutput>> ExecuteFuncOutputAsync<TOutput>(
             Func<TOutput> func)
         {
@@ -68,6 +71,7 @@ namespace Responsible.Handler.Winforms.Processors
             }
         }
 
+        
         internal static async Task<IResponse<TOutput>> ExecuteFuncOutputResponseAsync<TOutput>(
             Func<IResponse<TOutput>> func)
         {
@@ -87,6 +91,7 @@ namespace Responsible.Handler.Winforms.Processors
             }
         }
 
+        
         internal static async Task<IResponse> ExecuteActionAsync(Func<Task> action)
         {
             try
@@ -96,7 +101,7 @@ namespace Responsible.Handler.Winforms.Processors
                     return ResponseFactory.Error("The provided action is null", ErrorResponseStatus.BadRequest);
                 }
 
-                await action.Invoke();
+                await Task.Run(action);
                 return ResponseFactory.Ok();
             }
             catch (Exception ex)
@@ -105,6 +110,7 @@ namespace Responsible.Handler.Winforms.Processors
             }
         }
 
+        
         internal static async Task<IResponse> ExecuteFuncOutputResponseAsync(Func<Task<IResponse>> func)
         {
             try
@@ -124,6 +130,7 @@ namespace Responsible.Handler.Winforms.Processors
             }
         }
 
+        
         internal static async Task<IResponse<TOutput>> ExecuteFuncOutputAsync<TOutput>(
             Func<Task<TOutput>> func)
         {
@@ -144,6 +151,7 @@ namespace Responsible.Handler.Winforms.Processors
             }
         }
 
+        
         internal static async Task<IResponse<TOutput>> ExecuteFuncOutputResponseAsync<TOutput>(
             Func<Task<IResponse<TOutput>>> func)
         {

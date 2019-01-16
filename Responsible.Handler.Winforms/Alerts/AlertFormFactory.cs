@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Media;
+using Responsible.Handler.Winforms.AlertForms;
 using Responsible.Handler.Winforms.Properties;
 
 namespace Responsible.Handler.Winforms.Alerts
@@ -14,62 +15,111 @@ namespace Responsible.Handler.Winforms.Alerts
         {
             var image = GetGifImage(alertType);
             var sound = GetPopupSound(alertType);
+            var isErrorAllert = alertType == AlertType.Error;
             switch (alertButtons)
             {
                 case AlertButtons.Ok:
                     {
-                        return new AlertForm().SetDetail(title, message, image, sound,
-                            new List<AlertButtonViewModel>
+                        return new AlertForm
+                        {
+                            FormTitle = title,
+                            FormImage = image,
+                            FormMessageTitle = title,
+                            FormMessage = message,
+                            SystemSound = sound,
+                            IsErrorAlert = isErrorAllert,
+                            FormButtons = new List<AlertButtonViewModel>
                             {
                                 AlertStaticButtons.OkButton(GetOkButtonPenColour(alertType))
-                            });
+                            }
+                        };
                     }
                 case AlertButtons.OkCancel:
                     {
-                        return new AlertForm().SetDetail(title, message, image, sound,
-                            new List<AlertButtonViewModel>
+                        return new AlertForm
+                        {
+                            FormTitle = title,
+                            FormImage = image,
+                            FormMessageTitle = title,
+                            FormMessage = message,
+                            SystemSound = sound,
+                            IsErrorAlert = isErrorAllert,
+                            FormButtons = new List<AlertButtonViewModel>
                             {
-                            AlertStaticButtons.OkButton(),
-                            AlertStaticButtons.CancelButton()
-                            });
+                                AlertStaticButtons.OkButton(),
+                                AlertStaticButtons.CancelButton()
+                            }
+                        };
                     }
                 case AlertButtons.AbortRetryIgnore:
                     {
-                        return new AlertForm().SetDetail(title, message, image, sound,
-                            new List<AlertButtonViewModel>
+                        return new AlertForm
+                        {
+                            FormTitle = title,
+                            FormImage = image,
+                            FormMessageTitle = title,
+                            FormMessage = message,
+                            SystemSound = sound,
+                            IsErrorAlert = isErrorAllert,
+                            FormButtons = new List<AlertButtonViewModel>
                             {
-                            AlertStaticButtons.OkButton(),
-                            AlertStaticButtons.RetryButton(),
-                            AlertStaticButtons.IgnoreButton()
-                            });
+                                AlertStaticButtons.OkButton(),
+                                AlertStaticButtons.RetryButton(),
+                                AlertStaticButtons.IgnoreButton()
+                            }
+                        };
                     }
                 case AlertButtons.YesNoCancel:
                     {
-                        return new AlertForm().SetDetail(title, message, image, sound,
-                            new List<AlertButtonViewModel>
+                        return new AlertForm
+                        {
+                            FormTitle = title,
+                            FormImage = image,
+                            FormMessageTitle = title,
+                            FormMessage = message,
+                            SystemSound = sound,
+                            IsErrorAlert = isErrorAllert,
+                            FormButtons = new List<AlertButtonViewModel>
                             {
-                            AlertStaticButtons.YesButton(),
-                            AlertStaticButtons.NoButton(),
-                            AlertStaticButtons.CancelButton()
-                            });
+                                AlertStaticButtons.YesButton(),
+                                AlertStaticButtons.NoButton(),
+                                AlertStaticButtons.CancelButton()
+                            }
+                        };
                     }
                 case AlertButtons.YesNo:
                     {
-                        return new AlertForm().SetDetail(title, message, image, sound,
-                            new List<AlertButtonViewModel>
+                        return new AlertForm
+                        {
+                            FormTitle = title,
+                            FormImage = image,
+                            FormMessageTitle = title,
+                            FormMessage = message,
+                            SystemSound = sound,
+                            IsErrorAlert = isErrorAllert,
+                            FormButtons = new List<AlertButtonViewModel>
                             {
-                            AlertStaticButtons.YesButton(),
-                            AlertStaticButtons.NoButton()
-                            });
+                                AlertStaticButtons.YesButton(),
+                                AlertStaticButtons.NoButton()
+                            }
+                        };
                     }
                 case AlertButtons.RetryCancel:
                     {
-                        return new AlertForm().SetDetail(title, message, image, sound,
-                            new List<AlertButtonViewModel>
+                        return new AlertForm
+                        {
+                            FormTitle = title,
+                            FormImage = image,
+                            FormMessageTitle = title,
+                            FormMessage = message,
+                            SystemSound = sound,
+                            IsErrorAlert = isErrorAllert,
+                            FormButtons = new List<AlertButtonViewModel>
                             {
-                            AlertStaticButtons.RetryButton(),
-                            AlertStaticButtons.CancelButton()
-                            });
+                                AlertStaticButtons.RetryButton(),
+                                AlertStaticButtons.CancelButton()
+                            }
+                        };
                     }
                 default:
                     throw new ArgumentOutOfRangeException(nameof(alertButtons), alertButtons, null);

@@ -26,6 +26,12 @@ namespace Responsible.Core
         ResponseStatus Status { get; }
 
         /// <summary>
+        ///     <para>Response title</para>
+        ///     <para>Title is handy for Response reporting.</para>
+        /// </summary>
+        string Title { get; }
+
+        /// <summary>
         ///     <para>Annotate messages obtained by the operation.</para>
         /// </summary>
         IEnumerable<string> Messages { get; }
@@ -44,6 +50,13 @@ namespace Responsible.Core
         ///     <para>Gets all messages as a Single Message, seperated by Environment.NewLine <see cref="Environment.NewLine"/>.</para>
         /// </summary>
         string SingleMessage { get; }
+
+        /// <summary>
+        /// Adds a title to Response for Reporting
+        /// </summary>
+        /// <param name="title">The Response Title</param>
+        /// <returns><see cref="IResponse"/></returns>
+        IResponse AddTitle(string title);
     }
 
     /// <summary>
@@ -55,5 +68,12 @@ namespace Responsible.Core
         ///     <para>Resolves to an output of T.</para>
         /// </summary>
         T Value { get; }
+
+        /// <summary>
+        /// Adds a title to Response for Reporting
+        /// </summary>
+        /// <param name="title">The Response Title</param>
+        /// <returns><see cref="IResponse{T}"/></returns>
+        new IResponse<T> AddTitle(string title);
     }
 }

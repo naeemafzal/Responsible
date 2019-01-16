@@ -1,26 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Responsible.Core;
+using Responsible.Handler.Winforms.AlertForms;
 using Responsible.Handler.Winforms.Processors;
 
 namespace Responsible.Handler.Winforms.Executors
 {
-    internal class ActionExecutor : ProcessingForm
+    internal class ActionExecutor : WaitForm
     {
-        protected Action Action { get; private set; }
-        internal ActionExecutor() { }
-
-        internal ActionExecutor(string operationTitle, bool retryable,
-            bool showSuccessMessage = false, bool ignoreResponseMessage = false,
-            string successMessage = "Processed successfully") :
-            base(operationTitle, retryable, showSuccessMessage, ignoreResponseMessage, successMessage)
-        { }
-
-        internal ActionExecutor SetAction(Action action)
-        {
-            Action = action;
-            return this;
-        }
+        internal Action Action { get; set; }
 
         protected override async Task<IResponse> ExecuteRequestAsync()
         {
@@ -28,23 +16,9 @@ namespace Responsible.Handler.Winforms.Executors
         }
     }
 
-    internal class ActionExecutorTask : ProcessingForm
+    internal class ActionExecutorTask : WaitForm
     {
-        protected Func<Task> Action { get; private set; }
-        internal ActionExecutorTask() { }
-
-        internal ActionExecutorTask(string operationTitle, bool retryable,
-            bool showSuccessMessage = false, bool ignoreResponseMessage = false,
-            string successMessage = "Processed successfully") :
-            base(operationTitle, retryable, showSuccessMessage, ignoreResponseMessage, successMessage)
-        { }
-
-        internal ActionExecutorTask SetAction(Func<Task> action)
-        {
-            Action = action;
-            return this;
-        }
-
+        internal Func<Task> Action { get; set; }
         protected override async Task<IResponse> ExecuteRequestAsync()
         {
             return await ResponsibleAwaiter.ExecuteActionAsync(Action);

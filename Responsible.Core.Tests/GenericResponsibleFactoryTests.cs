@@ -85,5 +85,16 @@ namespace Responsible.Core.Tests
             Assert.IsFalse(errorResponse.Success);
             Assert.IsNull(errorResponse.Value, "Value is not null");
         }
+
+        [TestMethod]
+        public void Response_Operation_TitleIsAdded()
+        {
+            var title = "Ok_Title";
+            var addTitleResponse = ResponseFactory<int>.Ok(1).AddTitle(title);
+
+            Assert.IsTrue(addTitleResponse.Success);
+            Assert.AreEqual(title, addTitleResponse.Title);
+            Assert.AreEqual(1, addTitleResponse.Value);
+        }
     }
 }

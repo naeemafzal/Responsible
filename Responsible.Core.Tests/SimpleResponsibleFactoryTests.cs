@@ -56,5 +56,15 @@ namespace Responsible.Core.Tests
             Assert.IsTrue(cancelledResponse.Cancelled);
             Assert.AreEqual(ResponseStatus.BadRequest, cancelledResponse.Status);
         }
+
+        [TestMethod]
+        public void Response_Operation_TitleIsAdded()
+        {
+            var title = "Ok_Title";
+            var addTitleResponse = ResponseFactory.Ok().AddTitle(title);
+
+            Assert.IsTrue(addTitleResponse.Success);
+            Assert.AreEqual(title, addTitleResponse.Title);
+        }
     }
 }
