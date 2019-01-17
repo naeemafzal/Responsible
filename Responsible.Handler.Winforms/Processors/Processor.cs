@@ -33,6 +33,12 @@ namespace Responsible.Handler.Winforms.Processors
             SuccessMessage = successMessage;
         }
 
+        #region Private Properties
+
+        internal object ProgressObject { get; set; }
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -159,6 +165,18 @@ namespace Responsible.Handler.Winforms.Processors
         public Processor CanBeCanceled(CancellationTokenSource cancellationTokenSource)
         {
             CancellationTokenSource = cancellationTokenSource;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the progress object used for progress reporting
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="progress"><see cref="IProgress{T}"/></param>
+        /// <returns><see cref="Processor"/></returns>
+        public Processor ReportProgress<T>(IProgress<T> progress)
+        {
+            ProgressObject = progress;
             return this;
         }
 

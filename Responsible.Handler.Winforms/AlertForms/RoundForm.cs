@@ -18,6 +18,10 @@ namespace Responsible.Handler.Winforms.AlertForms
         protected Panel TitlePanel { get; private set; }
         protected Label TitleLabel { get; private set; }
 
+        protected Panel ProgressCounterPanel { get; private set; }
+        protected Label ProgressCounterLabel { get; private set; }
+        protected bool IncludeProgressCounterPanel { get; private set; }
+
         protected Panel MessagesPanel { get; private set; }
         protected RichTextBox MessagesRichTextBox { get; private set; }
         protected bool IncludeMessagesPanel { get; private set; }
@@ -204,6 +208,32 @@ namespace Responsible.Handler.Winforms.AlertForms
             TitlePanel.Controls.Add(TitleLabel);
         }
 
+        protected void AddProgressCounterLabel()
+        {
+            AddToHeight(50);
+            ProgressCounterPanel = new Panel
+            {
+                Name = "ProgressCounterPanel",
+                Dock = DockStyle.Top,
+                BackColor = Color.FromArgb(254, 252, 254),
+                Size = new Size(140, 50)
+            };
+
+            ProgressCounterLabel = new Label
+            {
+                Name = "TitleLabel",
+                Text = "",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill,
+                ForeColor = Color.DeepPink,
+                Font = new Font("Segoe UI", 20, FontStyle.Bold),
+                AutoSize = false
+            };
+
+            ProgressCounterPanel.Controls.Add(ProgressCounterLabel);
+            IncludeProgressCounterPanel = true;
+        }
+
         protected void AddButtonsLayout(List<AlertButtonViewModel> buttons)
         {
             if (buttons == null || !buttons.Any())
@@ -316,6 +346,11 @@ namespace Responsible.Handler.Winforms.AlertForms
                 ContainerPanel.Controls.Add(MessagesPanel);
             }
 
+            if (IncludeProgressCounterPanel)
+            {
+                ContainerPanel.Controls.Add(ProgressCounterPanel);
+            }
+
             ContainerPanel.Controls.Add(ImagePanel);
             ContainerPanel.Controls.Add(TitlePanel);
         }
@@ -324,48 +359,54 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         protected void AddMessageBox()
         {
-            AddToHeight(100);
-            MessagesPanel = new Panel
+            if (!IncludeMessagesPanel)
             {
-                Name = "MessagesPanel",
-                Dock = DockStyle.Top,
-                Size = new Size(140, 100),
-                BackColor = Color.FromArgb(254, 252, 254),
-                BorderStyle = BorderStyle.None
-            };
+                AddToHeight(100);
+                MessagesPanel = new Panel
+                {
+                    Name = "MessagesPanel",
+                    Dock = DockStyle.Top,
+                    Size = new Size(140, 100),
+                    BackColor = Color.FromArgb(254, 252, 254),
+                    BorderStyle = BorderStyle.None
+                };
 
-            MessagesRichTextBox = new RichTextBox
-            {
-                Name = "MessagesRichTextBox",
-                Dock = DockStyle.Fill,
-                ScrollBars = RichTextBoxScrollBars.Both,
-                ReadOnly = true,
-                BackColor = Color.FromArgb(254, 252, 254),
-                BorderStyle = BorderStyle.None,
-                Font = new Font("Segoe UI", 15)
-            };
+                MessagesRichTextBox = new RichTextBox
+                {
+                    Name = "MessagesRichTextBox",
+                    Dock = DockStyle.Fill,
+                    ScrollBars = RichTextBoxScrollBars.Both,
+                    ReadOnly = true,
+                    BackColor = Color.FromArgb(254, 252, 254),
+                    BorderStyle = BorderStyle.None,
+                    Font = new Font("Segoe UI", 15)
+                };
 
-            MessagesPanel.Controls.Add(MessagesRichTextBox);
-            IncludeMessagesPanel = true;
+                MessagesPanel.Controls.Add(MessagesRichTextBox);
+                IncludeMessagesPanel = true;
+            }
         }
 
-        protected void AddTextToRichTextBox(string text, Font font, Color color, HorizontalAlignment horizontalAlignment)
+        protected void AddTextToRichTextBox(string text, Font font, Color color, HorizontalAlignment horizontalAlignment, bool append = true)
         {
+            if (!append)
+            {
+                MessagesRichTextBox.Text = string.Empty;
+            }
+
             if (string.IsNullOrWhiteSpace(text))
             {
                 return;
             }
 
-            //Add a new line if there is already some text
-            if (MessagesRichTextBox.TextLength > 0)
-            {
-                MessagesRichTextBox.SelectedText = Environment.NewLine;
-            }
-
             MessagesRichTextBox.SelectionFont = font;
             MessagesRichTextBox.SelectionColor = color;
             MessagesRichTextBox.SelectionAlignment = horizontalAlignment;
-            MessagesRichTextBox.SelectedText = text;
+            MessagesRichTextBox.SelectedText = text + Environment.NewLine;
+
+            //Scroll to end
+            MessagesRichTextBox.SelectionStart = MessagesRichTextBox.Text.Length;
+            MessagesRichTextBox.ScrollToCaret();
         }
 
         #endregion

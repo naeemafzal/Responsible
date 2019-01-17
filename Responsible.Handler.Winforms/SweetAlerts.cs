@@ -8,7 +8,7 @@ using Responsible.Handler.Winforms.Alerts;
 namespace Responsible.Handler.Winforms
 {
     /// <summary>
-    /// Handles Messages
+    /// Handles Message
     /// </summary>
     public class SweetAlerts
     {

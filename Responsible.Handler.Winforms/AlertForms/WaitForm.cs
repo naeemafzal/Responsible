@@ -7,11 +7,13 @@ using System.Windows.Forms;
 using Responsible.Core;
 using Responsible.Handler.Winforms.Alerts;
 using Responsible.Handler.Winforms.Controls;
+using Responsible.Handler.Winforms.Progresses;
 
 namespace Responsible.Handler.Winforms.AlertForms
 {
     internal abstract class WaitForm : RoundForm
     {
+        internal object ProgressObject { get; set; }
         internal CancellationTokenSource CancellationTokenSource { get; set; }
         internal bool CanRetry { get; set; }
         internal bool ShowSuccessMessage { get; set; }
@@ -68,9 +70,107 @@ namespace Responsible.Handler.Winforms.AlertForms
             AddImageBox(FormImage);
             AddTitleLabel(FormTitle);
 
+            try
+            {
+                AddProgress();
+            }
+            catch
+            {
+                // ignored
+            }
+
             RenderForm();
             Refresh();
         }
+
+        #region Progress Handling
+
+        private void AddProgress()
+        {
+            if (ProgressObject != null)
+            {
+                var progressObjectType = ProgressObject.GetType().GenericTypeArguments.First().UnderlyingSystemType;
+                var isICounterProgress = progressObjectType == typeof(ICounterProgress) ||
+                                         progressObjectType.GetInterfaces().Contains(typeof(ICounterProgress));
+
+                var isITextProgress = progressObjectType == typeof(ITextProgress) ||
+                                      progressObjectType.GetInterfaces().Contains(typeof(ITextProgress));
+
+                var isICounterAndTextProcess = progressObjectType == typeof(ICounterAndTextProcess) ||
+                                               progressObjectType.GetInterfaces()
+                                                   .Contains(typeof(ICounterAndTextProcess));
+
+
+                if (isICounterProgress)
+                {
+                    if (ProgressObject is Progress<ICounterProgress> counterProgress)
+                    {
+                        counterProgress.ProgressChanged += CounterProgress_ProgressChanged;
+                        AddProgressCounterLabel();
+                    }
+                }
+
+                if (isITextProgress)
+                {
+                    if (ProgressObject is Progress<ITextProgress> textProgress)
+                    {
+                        textProgress.ProgressChanged += TextProgress_ProgressChanged;
+                        AddMessageBox();
+                    }
+                }
+
+                if (isICounterAndTextProcess)
+                {
+                    if (ProgressObject is Progress<ICounterAndTextProcess> counterAndTextProgress)
+                    {
+                        counterAndTextProgress.ProgressChanged += CounterAndTextProgress_ProgressChanged;
+                        AddProgressCounterLabel();
+                        AddMessageBox();
+                    }
+                }
+            }
+        }
+
+        private void CounterProgress_ProgressChanged(object sender, ICounterProgress e)
+        {
+            if (e != null)
+            {
+                ProgressCounterLabel.Text = $@"{e.Count}/{e.Total}";
+            }
+        }
+
+        private void CounterAndTextProgress_ProgressChanged(object sender, ICounterAndTextProcess e)
+        {
+            if (e != null)
+            {
+                ProgressCounterLabel.Text = $@"{e.Count}/{e.Total}";
+                UpdateTextProgress(e.Message, e.CurrentMessageOnly);
+            }
+        }
+
+        private void TextProgress_ProgressChanged(object sender, ITextProgress e)
+        {
+            if (e != null)
+            {
+                UpdateTextProgress(e.Message, e.CurrentMessageOnly);
+            }
+        }
+
+        private void UpdateTextProgress(string message, bool currentMessageOnly)
+        {
+            if (currentMessageOnly)
+            {
+                AddTextToRichTextBox(message, new Font("Segoe UI", 15), Color.DeepPink,
+                    HorizontalAlignment.Center, false);
+            }
+            else
+            {
+                AddTextToRichTextBox(message, new Font("Segoe UI", 15), Color.DeepPink,
+                    HorizontalAlignment.Center);
+            }
+        }
+
+        #endregion
 
         private void CancelButton_Click(object sender, EventArgs e)
         {

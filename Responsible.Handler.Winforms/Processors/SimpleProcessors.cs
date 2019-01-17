@@ -34,7 +34,8 @@ namespace Responsible.Handler.Winforms.Processors
                 SuccessMessage = processor.SuccessMessage,
                 Action = action,
                 CancellationTokenSource = processor.CancellationTokenSource,
-                FormImage = Properties.Resources.rolling
+                FormImage = Properties.Resources.rolling,
+                ProgressObject = processor.ProgressObject
             })
             {
                 form.ShowDialog();
@@ -66,7 +67,8 @@ namespace Responsible.Handler.Winforms.Processors
                 SuccessMessage = processor.SuccessMessage,
                 Func = func,
                 CancellationTokenSource = processor.CancellationTokenSource,
-                FormImage = Properties.Resources.rolling
+                FormImage = Properties.Resources.rolling,
+                ProgressObject = processor.ProgressObject
             })
             {
                 form.ShowDialog();
@@ -98,7 +100,8 @@ namespace Responsible.Handler.Winforms.Processors
                 SuccessMessage = processor.SuccessMessage,
                 Func = func,
                 CancellationTokenSource = processor.CancellationTokenSource,
-                FormImage = Properties.Resources.rolling
+                FormImage = Properties.Resources.rolling,
+                ProgressObject = processor.ProgressObject
             })
             {
                 form.ShowDialog();
@@ -130,7 +133,8 @@ namespace Responsible.Handler.Winforms.Processors
                 SuccessMessage = processor.SuccessMessage,
                 Func = func,
                 CancellationTokenSource = processor.CancellationTokenSource,
-                FormImage = Properties.Resources.rolling
+                FormImage = Properties.Resources.rolling,
+                ProgressObject = processor.ProgressObject
             })
             {
                 form.ShowDialog();
