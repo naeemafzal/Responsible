@@ -19,7 +19,18 @@ namespace Responsible.Core
             get
             {
                 if (Messages != null && Messages.Any())
+                {
+                    if (!string.IsNullOrWhiteSpace(Title))
+                    {
+                        return string.Join(Environment.NewLine, Title, Messages.ToArray());
+                    }
                     return string.Join(Environment.NewLine, Messages.ToArray());
+                }
+
+                if (!string.IsNullOrWhiteSpace(Title))
+                {
+                    return Title;
+                }
 
                 return string.Empty;
             }

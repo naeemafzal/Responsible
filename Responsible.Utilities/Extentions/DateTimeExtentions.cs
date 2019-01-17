@@ -93,7 +93,7 @@ namespace Responsible.Utilities.Extentions
                 return string.Empty;
             }
 
-            return value.Value.ToString($"dd{dateSeperator}MM{dateSeperator}yyyy");
+            return BritishFormatDateOnlyString(value.Value, dateSeperator);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Responsible.Utilities.Extentions
                 return string.Empty;
             }
 
-            return value.Value.ToString($"dd{dateSeperator}MM{dateSeperator}yyyy HH:mm");
+            return BritishFormatDateTimeOnly24HourString(value.Value, dateSeperator);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Responsible.Utilities.Extentions
                 return string.Empty;
             }
 
-            return value.Value.ToString($"dd{dateSeperator}MM{dateSeperator}yyyy hh:mm tt");
+            return BritishFormatDateTimeOnly12HourString(value.Value, dateSeperator);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Responsible.Utilities.Extentions
                 return string.Empty;
             }
 
-            return value.Value.ToString($"dd{dateSeperator}MM{dateSeperator}yyyy HH:mm:ss.fff");
+            return BritishFormatFullDateTime24HourString(value.Value, dateSeperator);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Responsible.Utilities.Extentions
                 return string.Empty;
             }
 
-            return value.Value.ToString($"dd{dateSeperator}MM{dateSeperator}yyyy hh:mm:ss.fff tt");
+            return BritishFormatFullDateTime12HourString(value.Value, dateSeperator);
         }
     }
 }

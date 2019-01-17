@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -65,6 +66,7 @@ namespace Responsible.Core.Tests
 
             Assert.IsTrue(addTitleResponse.Success);
             Assert.AreEqual(title, addTitleResponse.Title);
+            Assert.IsTrue(addTitleResponse.SingleMessage.Contains(title));
         }
     }
 }

@@ -292,7 +292,8 @@ namespace Responsible.Core
                 Exception = response.Exception,
                 Messages = response.Messages == null || !response.Messages.Any() ? new List<string>() : response.Messages.ToList(),
                 Status = response.Status,
-                Cancelled = response.Cancelled
+                Cancelled = response.Cancelled,
+                Title = response.Title
             };
         }
     }
@@ -663,7 +664,8 @@ namespace Responsible.Core
                 Exception = response.Exception,
                 Messages = response.Messages == null || !response.Messages.Any() ? new List<string>() : response.Messages.ToList(),
                 Status = response.Status,
-                Cancelled = response.Cancelled
+                Cancelled = response.Cancelled,
+                Title = response.Title
             };
 
             var sameTypeConversion = response as Response<T>;
@@ -695,7 +697,8 @@ namespace Responsible.Core
                 Messages = response.Messages == null || !response.Messages.Any() ? new List<string>() : response.Messages.ToList(),
                 Status = response.Status,
                 Value = value,
-                Cancelled = response.Cancelled
+                Cancelled = response.Cancelled,
+                Title = response.Title
             };
 
             //Initialise constructor for IEnumerable items etc List, Dictionary
