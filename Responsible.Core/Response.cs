@@ -20,16 +20,7 @@ namespace Responsible.Core
             {
                 if (Messages != null && Messages.Any())
                 {
-                    if (!string.IsNullOrWhiteSpace(Title))
-                    {
-                        return string.Join(Environment.NewLine, Title, Messages.ToArray());
-                    }
                     return string.Join(Environment.NewLine, Messages.ToArray());
-                }
-
-                if (!string.IsNullOrWhiteSpace(Title))
-                {
-                    return Title;
                 }
 
                 return string.Empty;
