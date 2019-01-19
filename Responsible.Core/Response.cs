@@ -9,7 +9,7 @@ namespace Responsible.Core
         public ResponseStatus Status { get; internal set; }
         public bool Success => (int)Status >= 200 && (int)Status <= 299;
         public bool Cancelled { get; internal set; }
-        public string Title { get; internal set; }
+        public string Title { get; internal set; } = string.Empty;
         public IEnumerable<string> Messages { get; internal set; } = new List<string>();
         public Exception Exception { get; internal set; }
         public bool HasException => Exception != null;
@@ -29,6 +29,11 @@ namespace Responsible.Core
 
         public IResponse AddTitle(string title)
         {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                title = string.Empty;
+            }
+
             Title = title;
             return this;
         }
