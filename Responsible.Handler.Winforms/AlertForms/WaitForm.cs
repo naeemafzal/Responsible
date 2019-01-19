@@ -191,6 +191,7 @@ namespace Responsible.Handler.Winforms.AlertForms
                             Response.Title, SweetAlerts.ExceptionDetail(Response),
                             AlertType.Error, AlertButtons.RetryCancel);
                         if (retrySelection != DialogResult.Retry) return;
+                        MessagesRichTextBox.Text = string.Empty;
                         continue;
                     }
                 }
