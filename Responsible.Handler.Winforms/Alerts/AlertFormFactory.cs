@@ -9,7 +9,7 @@ namespace Responsible.Handler.Winforms.Alerts
 {
     internal class AlertFormFactory
     {
-        internal static AlertForm CreateAlertForm(string title, string message,
+        internal static AlertForm CreateAlertForm(string title, string message, string messagesTitle,
             AlertType alertType,
             AlertButtons alertButtons)
         {
@@ -23,6 +23,7 @@ namespace Responsible.Handler.Winforms.Alerts
                         return new AlertForm
                         {
                             FormTitle = title,
+                            MessagesTitle = messagesTitle,
                             FormImage = image,
                             FormMessage = message,
                             SystemSound = sound,
@@ -38,6 +39,7 @@ namespace Responsible.Handler.Winforms.Alerts
                         return new AlertForm
                         {
                             FormTitle = title,
+                            MessagesTitle = messagesTitle,
                             FormImage = image,
                             FormMessage = message,
                             SystemSound = sound,
@@ -54,6 +56,7 @@ namespace Responsible.Handler.Winforms.Alerts
                         return new AlertForm
                         {
                             FormTitle = title,
+                            MessagesTitle = messagesTitle,
                             FormImage = image,
                             FormMessage = message,
                             SystemSound = sound,
@@ -71,6 +74,7 @@ namespace Responsible.Handler.Winforms.Alerts
                         return new AlertForm
                         {
                             FormTitle = title,
+                            MessagesTitle = messagesTitle,
                             FormImage = image,
                             FormMessage = message,
                             SystemSound = sound,
@@ -88,6 +92,7 @@ namespace Responsible.Handler.Winforms.Alerts
                         return new AlertForm
                         {
                             FormTitle = title,
+                            MessagesTitle = messagesTitle,
                             FormImage = image,
                             FormMessage = message,
                             SystemSound = sound,
@@ -104,6 +109,7 @@ namespace Responsible.Handler.Winforms.Alerts
                         return new AlertForm
                         {
                             FormTitle = title,
+                            MessagesTitle = messagesTitle,
                             FormImage = image,
                             FormMessage = message,
                             SystemSound = sound,

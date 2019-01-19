@@ -46,6 +46,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         private void AlertForm_Load(object sender, EventArgs e)
         {
+            StartPosition = Owner == null ? FormStartPosition.CenterScreen : FormStartPosition.CenterParent;
             if (CancellationTokenSource != null)
             {
                 var cancelButton = AlertStaticButtons.CancelButton();
@@ -160,12 +161,12 @@ namespace Responsible.Handler.Winforms.AlertForms
         {
             if (currentMessageOnly)
             {
-                AddTextToRichTextBox(message, new Font("Segoe UI", 15), Color.DeepPink,
+                AddTextToRichTextBox(message, new Font("Segoe UI", 13), Color.DeepPink,
                     HorizontalAlignment.Center, false);
             }
             else
             {
-                AddTextToRichTextBox(message, new Font("Segoe UI", 15), Color.DeepPink,
+                AddTextToRichTextBox(message, new Font("Segoe UI", 13), Color.DeepPink,
                     HorizontalAlignment.Center);
             }
         }
@@ -186,8 +187,8 @@ namespace Responsible.Handler.Winforms.AlertForms
                 {
                     if (CanRetry && !Response.Cancelled)
                     {
-                        var retrySelection = SweetAlerts.Alert(this, FormTitle, Response.Messages.ToList(),
-                            AlertButtons.RetryCancel, AlertType.Error);
+                        var retrySelection = AlertDisplayHandler.Alert(this, FormTitle, Response.Messages.ToList(), Response.Title,
+                            AlertType.Error, AlertButtons.RetryCancel);
                         if (retrySelection != DialogResult.Retry) return;
                         continue;
                     }

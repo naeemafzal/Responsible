@@ -62,7 +62,9 @@ namespace Responsible.Handler.Winforms.AlertForms
             AutoScaleMode = AutoScaleMode.Font;
             Margin = new Padding(4, 5, 4, 5);
 
-            StartPosition = FormStartPosition.CenterScreen;
+
+            StartPosition = Owner == null ? FormStartPosition.CenterScreen : FormStartPosition.CenterParent;
+
             BackColor = Color.FromArgb(254, 252, 254);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
@@ -361,12 +363,12 @@ namespace Responsible.Handler.Winforms.AlertForms
         {
             if (!IncludeMessagesPanel)
             {
-                AddToHeight(100);
+                AddToHeight(150);
                 MessagesPanel = new Panel
                 {
                     Name = "MessagesPanel",
                     Dock = DockStyle.Top,
-                    Size = new Size(140, 100),
+                    Size = new Size(140, 150),
                     BackColor = Color.FromArgb(254, 252, 254),
                     BorderStyle = BorderStyle.None
                 };

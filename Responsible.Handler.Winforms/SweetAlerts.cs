@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Responsible.Core;
@@ -32,7 +31,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, alertType,
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, alertType,
                 alertButtons);
         }
 
@@ -57,7 +56,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(owner, operationTitle, message, alertType,
+            return AlertDisplayHandler.Alert(owner, operationTitle, message, string.Empty, alertType,
                 alertButtons);
         }
 
@@ -81,7 +80,7 @@ namespace Responsible.Handler.Winforms
                 messages = new List<string>();
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, SingleMessage(messages),
+            return AlertDisplayHandler.Alert(operationTitle, messages, string.Empty,
                 alertType, alertButtons);
         }
 
@@ -106,7 +105,7 @@ namespace Responsible.Handler.Winforms
                 messages = new List<string>();
             }
 
-            return AlertDisplayHandler.Alert(owner, operationTitle, SingleMessage(messages),
+            return AlertDisplayHandler.Alert(owner, operationTitle, messages, string.Empty,
                 alertType, alertButtons);
         }
 
@@ -124,7 +123,7 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                AlertDisplayHandler.Alert(operationTitle, "Provided response is null.",
+                AlertDisplayHandler.Alert(operationTitle, "Provided response is null.", string.Empty,
                     AlertType.Error, AlertButtons.Ok);
                 return false;
             }
@@ -137,7 +136,7 @@ namespace Responsible.Handler.Winforms
             var message = string.Empty;
             if (response.Messages != null && response.Messages.Any())
             {
-                message = SingleMessage(response.Messages.ToList());
+                message = AlertDisplayHandler.SingleMessage(response.Messages.ToList());
             }
 
             if (!response.Success)
@@ -147,7 +146,7 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                AlertDisplayHandler.Alert(operationTitle, message,
+                AlertDisplayHandler.Alert(operationTitle, message, response.Title,
                     AlertType.Error, AlertButtons.Ok);
                 return response.Success;
             }
@@ -169,7 +168,7 @@ namespace Responsible.Handler.Winforms
                 }
             }
 
-            AlertDisplayHandler.Alert(operationTitle, message, AlertType.Success,
+            AlertDisplayHandler.Alert(operationTitle, message, response.Title, AlertType.Success,
                 AlertButtons.Ok);
             return response.Success;
         }
@@ -189,7 +188,7 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                AlertDisplayHandler.Alert(owner, operationTitle, "Provided response is null.",
+                AlertDisplayHandler.Alert(owner, operationTitle, "Provided response is null.", string.Empty,
                     AlertType.Error, AlertButtons.Ok);
                 return false;
             }
@@ -202,7 +201,7 @@ namespace Responsible.Handler.Winforms
             var message = string.Empty;
             if (response.Messages != null && response.Messages.Any())
             {
-                message = SingleMessage(response.Messages.ToList());
+                message = AlertDisplayHandler.SingleMessage(response.Messages.ToList());
             }
 
             if (!response.Success)
@@ -212,7 +211,7 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                AlertDisplayHandler.Alert(owner, operationTitle, message,
+                AlertDisplayHandler.Alert(owner, operationTitle, message, response.Title,
                     AlertType.Error, AlertButtons.Ok);
                 return response.Success;
             }
@@ -234,21 +233,9 @@ namespace Responsible.Handler.Winforms
                 }
             }
 
-            AlertDisplayHandler.Alert(owner, operationTitle, message, AlertType.Success,
+            AlertDisplayHandler.Alert(owner, operationTitle, message, response.Title, AlertType.Success,
                 AlertButtons.Ok);
             return response.Success;
-        }
-
-        private static string SingleMessage(List<string> messages)
-        {
-            if (messages == null || !messages.Any())
-            {
-                return string.Empty;
-            }
-
-            return messages.Count == 1
-                ? messages[0]
-                : string.Join($"{Environment.NewLine}", messages.Select(x => $"\u2022 {x}"));
         }
     }
 }
