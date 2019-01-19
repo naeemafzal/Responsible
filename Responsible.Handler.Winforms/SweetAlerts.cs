@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using Responsible.Core;
 using Responsible.Handler.Winforms.Alerts;
@@ -7,10 +10,12 @@ using Responsible.Handler.Winforms.Alerts;
 namespace Responsible.Handler.Winforms
 {
     /// <summary>
-    /// Handles Message
+    /// Handles Alerts
     /// </summary>
-    public class SweetAlerts
+    public static class SweetAlerts
     {
+        #region Alerts
+
         /// <summary>
         /// Handles displaying relevant messages to the user from the inputs
         /// </summary>
@@ -31,7 +36,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, alertType,
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, alertType,
                 alertButtons);
         }
 
@@ -56,7 +61,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(owner, operationTitle, message, string.Empty, alertType,
+            return AlertDisplayHandler.Alert(owner, operationTitle, message, string.Empty, string.Empty, alertType,
                 alertButtons);
         }
 
@@ -80,7 +85,7 @@ namespace Responsible.Handler.Winforms
                 messages = new List<string>();
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, messages, string.Empty,
+            return AlertDisplayHandler.Alert(operationTitle, messages, string.Empty, string.Empty,
                 alertType, alertButtons);
         }
 
@@ -105,9 +110,13 @@ namespace Responsible.Handler.Winforms
                 messages = new List<string>();
             }
 
-            return AlertDisplayHandler.Alert(owner, operationTitle, messages, string.Empty,
+            return AlertDisplayHandler.Alert(owner, operationTitle, messages, string.Empty, string.Empty,
                 alertType, alertButtons);
         }
+
+        #endregion
+
+        #region Alert Responses
 
         /// <summary>
         /// Handles displaying relevant messages to the user from the inputs
@@ -123,7 +132,7 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                AlertDisplayHandler.Alert(operationTitle, "Provided response is null.", string.Empty,
+                AlertDisplayHandler.Alert(operationTitle, "Provided response is null.", string.Empty, string.Empty,
                     AlertType.Error, AlertButtons.Ok);
                 return false;
             }
@@ -146,7 +155,7 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                AlertDisplayHandler.Alert(operationTitle, message, response.Title,
+                AlertDisplayHandler.Alert(operationTitle, message, response.Title, ExceptionDetail(response),
                     AlertType.Error, AlertButtons.Ok);
                 return response.Success;
             }
@@ -168,8 +177,8 @@ namespace Responsible.Handler.Winforms
                 }
             }
 
-            AlertDisplayHandler.Alert(operationTitle, message, response.Title, AlertType.Success,
-                AlertButtons.Ok);
+            AlertDisplayHandler.Alert(operationTitle, message, response.Title, ExceptionDetail(response),
+                AlertType.Success, AlertButtons.Ok);
             return response.Success;
         }
 
@@ -188,7 +197,7 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                AlertDisplayHandler.Alert(owner, operationTitle, "Provided response is null.", string.Empty,
+                AlertDisplayHandler.Alert(owner, operationTitle, "Provided response is null.", string.Empty, string.Empty,
                     AlertType.Error, AlertButtons.Ok);
                 return false;
             }
@@ -211,7 +220,7 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                AlertDisplayHandler.Alert(owner, operationTitle, message, response.Title,
+                AlertDisplayHandler.Alert(owner, operationTitle, message, response.Title, ExceptionDetail(response),
                     AlertType.Error, AlertButtons.Ok);
                 return response.Success;
             }
@@ -233,9 +242,230 @@ namespace Responsible.Handler.Winforms
                 }
             }
 
-            AlertDisplayHandler.Alert(owner, operationTitle, message, response.Title, AlertType.Success,
-                AlertButtons.Ok);
+            AlertDisplayHandler.Alert(owner, operationTitle, message, response.Title, ExceptionDetail(response),
+                AlertType.Success, AlertButtons.Ok);
             return response.Success;
+        }
+
+        #endregion
+
+        #region Simple Messages
+
+        /// <summary>
+        /// Handles displaying relevant messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="message">The message text</param>
+        public static DialogResult ShowInfo(string operationTitle, string message)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            if (message == null)
+            {
+                message = string.Empty;
+            }
+
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Info,
+                AlertButtons.Ok);
+        }
+
+        /// <summary>
+        /// Handles displaying relevant messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="messages">The messages</param>
+        public static DialogResult ShowInfo(string operationTitle, List<string> messages)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            var message = string.Empty;
+            if (messages != null && messages.Any())
+            {
+                message = AlertDisplayHandler.SingleMessage(messages);
+            }
+
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Info,
+                AlertButtons.Ok);
+        }
+
+        /// <summary>
+        /// Handles displaying relevant messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="message">The message text</param>
+        public static DialogResult ShowError(string operationTitle, string message)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            if (message == null)
+            {
+                message = string.Empty;
+            }
+
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Error,
+                AlertButtons.Ok);
+        }
+
+        /// <summary>
+        /// Handles displaying relevant messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="messages">The messages</param>
+        public static DialogResult ShowError(string operationTitle, List<string> messages)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            var message = string.Empty;
+            if (messages != null && messages.Any())
+            {
+                message = AlertDisplayHandler.SingleMessage(messages);
+            }
+
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Error,
+                AlertButtons.Ok);
+        }
+
+        /// <summary>
+        /// Handles displaying relevant messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="message">The message text</param>
+        public static DialogResult ShowSuccess(string operationTitle, string message)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            if (message == null)
+            {
+                message = string.Empty;
+            }
+
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Success,
+                AlertButtons.Ok);
+        }
+
+        /// <summary>
+        /// Handles displaying relevant messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="messages">The messages</param>
+        public static DialogResult ShowSuccess(string operationTitle, List<string> messages)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            var message = string.Empty;
+            if (messages != null && messages.Any())
+            {
+                message = AlertDisplayHandler.SingleMessage(messages);
+            }
+
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Success,
+                AlertButtons.Ok);
+        }
+
+        /// <summary>
+        /// Handles displaying relevant messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="message">The message text</param>
+        public static DialogResult ShowWarning(string operationTitle, string message)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            if (message == null)
+            {
+                message = string.Empty;
+            }
+
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
+                AlertButtons.Ok);
+        }
+
+        /// <summary>
+        /// Handles displaying relevant messages to the user from the inputs
+        /// </summary>
+        /// <param name="operationTitle">The title of the message box</param>
+        /// <param name="messages">The messages</param>
+        public static DialogResult ShowWarning(string operationTitle, List<string> messages)
+        {
+            if (string.IsNullOrWhiteSpace(operationTitle))
+            {
+                operationTitle = "Operation";
+            }
+
+            var message = string.Empty;
+            if (messages != null && messages.Any())
+            {
+                message = AlertDisplayHandler.SingleMessage(messages);
+            }
+
+            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
+                AlertButtons.Ok);
+        }
+
+        #endregion
+
+        internal static string ExceptionDetail(IResponse response)
+        {
+            if (response == null || !response.HasException)
+            {
+                return string.Empty;
+            }
+
+            var richTextBox = new RichTextBox
+            {
+                SelectionFont = new Font("Segoe UI", 18),
+                SelectionColor = Color.Red,
+                SelectionAlignment = HorizontalAlignment.Left,
+            };
+
+            var hasDetail = false;
+            //Exception Messages
+            if (response.Exception != null)
+            {
+                richTextBox.SelectedText = "Exception Messages";
+                richTextBox.SelectedText = Environment.NewLine;
+                richTextBox.SelectionColor = Color.Black;
+                richTextBox.SelectionFont = new Font("Segoe UI", 13);
+                richTextBox.SelectedText = AlertDisplayHandler.SingleMessage(response.Exception.GetExceptionMessages());
+                richTextBox.SelectedText = Environment.NewLine;
+                hasDetail = true;
+            }
+
+            //StackTrace
+            if (response.Exception?.StackTrace != null)
+            {
+                richTextBox.SelectionColor = Color.Red;
+                richTextBox.SelectionFont = new Font("Segoe UI", 18);
+                richTextBox.SelectedText = "Stack Trace";
+                richTextBox.SelectedText = Environment.NewLine;
+                richTextBox.SelectionColor = Color.Black;
+                richTextBox.SelectionFont = new Font("Segoe UI", 13);
+                richTextBox.SelectedText = response.Exception.StackTrace;
+                hasDetail = true;
+            }
+
+            return hasDetail ? richTextBox.Rtf : string.Empty;
         }
     }
 }

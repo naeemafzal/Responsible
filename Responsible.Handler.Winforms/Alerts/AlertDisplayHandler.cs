@@ -7,11 +7,10 @@ namespace Responsible.Handler.Winforms.Alerts
 {
     internal static class AlertDisplayHandler
     {
-        internal static DialogResult Alert(string title, string message, string messagesTitle,
-            AlertType alertType,
-            AlertButtons alertButtons)
+        internal static DialogResult Alert(string title, string message, string messagesTitle, string exceptionDetail,
+            AlertType alertType, AlertButtons alertButtons)
         {
-            using (var alertForm = AlertFormFactory.CreateAlertForm(title, message, messagesTitle,
+            using (var alertForm = AlertFormFactory.CreateAlertForm(title, message, messagesTitle, exceptionDetail,
                 alertType, alertButtons))
             {
                 alertForm.ShowDialog();
@@ -20,10 +19,9 @@ namespace Responsible.Handler.Winforms.Alerts
         }
 
         internal static DialogResult Alert(IWin32Window owner, string title, string message, string messagesTitle,
-            AlertType alertType,
-            AlertButtons alertButtons)
+            string exceptionDetail, AlertType alertType, AlertButtons alertButtons)
         {
-            using (var alertForm = AlertFormFactory.CreateAlertForm(title, message, messagesTitle,
+            using (var alertForm = AlertFormFactory.CreateAlertForm(title, message, messagesTitle, exceptionDetail,
                 alertType, alertButtons))
             {
                 alertForm.ShowDialog(owner);
@@ -32,10 +30,9 @@ namespace Responsible.Handler.Winforms.Alerts
         }
 
         internal static DialogResult Alert(string title, List<string> messages, string messagesTitle,
-            AlertType alertType,
-            AlertButtons alertButtons)
+            string exceptionDetail, AlertType alertType, AlertButtons alertButtons)
         {
-            using (var alertForm = AlertFormFactory.CreateAlertForm(title, SingleMessage(messages), messagesTitle,
+            using (var alertForm = AlertFormFactory.CreateAlertForm(title, SingleMessage(messages), messagesTitle, exceptionDetail,
                 alertType, alertButtons))
             {
                 alertForm.ShowDialog();
@@ -43,11 +40,10 @@ namespace Responsible.Handler.Winforms.Alerts
             }
         }
 
-        internal static DialogResult Alert(IWin32Window owner, string title, List<string> messages, string messagesTitle,
-            AlertType alertType,
-            AlertButtons alertButtons)
+        internal static DialogResult Alert(IWin32Window owner, string title, List<string> messages,
+            string messagesTitle, string exceptionDetail, AlertType alertType, AlertButtons alertButtons)
         {
-            using (var alertForm = AlertFormFactory.CreateAlertForm(title, SingleMessage(messages), messagesTitle,
+            using (var alertForm = AlertFormFactory.CreateAlertForm(title, SingleMessage(messages), messagesTitle, exceptionDetail,
                 alertType, alertButtons))
             {
                 alertForm.ShowDialog(owner);

@@ -187,7 +187,8 @@ namespace Responsible.Handler.Winforms.AlertForms
                 {
                     if (CanRetry && !Response.Cancelled)
                     {
-                        var retrySelection = AlertDisplayHandler.Alert(this, FormTitle, Response.Messages.ToList(), Response.Title,
+                        var retrySelection = AlertDisplayHandler.Alert(this, FormTitle, Response.Messages.ToList(),
+                            Response.Title, SweetAlerts.ExceptionDetail(Response),
                             AlertType.Error, AlertButtons.RetryCancel);
                         if (retrySelection != DialogResult.Retry) return;
                         continue;
