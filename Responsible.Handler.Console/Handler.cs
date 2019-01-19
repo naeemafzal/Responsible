@@ -16,14 +16,14 @@ namespace Responsible.Handler.Console
         /// <param name="showSuccessMessage">Defines if the <see cref="IResponse.Success"/> is true then show a success message</param>
         /// <param name="ignoreResponseMessage">If <see cref="IResponse.Success"/> is true and ignoreResponseMessage is also true then messages from response are ignored</param>
         /// <param name="successMessage">If <see cref="IResponse.Success"/> and ignoreResponseMessage are true then successMessage is displayed</param>
-        public static void HandleResponse(string operationTitle, IResponse response, bool showSuccessMessage = false,
+        public static bool HandleResponse(string operationTitle, IResponse response, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            var consoleTextColour =  System.Console.ForegroundColor;
+            var consoleTextColour = System.Console.ForegroundColor;
             if (response == null)
             {
                 WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}Provided response is null.", ConsoleColor.Red, consoleTextColour);
-                return;
+                return false;
             }
 
             var message = response.SingleMessage;
@@ -36,12 +36,12 @@ namespace Responsible.Handler.Console
                 }
 
                 WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}{message}", ConsoleColor.Red, consoleTextColour);
-                return;
+                return false;
             }
 
             if (!showSuccessMessage)
             {
-                return;
+                return true;
             }
 
             if (ignoreResponseMessage)
@@ -50,6 +50,42 @@ namespace Responsible.Handler.Console
             }
 
             WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}{message}", ConsoleColor.Green, consoleTextColour);
+            return true;
+        }
+
+        /// <summary>
+        /// Writes a message on Console
+        /// </summary>
+        /// <param name="title">Title of the message</param>
+        /// <param name="message">The message</param>
+        /// <param name="isErrorMessage">Flag to specify if the message is an error message</param>
+        public static void WriteMessage(string title, string message, bool isErrorMessage)
+        {
+            var consoleTextColour = System.Console.ForegroundColor;
+            var messageColour = isErrorMessage ? ConsoleColor.Red : ConsoleColor.Green;
+            WriteColourfullMessages($"{title}:{Environment.NewLine}{message}", messageColour, consoleTextColour);
+        }
+
+        /// <summary>
+        /// Writes a message on Console
+        /// </summary>
+        /// <param name="message">The message</param>
+        /// <param name="isErrorMessage">Flag to specify if the message is an error message</param>
+        public static void WriteMessage(string message, bool isErrorMessage)
+        {
+            var consoleTextColour = System.Console.ForegroundColor;
+            var messageColour = isErrorMessage ? ConsoleColor.Red : ConsoleColor.Green;
+            WriteColourfullMessages(message, messageColour, consoleTextColour);
+        }
+
+        /// <summary>
+        /// Writes a message on Console
+        /// </summary>
+        /// <param name="message">The message</param>
+        public static void WriteMessage(string message)
+        {
+            var consoleTextColour = System.Console.ForegroundColor;
+            WriteColourfullMessages(message, ConsoleColor.Green, consoleTextColour);
         }
 
         private static void WriteColourfullMessages(string message, ConsoleColor textColour, ConsoleColor defaulColour)
