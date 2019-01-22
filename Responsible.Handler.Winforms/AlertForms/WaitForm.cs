@@ -13,6 +13,8 @@ namespace Responsible.Handler.Winforms.AlertForms
 {
     internal abstract class WaitForm : RoundForm
     {
+        #region Internal Properties
+
         internal object ProgressObject { get; set; }
         internal CancellationTokenSource CancellationTokenSource { get; set; }
         internal bool CanRetry { get; set; }
@@ -24,13 +26,17 @@ namespace Responsible.Handler.Winforms.AlertForms
         internal string FormTitle { get; set; }
         internal Bitmap FormImage { get; set; }
 
+        #endregion
 
+        
         protected WaitForm()
         {
             Load += AlertForm_Load;
             Shown += AlertForm_Shown;
             FormClosing += WaitForm_FormClosing;
         }
+
+        #region Form Events
 
         private void WaitForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -46,7 +52,21 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         private void AlertForm_Load(object sender, EventArgs e)
         {
-            StartPosition = Owner == null ? FormStartPosition.CenterScreen : FormStartPosition.CenterParent;
+            AddCancelButton();
+            AddImageBox(FormImage);
+            AddTitleLabel(FormTitle);
+            AddProgress();
+
+            RenderForm();
+            CentreWindow();
+        }
+
+        #endregion
+        
+        #region Cancellation Handling
+
+        private void AddCancelButton()
+        {
             if (CancellationTokenSource != null)
             {
                 var cancelButton = AlertStaticButtons.CancelButton();
@@ -67,22 +87,14 @@ namespace Responsible.Handler.Winforms.AlertForms
                 roundedCancelButton.Click += CancelButton_Click;
                 AddButtonsLayoutWithCancelButton(roundedCancelButton);
             }
-
-            AddImageBox(FormImage);
-            AddTitleLabel(FormTitle);
-
-            try
-            {
-                AddProgress();
-            }
-            catch
-            {
-                // ignored
-            }
-
-            RenderForm();
-            Refresh();
         }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            CancellationTokenSource.Cancel();
+        }
+
+        #endregion
 
         #region Progress Handling
 
@@ -173,27 +185,44 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         #endregion
 
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
-            CancellationTokenSource.Cancel();
-        }
+        #region Process Execution
 
         private async Task ExecuteAsync()
         {
             while (true)
             {
+                Visible = true;
                 Response = await ExecuteRequestAsync();
+                Visible = false;
                 if (!Response.Success)
                 {
-                    if (CanRetry && !Response.Cancelled)
+                    if (CanRetry)
                     {
+                        var buttons = Response.Cancelled ? AlertButtons.Ok : AlertButtons.RetryCancel;
                         var retrySelection = AlertDisplayHandler.Alert(this, FormTitle, Response.Messages.ToList(),
                             Response.Title, SweetAlerts.ExceptionDetail(Response),
-                            AlertType.Error, AlertButtons.RetryCancel);
+                            AlertType.Error, buttons);
+
+                        //Break if operation was cancelled
+                        if (Response.Cancelled)
+                        {
+                            break;
+                        }
+
                         if (retrySelection != DialogResult.Retry) return;
-                        MessagesRichTextBox.Text = string.Empty;
+                        if (MessagesRichTextBox != null)
+                        {
+                            MessagesRichTextBox.Text = string.Empty;
+                        }
+
                         continue;
                     }
+                }
+
+                //Break if operation was cancelled
+                if (Response.Cancelled)
+                {
+                    break;
                 }
 
                 SweetAlerts.AlertResponse(this, FormTitle, Response, ShowSuccessMessage, IgnoreResponseMessage,
@@ -203,5 +232,7 @@ namespace Responsible.Handler.Winforms.AlertForms
         }
 
         protected abstract Task<IResponse> ExecuteRequestAsync();
+
+        #endregion
     }
 }

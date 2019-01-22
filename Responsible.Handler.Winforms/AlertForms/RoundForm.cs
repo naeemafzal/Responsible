@@ -12,32 +12,48 @@ namespace Responsible.Handler.Winforms.AlertForms
 {
     internal abstract class RoundForm : Form
     {
+        #region Protected Properties
+
+        //Main Container
         protected Panel ContainerPanel { get; private set; }
         protected Panel ImagePanel { get; private set; }
 
+        //Title
         protected Panel TitlePanel { get; private set; }
         protected Label TitleLabel { get; private set; }
 
+        //Progress
         protected Panel ProgressCounterPanel { get; private set; }
         protected Label ProgressCounterLabel { get; private set; }
         protected bool IncludeProgressCounterPanel { get; private set; }
 
+        //Messages
         protected Panel MessagesPanel { get; private set; }
         protected RichTextBox MessagesRichTextBox { get; private set; }
         protected bool IncludeMessagesPanel { get; private set; }
 
+        //Buttons
         protected Panel ButtonsTableLayoutPanel { get; private set; }
         protected TableLayoutPanel ButtonsTableLayout { get; private set; }
         protected bool IncludeButtonsTableLayoutPanel { get; private set; }
 
         internal SystemSound SystemSound { get; set; }
-
         internal bool CanFormBeClosed { get; set; }
 
+        #endregion
+
+        #region Private Properties
 
         private readonly System.ComponentModel.IContainer components = null;
 
-        #region Private Methods
+        #endregion
+
+        protected RoundForm()
+        {
+            InitForm();
+        }
+
+        #region Rounding Form
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
@@ -56,14 +72,56 @@ namespace Responsible.Handler.Winforms.AlertForms
             Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
         }
 
+        #endregion
+
+        #region Centering Form
+
+        private struct Rect
+        {
+            public int Left;        // x position of upper-left corner
+            public int Top;         // y position of upper-left corner
+            public int Right;       // x position of lower-right corner
+            public int Bottom;      // y position of lower-right corner
+        }
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int wFlags);
+
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(HandleRef hwnd, out Rect lpRect);
+
+        private void CentreWindow(IntPtr handle, Size monitorDimensions)
+        {
+            var rect = new Rect{ Left = 0, Right = 0, Top = 0, Bottom = 0 };
+            GetWindowRect(new HandleRef(this, handle), out rect);
+
+            var x1Pos = monitorDimensions.Width / 2 - (rect.Right - rect.Left) / 2;
+            var x2Pos = rect.Right - rect.Left;
+            var y1Pos = monitorDimensions.Height / 2 - (rect.Bottom - rect.Top) / 2;
+            var y2Pos = rect.Bottom - rect.Top;
+
+            SetWindowPos(handle, 0, x1Pos, y1Pos, x2Pos, y2Pos, 0);
+        }
+
+        private Size GetMonitorDimensions()
+        {
+            return SystemInformation.PrimaryMonitorSize;
+        }
+
+        protected void CentreWindow()
+        {
+            CentreWindow(Handle, GetMonitorDimensions());
+        }
+
+        #endregion
+
+        #region Private Methods
+
         private void InitForm()
         {
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             Margin = new Padding(4, 5, 4, 5);
-
-
-            StartPosition = Owner == null ? FormStartPosition.CenterScreen : FormStartPosition.CenterParent;
 
             BackColor = Color.FromArgb(254, 252, 254);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -71,13 +129,12 @@ namespace Responsible.Handler.Winforms.AlertForms
             Margin = new Padding(4, 5, 4, 5);
 
             DoubleBuffered = true;
-
             SetHeight(new Size(600, 250));
 
             SetRounForm();
             AddContainerPanel();
-            FormClosing += RoundForm_FormClosing;
             Shown += RoundForm_Shown;
+            FormClosing += RoundForm_FormClosing;
         }
 
         private void AddContainerPanel()
@@ -92,27 +149,6 @@ namespace Responsible.Handler.Winforms.AlertForms
             Controls.Add(ContainerPanel);
         }
 
-        #endregion
-
-        protected RoundForm()
-        {
-            InitForm();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                components?.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private void RoundForm_Shown(object sender, EventArgs e)
-        {
-            PlaySound();
-        }
-
         private void PlaySound()
         {
             try
@@ -123,11 +159,6 @@ namespace Responsible.Handler.Winforms.AlertForms
             {
                 // ignored
             }
-        }
-
-        private void RoundForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = !CanFormBeClosed;
         }
 
         private void SetHeight(Size size)
@@ -145,6 +176,19 @@ namespace Responsible.Handler.Winforms.AlertForms
             MaximumSize = size;
             MinimumSize = size;
             SetRounForm();
+        }
+
+        #endregion
+
+        #region Protected Methods
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                components?.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         protected void AddImageBox(Bitmap image)
@@ -207,6 +251,9 @@ namespace Responsible.Handler.Winforms.AlertForms
                 AutoSize = false
             };
 
+            TitleLabel.MouseDown += TitleLabel_MouseDown;
+            TitleLabel.MouseUp += TitleLabel_MouseUp;
+            TitleLabel.MouseMove += TitleLabel_MouseMove;
             TitlePanel.Controls.Add(TitleLabel);
         }
 
@@ -235,6 +282,45 @@ namespace Responsible.Handler.Winforms.AlertForms
             ProgressCounterPanel.Controls.Add(ProgressCounterLabel);
             IncludeProgressCounterPanel = true;
         }
+
+        protected void RenderForm()
+        {
+            if (IncludeButtonsTableLayoutPanel)
+            {
+                ContainerPanel.Controls.Add(ButtonsTableLayoutPanel);
+            }
+
+            if (IncludeMessagesPanel)
+            {
+                ContainerPanel.Controls.Add(MessagesPanel);
+            }
+
+            if (IncludeProgressCounterPanel)
+            {
+                ContainerPanel.Controls.Add(ProgressCounterPanel);
+            }
+
+            ContainerPanel.Controls.Add(ImagePanel);
+            ContainerPanel.Controls.Add(TitlePanel);
+        }
+
+        #endregion
+
+        #region Form Events
+
+        private void RoundForm_Shown(object sender, EventArgs e)
+        {
+            PlaySound();
+        }
+
+        private void RoundForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = !CanFormBeClosed;
+        }
+
+        #endregion
+
+        #region Form Buttons
 
         protected void AddButtonsLayout(List<AlertButtonViewModel> buttons)
         {
@@ -336,27 +422,8 @@ namespace Responsible.Handler.Winforms.AlertForms
             Close();
         }
 
-        protected void RenderForm()
-        {
-            if (IncludeButtonsTableLayoutPanel)
-            {
-                ContainerPanel.Controls.Add(ButtonsTableLayoutPanel);
-            }
-
-            if (IncludeMessagesPanel)
-            {
-                ContainerPanel.Controls.Add(MessagesPanel);
-            }
-
-            if (IncludeProgressCounterPanel)
-            {
-                ContainerPanel.Controls.Add(ProgressCounterPanel);
-            }
-
-            ContainerPanel.Controls.Add(ImagePanel);
-            ContainerPanel.Controls.Add(TitlePanel);
-        }
-
+        #endregion
+        
         #region RicherTextBox
 
         protected void AddMessageBox()
@@ -409,6 +476,33 @@ namespace Responsible.Handler.Winforms.AlertForms
             //Scroll to end
             MessagesRichTextBox.SelectionStart = MessagesRichTextBox.Text.Length;
             MessagesRichTextBox.ScrollToCaret();
+        }
+
+        #endregion
+
+        #region Panel Dragging
+
+        private bool _dragging;
+        private Point _startPoint = new Point(0, 0);
+
+        private void TitleLabel_MouseDown(object sender, MouseEventArgs e)
+        {
+            _dragging = true;
+            _startPoint = new Point(e.X, e.Y);
+        }
+
+        private void TitleLabel_MouseUp(object sender, MouseEventArgs e)
+        {
+            _dragging = false;
+        }
+
+        private void TitleLabel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_dragging)
+            {
+                var p = PointToScreen(e.Location);
+                Location = new Point(p.X - _startPoint.X, p.Y - _startPoint.Y);
+            }
         }
 
         #endregion

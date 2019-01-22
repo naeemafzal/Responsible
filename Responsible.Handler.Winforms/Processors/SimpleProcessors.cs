@@ -25,21 +25,28 @@ namespace Responsible.Handler.Winforms.Processors
                 return ResponseFactory.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
-            using (var form = new ActionExecutor
+            try
             {
-                FormTitle = processor.OperationTitle,
-                CanRetry = processor.CanRetry,
-                ShowSuccessMessage = processor.ReportSuccess,
-                IgnoreResponseMessage = processor.IgnoreResponseMessage,
-                SuccessMessage = processor.SuccessMessage,
-                Action = action,
-                CancellationTokenSource = processor.CancellationTokenSource,
-                FormImage = Properties.Resources.rolling,
-                ProgressObject = processor.ProgressObject
-            })
+                using (var form = new ActionExecutor
+                {
+                    FormTitle = processor.OperationTitle,
+                    CanRetry = processor.CanRetry,
+                    ShowSuccessMessage = processor.ReportSuccess,
+                    IgnoreResponseMessage = processor.IgnoreResponseMessage,
+                    SuccessMessage = processor.SuccessMessage,
+                    Action = action,
+                    CancellationTokenSource = processor.CancellationTokenSource,
+                    FormImage = Properties.Resources.rolling,
+                    ProgressObject = processor.ProgressObject
+                })
+                {
+                    form.ShowDialog();
+                    return form.Response;
+                }
+            }
+            catch (Exception ex)
             {
-                form.ShowDialog();
-                return form.Response;
+                return ResponseFactory.Exception(ex);
             }
         }
 
@@ -58,21 +65,28 @@ namespace Responsible.Handler.Winforms.Processors
                 return ResponseFactory.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
-            using (var form = new FuncOutputResponseExecutor
+            try
             {
-                FormTitle = processor.OperationTitle,
-                CanRetry = processor.CanRetry,
-                ShowSuccessMessage = processor.ReportSuccess,
-                IgnoreResponseMessage = processor.IgnoreResponseMessage,
-                SuccessMessage = processor.SuccessMessage,
-                Func = func,
-                CancellationTokenSource = processor.CancellationTokenSource,
-                FormImage = Properties.Resources.rolling,
-                ProgressObject = processor.ProgressObject
-            })
+                using (var form = new FuncOutputResponseExecutor
+                {
+                    FormTitle = processor.OperationTitle,
+                    CanRetry = processor.CanRetry,
+                    ShowSuccessMessage = processor.ReportSuccess,
+                    IgnoreResponseMessage = processor.IgnoreResponseMessage,
+                    SuccessMessage = processor.SuccessMessage,
+                    Func = func,
+                    CancellationTokenSource = processor.CancellationTokenSource,
+                    FormImage = Properties.Resources.rolling,
+                    ProgressObject = processor.ProgressObject
+                })
+                {
+                    form.ShowDialog();
+                    return form.Response;
+                }
+            }
+            catch (Exception ex)
             {
-                form.ShowDialog();
-                return form.Response;
+                return ResponseFactory.Exception(ex);
             }
         }
 
@@ -91,21 +105,28 @@ namespace Responsible.Handler.Winforms.Processors
                 return ResponseFactory<TOutput>.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
-            using (var form = new FuncOutputExecutor<TOutput>()
+            try
             {
-                FormTitle = processor.OperationTitle,
-                CanRetry = processor.CanRetry,
-                ShowSuccessMessage = processor.ReportSuccess,
-                IgnoreResponseMessage = processor.IgnoreResponseMessage,
-                SuccessMessage = processor.SuccessMessage,
-                Func = func,
-                CancellationTokenSource = processor.CancellationTokenSource,
-                FormImage = Properties.Resources.rolling,
-                ProgressObject = processor.ProgressObject
-            })
+                using (var form = new FuncOutputExecutor<TOutput>()
+                {
+                    FormTitle = processor.OperationTitle,
+                    CanRetry = processor.CanRetry,
+                    ShowSuccessMessage = processor.ReportSuccess,
+                    IgnoreResponseMessage = processor.IgnoreResponseMessage,
+                    SuccessMessage = processor.SuccessMessage,
+                    Func = func,
+                    CancellationTokenSource = processor.CancellationTokenSource,
+                    FormImage = Properties.Resources.rolling,
+                    ProgressObject = processor.ProgressObject
+                })
+                {
+                    form.ShowDialog();
+                    return form.Response as IResponse<TOutput>;
+                }
+            }
+            catch (Exception ex)
             {
-                form.ShowDialog();
-                return form.Response as IResponse<TOutput>;
+                return ResponseFactory<TOutput>.Exception(ex);
             }
         }
 
@@ -124,21 +145,28 @@ namespace Responsible.Handler.Winforms.Processors
                 return ResponseFactory<TOutput>.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
-            using (var form = new FuncOutputResponseExecutor<TOutput>()
+            try
             {
-                FormTitle = processor.OperationTitle,
-                CanRetry = processor.CanRetry,
-                ShowSuccessMessage = processor.ReportSuccess,
-                IgnoreResponseMessage = processor.IgnoreResponseMessage,
-                SuccessMessage = processor.SuccessMessage,
-                Func = func,
-                CancellationTokenSource = processor.CancellationTokenSource,
-                FormImage = Properties.Resources.rolling,
-                ProgressObject = processor.ProgressObject
-            })
+                using (var form = new FuncOutputResponseExecutor<TOutput>()
+                {
+                    FormTitle = processor.OperationTitle,
+                    CanRetry = processor.CanRetry,
+                    ShowSuccessMessage = processor.ReportSuccess,
+                    IgnoreResponseMessage = processor.IgnoreResponseMessage,
+                    SuccessMessage = processor.SuccessMessage,
+                    Func = func,
+                    CancellationTokenSource = processor.CancellationTokenSource,
+                    FormImage = Properties.Resources.rolling,
+                    ProgressObject = processor.ProgressObject
+                })
+                {
+                    form.ShowDialog();
+                    return form.Response as IResponse<TOutput>;
+                }
+            }
+            catch (Exception ex)
             {
-                form.ShowDialog();
-                return form.Response as IResponse<TOutput>;
+                return ResponseFactory<TOutput>.Exception(ex);
             }
         }
     }

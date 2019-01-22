@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Responsible.Core;
 using Responsible.Handler.Winforms.Alerts;
 
 namespace Responsible.Handler.Winforms.AlertForms
 {
     internal class AlertForm : RoundForm
     {
+        #region Internal Properties
+
         internal string FormTitle { get; set; }
         internal string MessagesTitle { get; set; }
         internal Bitmap FormImage { get; set; }
@@ -18,9 +19,19 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         internal List<AlertButtonViewModel> FormButtons = new List<AlertButtonViewModel>();
 
+        #endregion
+
         public AlertForm()
         {
             Load += AlertForm_Load;
+            Shown += AlertForm_Shown;
+        }
+
+        #region Form Events
+
+        private void AlertForm_Shown(object sender, EventArgs e)
+        {
+
         }
 
         private void AlertFormControl_KeyDown(object sender, KeyEventArgs e)
@@ -31,9 +42,8 @@ namespace Responsible.Handler.Winforms.AlertForms
             }
         }
 
-        private void AlertForm_Load(object sender, System.EventArgs e)
+        private void AlertForm_Load(object sender, EventArgs e)
         {
-            StartPosition = Owner == null ? FormStartPosition.CenterScreen : FormStartPosition.CenterParent;
             if (!string.IsNullOrWhiteSpace(MessagesTitle))
             {
                 AddMessageBox();
@@ -54,9 +64,13 @@ namespace Responsible.Handler.Winforms.AlertForms
             AddTitleLabel(FormTitle);
 
             RenderForm();
-
             SetKeyPressEvent(this);
+            CentreWindow();
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void SaflySetFormMessage()
         {
@@ -92,5 +106,6 @@ namespace Responsible.Handler.Winforms.AlertForms
             }
         }
 
+        #endregion
     }
 }
