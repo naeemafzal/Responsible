@@ -92,7 +92,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         private void CentreWindow(IntPtr handle, Size monitorDimensions)
         {
-            var rect = new Rect{ Left = 0, Right = 0, Top = 0, Bottom = 0 };
+            var rect = new Rect { Left = 0, Right = 0, Top = 0, Bottom = 0 };
             GetWindowRect(new HandleRef(this, handle), out rect);
 
             var x1Pos = monitorDimensions.Width / 2 - (rect.Right - rect.Left) / 2;
@@ -423,7 +423,7 @@ namespace Responsible.Handler.Winforms.AlertForms
         }
 
         #endregion
-        
+
         #region RicherTextBox
 
         protected void AddMessageBox()
@@ -456,7 +456,7 @@ namespace Responsible.Handler.Winforms.AlertForms
             }
         }
 
-        protected void AddTextToRichTextBox(string text, Font font, Color color, HorizontalAlignment horizontalAlignment, bool append = true)
+        protected void AddTextToRichTextBox(string text, Font font, Color color, HorizontalAlignment horizontalAlignment, bool append = true, bool insertAtBegining = false)
         {
             if (!append)
             {
@@ -466,6 +466,16 @@ namespace Responsible.Handler.Winforms.AlertForms
             if (string.IsNullOrWhiteSpace(text))
             {
                 return;
+            }
+
+            if (insertAtBegining)
+            {
+                MessagesRichTextBox.SelectionStart = 0;
+                MessagesRichTextBox.SelectionLength = 0;
+            }
+            else
+            {
+                MessagesRichTextBox.SelectionStart = MessagesRichTextBox.Text.Length;
             }
 
             MessagesRichTextBox.SelectionFont = font;

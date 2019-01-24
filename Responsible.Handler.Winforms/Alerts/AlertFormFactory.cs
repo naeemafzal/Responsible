@@ -10,7 +10,7 @@ namespace Responsible.Handler.Winforms.Alerts
     internal class AlertFormFactory
     {
         internal static AlertForm CreateAlertForm(string title, string message,
-            string messagesTitle, string exceptionDetail, 
+            string messagesTitle, string exceptionDetail, string rtf,
             AlertType alertType, AlertButtons alertButtons)
         {
             var image = GetGifImage(alertType);
@@ -29,6 +29,7 @@ namespace Responsible.Handler.Winforms.Alerts
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
                             ExceptionDetail = exceptionDetail,
+                            Rtf = rtf,
                             FormButtons = new List<AlertButtonViewModel>
                             {
                                 AlertStaticButtons.OkButton(GetOkButtonPenColour(alertType))
@@ -46,6 +47,7 @@ namespace Responsible.Handler.Winforms.Alerts
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
                             ExceptionDetail = exceptionDetail,
+                            Rtf = rtf,
                             FormButtons = new List<AlertButtonViewModel>
                             {
                                 AlertStaticButtons.OkButton(),
@@ -64,6 +66,7 @@ namespace Responsible.Handler.Winforms.Alerts
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
                             ExceptionDetail = exceptionDetail,
+                            Rtf = rtf,
                             FormButtons = new List<AlertButtonViewModel>
                             {
                                 AlertStaticButtons.OkButton(),
@@ -83,6 +86,7 @@ namespace Responsible.Handler.Winforms.Alerts
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
                             ExceptionDetail = exceptionDetail,
+                            Rtf = rtf,
                             FormButtons = new List<AlertButtonViewModel>
                             {
                                 AlertStaticButtons.YesButton(),
@@ -102,6 +106,7 @@ namespace Responsible.Handler.Winforms.Alerts
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
                             ExceptionDetail = exceptionDetail,
+                            Rtf = rtf,
                             FormButtons = new List<AlertButtonViewModel>
                             {
                                 AlertStaticButtons.YesButton(),
@@ -120,6 +125,7 @@ namespace Responsible.Handler.Winforms.Alerts
                             SystemSound = sound,
                             IsErrorAlert = isErrorAllert,
                             ExceptionDetail = exceptionDetail,
+                            Rtf = rtf,
                             FormButtons = new List<AlertButtonViewModel>
                             {
                                 AlertStaticButtons.RetryButton(),

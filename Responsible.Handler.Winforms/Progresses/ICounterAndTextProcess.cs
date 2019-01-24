@@ -1,7 +1,7 @@
 ﻿namespace Responsible.Handler.Winforms.Progresses
 {
     /// <summary>
-    /// An interface to be used when reporting Count Progress(5/50) & text messages
+    /// An interface to be used when reporting Count Progress(5/50) And text messages
     /// </summary>
     public interface ICounterAndTextProcess
     {

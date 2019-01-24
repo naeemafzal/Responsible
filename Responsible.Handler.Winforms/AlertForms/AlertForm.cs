@@ -16,6 +16,7 @@ namespace Responsible.Handler.Winforms.AlertForms
         internal string FormMessage { get; set; }
         internal bool IsErrorAlert { get; set; }
         internal string ExceptionDetail { get; set; }
+        internal string Rtf { get; set; }
 
         internal List<AlertButtonViewModel> FormButtons = new List<AlertButtonViewModel>();
 
@@ -44,16 +45,21 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         private void AlertForm_Load(object sender, EventArgs e)
         {
+            if (!string.IsNullOrWhiteSpace(Rtf) && Rtf.ToLower().Contains("{\\rtf1"))
+            {
+                AddMessageBox();
+                MessagesRichTextBox.Rtf = Rtf;
+            }
+
             if (!string.IsNullOrWhiteSpace(MessagesTitle))
             {
                 AddMessageBox();
-
                 if (!string.IsNullOrWhiteSpace(MessagesTitle) &&
                     MessagesTitle.ToLower() !=
                     (!string.IsNullOrWhiteSpace(FormTitle) ? FormTitle : string.Empty).ToLower())
                 {
-                    var color = IsErrorAlert ? Color.Red : Color.Black;
-                    AddTextToRichTextBox(MessagesTitle, new Font("Segoe UI", 20), color, HorizontalAlignment.Center);
+                    var color = IsErrorAlert ? Color.Red : Color.Green;
+                    AddTextToRichTextBox(MessagesTitle, new Font("Segoe UI", 20), color, HorizontalAlignment.Center, true, true);
                 }
             }
 
@@ -64,6 +70,12 @@ namespace Responsible.Handler.Winforms.AlertForms
             AddTitleLabel(FormTitle);
 
             RenderForm();
+            if (MessagesRichTextBox != null)
+            {
+                MessagesRichTextBox.SelectionStart = 0;
+                MessagesRichTextBox.SelectionLength = 0;
+                MessagesRichTextBox.ScrollToCaret();
+            }
             SetKeyPressEvent(this);
             CentreWindow();
         }
@@ -90,7 +102,7 @@ namespace Responsible.Handler.Winforms.AlertForms
                 }
             }
 
-            var color = IsErrorAlert ? Color.Red : Color.Black;
+            var color = IsErrorAlert ? Color.Red : Color.Green;
             AddTextToRichTextBox(FormMessage, new Font("Segoe UI", 13), color, HorizontalAlignment.Center);
         }
 

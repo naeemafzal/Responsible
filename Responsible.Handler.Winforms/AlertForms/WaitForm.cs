@@ -28,7 +28,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         #endregion
 
-        
+
         protected WaitForm()
         {
             Load += AlertForm_Load;
@@ -62,7 +62,7 @@ namespace Responsible.Handler.Winforms.AlertForms
         }
 
         #endregion
-        
+
         #region Cancellation Handling
 
         private void AddCancelButton()
@@ -225,8 +225,19 @@ namespace Responsible.Handler.Winforms.AlertForms
                     break;
                 }
 
-                SweetAlerts.AlertResponse(this, FormTitle, Response, ShowSuccessMessage, IgnoreResponseMessage,
-                    SuccessMessage);
+                var rtf = MessagesRichTextBox != null &&
+                          !string.IsNullOrWhiteSpace(MessagesRichTextBox.Text)
+                    ? MessagesRichTextBox.Rtf
+                    : string.Empty;
+
+                var successMessages = Response.Messages.ToList();
+                if (!successMessages.Any())
+                {
+                    successMessages.Add("Processed successfully");
+                }
+
+                AlertDisplayHandler.AlertRtf(this, FormTitle, successMessages, Response.Title,
+                    string.Empty, rtf, AlertType.Success, AlertButtons.Ok);
                 break;
             }
         }
