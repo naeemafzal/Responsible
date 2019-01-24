@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -236,8 +237,19 @@ namespace Responsible.Handler.Winforms.AlertForms
                     successMessages.Add("Processed successfully");
                 }
 
-                AlertDisplayHandler.AlertRtf(this, FormTitle, successMessages, Response.Title,
-                    string.Empty, rtf, AlertType.Success, AlertButtons.Ok);
+                if (ShowSuccessMessage)
+                {
+                    if (IgnoreResponseMessage)
+                    {
+                        successMessages = new List<string>
+                        {
+                            !string.IsNullOrWhiteSpace(SuccessMessage) ? SuccessMessage : "Processed successfully"
+                        };
+                    }
+
+                    AlertDisplayHandler.AlertRtf(this, FormTitle, successMessages, Response.Title,
+                        string.Empty, rtf, AlertType.Success, AlertButtons.Ok);
+                }
                 break;
             }
         }
