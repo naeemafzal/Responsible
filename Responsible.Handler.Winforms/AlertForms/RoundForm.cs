@@ -259,28 +259,31 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         protected void AddProgressCounterLabel()
         {
-            AddToHeight(50);
-            ProgressCounterPanel = new Panel
+            if (!IncludeProgressCounterPanel)
             {
-                Name = "ProgressCounterPanel",
-                Dock = DockStyle.Top,
-                BackColor = Color.FromArgb(254, 252, 254),
-                Size = new Size(140, 50)
-            };
+                AddToHeight(50);
+                ProgressCounterPanel = new Panel
+                {
+                    Name = "ProgressCounterPanel",
+                    Dock = DockStyle.Top,
+                    BackColor = Color.FromArgb(254, 252, 254),
+                    Size = new Size(140, 50)
+                };
 
-            ProgressCounterLabel = new Label
-            {
-                Name = "TitleLabel",
-                Text = "",
-                TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Fill,
-                ForeColor = Color.DeepPink,
-                Font = new Font("Segoe UI", 20, FontStyle.Bold),
-                AutoSize = false
-            };
+                ProgressCounterLabel = new Label
+                {
+                    Name = "TitleLabel",
+                    Text = "",
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Dock = DockStyle.Fill,
+                    ForeColor = Color.DeepPink,
+                    Font = new Font("Segoe UI", 20, FontStyle.Bold),
+                    AutoSize = false
+                };
 
-            ProgressCounterPanel.Controls.Add(ProgressCounterLabel);
-            IncludeProgressCounterPanel = true;
+                ProgressCounterPanel.Controls.Add(ProgressCounterLabel);
+                IncludeProgressCounterPanel = true;
+            }
         }
 
         protected void RenderForm()

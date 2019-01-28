@@ -29,7 +29,6 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         #endregion
 
-
         protected WaitForm()
         {
             Load += AlertForm_Load;
@@ -104,43 +103,92 @@ namespace Responsible.Handler.Winforms.AlertForms
             if (ProgressObject != null)
             {
                 var progressObjectType = ProgressObject.GetType().GenericTypeArguments.First().UnderlyingSystemType;
-                var isICounterProgress = progressObjectType == typeof(ICounterProgress) ||
-                                         progressObjectType.GetInterfaces().Contains(typeof(ICounterProgress));
 
-                var isITextProgress = progressObjectType == typeof(ITextProgress) ||
-                                      progressObjectType.GetInterfaces().Contains(typeof(ITextProgress));
+                StandardProgressImpl(progressObjectType);
+                OutputProgressImpl(progressObjectType);
+            }
+        }
 
-                var isICounterAndTextProcess = progressObjectType == typeof(ICounterAndTextProcess) ||
-                                               progressObjectType.GetInterfaces()
-                                                   .Contains(typeof(ICounterAndTextProcess));
+        private void StandardProgressImpl(Type progressObjectType)
+        {
+            var isICounterProgress = progressObjectType == typeof(ICounterProgress) ||
+                                     progressObjectType.GetInterfaces().Contains(typeof(ICounterProgress));
+
+            var isITextProgress = progressObjectType == typeof(ITextProgress) ||
+                                  progressObjectType.GetInterfaces().Contains(typeof(ITextProgress));
+
+            var isICounterAndTextProcess = progressObjectType == typeof(ICounterAndTextProgress) ||
+                                           progressObjectType.GetInterfaces()
+                                               .Contains(typeof(ICounterAndTextProgress));
 
 
-                if (isICounterProgress)
+            if (isICounterProgress)
+            {
+                if (ProgressObject is Progress<ICounterProgress> counterProgress)
                 {
-                    if (ProgressObject is Progress<ICounterProgress> counterProgress)
-                    {
-                        counterProgress.ProgressChanged += CounterProgress_ProgressChanged;
-                        AddProgressCounterLabel();
-                    }
+                    counterProgress.ProgressChanged += CounterProgress_ProgressChanged;
+                    AddProgressCounterLabel();
                 }
+            }
 
-                if (isITextProgress)
+            if (isITextProgress)
+            {
+                if (ProgressObject is Progress<ITextProgress> textProgress)
                 {
-                    if (ProgressObject is Progress<ITextProgress> textProgress)
-                    {
-                        textProgress.ProgressChanged += TextProgress_ProgressChanged;
-                        AddMessageBox();
-                    }
+                    textProgress.ProgressChanged += TextProgress_ProgressChanged;
+                    AddMessageBox();
                 }
+            }
 
-                if (isICounterAndTextProcess)
+            if (isICounterAndTextProcess)
+            {
+                if (ProgressObject is Progress<ICounterAndTextProgress> counterAndTextProgress)
                 {
-                    if (ProgressObject is Progress<ICounterAndTextProcess> counterAndTextProgress)
-                    {
-                        counterAndTextProgress.ProgressChanged += CounterAndTextProgress_ProgressChanged;
-                        AddProgressCounterLabel();
-                        AddMessageBox();
-                    }
+                    counterAndTextProgress.ProgressChanged += CounterAndTextProgress_ProgressChanged;
+                    AddProgressCounterLabel();
+                    AddMessageBox();
+                }
+            }
+        }
+
+        private void OutputProgressImpl(Type progressObjectType)
+        {
+            var isICounterProgress = progressObjectType == typeof(ICounterProgressOutput) ||
+                                     progressObjectType.GetInterfaces().Contains(typeof(ICounterProgressOutput));
+
+            var isITextProgress = progressObjectType == typeof(ITextProgressOutput) ||
+                                  progressObjectType.GetInterfaces().Contains(typeof(ITextProgressOutput));
+
+            var isICounterAndTextProcess = progressObjectType == typeof(ICounterAndTextProgressOutput) ||
+                                           progressObjectType.GetInterfaces()
+                                               .Contains(typeof(ICounterAndTextProgressOutput));
+
+
+            if (isICounterProgress)
+            {
+                if (ProgressObject is Progress<ICounterProgressOutput> counterProgress)
+                {
+                    counterProgress.ProgressChanged += CounterProgress_ProgressChanged;
+                    AddProgressCounterLabel();
+                }
+            }
+
+            if (isITextProgress)
+            {
+                if (ProgressObject is Progress<ITextProgressOutput> textProgress)
+                {
+                    textProgress.ProgressChanged += TextProgress_ProgressChanged;
+                    AddMessageBox();
+                }
+            }
+
+            if (isICounterAndTextProcess)
+            {
+                if (ProgressObject is Progress<ICounterAndTextProgressOutput> counterAndTextProgress)
+                {
+                    counterAndTextProgress.ProgressChanged += CounterAndTextProgress_ProgressChanged;
+                    AddProgressCounterLabel();
+                    AddMessageBox();
                 }
             }
         }
@@ -153,7 +201,7 @@ namespace Responsible.Handler.Winforms.AlertForms
             }
         }
 
-        private void CounterAndTextProgress_ProgressChanged(object sender, ICounterAndTextProcess e)
+        private void CounterAndTextProgress_ProgressChanged(object sender, ICounterAndTextProgress e)
         {
             if (e != null)
             {
@@ -163,6 +211,31 @@ namespace Responsible.Handler.Winforms.AlertForms
         }
 
         private void TextProgress_ProgressChanged(object sender, ITextProgress e)
+        {
+            if (e != null)
+            {
+                UpdateTextProgress(e.Message, e.CurrentMessageOnly);
+            }
+        }
+
+        private void CounterProgress_ProgressChanged(object sender, ICounterProgressOutput e)
+        {
+            if (e != null)
+            {
+                ProgressCounterLabel.Text = $@"{e.Count}/{e.Total}";
+            }
+        }
+
+        private void CounterAndTextProgress_ProgressChanged(object sender, ICounterAndTextProgressOutput e)
+        {
+            if (e != null)
+            {
+                ProgressCounterLabel.Text = $@"{e.Count}/{e.Total}";
+                UpdateTextProgress(e.Message, e.CurrentMessageOnly);
+            }
+        }
+
+        private void TextProgress_ProgressChanged(object sender, ITextProgressOutput e)
         {
             if (e != null)
             {

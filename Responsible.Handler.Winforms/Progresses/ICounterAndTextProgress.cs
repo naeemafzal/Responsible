@@ -1,10 +1,20 @@
 ﻿namespace Responsible.Handler.Winforms.Progresses
 {
     /// <summary>
-    /// To be used reporting text messages
+    /// An interface to be used when reporting Count Progress(5/50) And text messages
     /// </summary>
-    public interface ITextProgress
+    public interface ICounterAndTextProgress
     {
+        /// <summary>
+        /// The current item being processed
+        /// </summary>
+        int Count { get; set; }
+
+        /// <summary>
+        /// The total items to be processed
+        /// </summary>
+        int Total { get; set; }
+
         /// <summary>
         /// The message to report
         /// </summary>
@@ -17,10 +27,20 @@
     }
 
     /// <summary>
-    /// To be used reporting text messages
+    /// An interface to be used when reporting Count Progress(5/50) And text messages
     /// </summary>
-    public interface ITextProgressOutput
+    public interface ICounterAndTextProgressOutput
     {
+        /// <summary>
+        /// The current item being processed
+        /// </summary>
+        int Count { get; set; }
+
+        /// <summary>
+        /// The total items to be processed
+        /// </summary>
+        int Total { get; set; }
+
         /// <summary>
         /// The message to report
         /// </summary>

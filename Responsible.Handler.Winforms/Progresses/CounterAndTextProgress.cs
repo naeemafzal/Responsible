@@ -1,8 +1,14 @@
 ﻿namespace Responsible.Handler.Winforms.Progresses
 {
     /// <inheritdoc />
-    public sealed class TextProgress : ITextProgress
+    public sealed class CounterAndTextProgress : ICounterAndTextProgress
     {
+        /// <inheritdoc />
+        public int Count { get; set; }
+
+        /// <inheritdoc />
+        public int Total { get; set; }
+
         /// <inheritdoc />
         public string Message { get; set; }
 
@@ -11,8 +17,14 @@
     }
 
     /// <inheritdoc />
-    public sealed class TextProgressOutput : ITextProgressOutput
+    public sealed class CounterAndTextProgressOutput : ICounterAndTextProgressOutput
     {
+        /// <inheritdoc />
+        public int Count { get; set; }
+
+        /// <inheritdoc />
+        public int Total { get; set; }
+
         /// <inheritdoc />
         public string Message { get; set; }
 
