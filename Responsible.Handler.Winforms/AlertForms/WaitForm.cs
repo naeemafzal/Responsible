@@ -291,6 +291,13 @@ namespace Responsible.Handler.Winforms.AlertForms
 
                         continue;
                     }
+                    else
+                    {
+                        AlertDisplayHandler.Alert(this, FormTitle, Response.Messages.ToList(),
+                            Response.Title, SweetAlerts.ExceptionDetail(Response),
+                            AlertType.Error, AlertButtons.Ok);
+                        break;
+                    }
                 }
 
                 //Break if operation was cancelled

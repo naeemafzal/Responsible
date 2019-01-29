@@ -15,8 +15,8 @@ namespace Responsible.Core
         /// <param name="exception">The exception to extract messages from</param>
         public static List<string> GetExceptionMessages(this Exception exception)
         {
-            return exception == null ? 
-                new List<string> { "Exception is NULL, could not extract any exception detail" } : 
+            return exception == null ?
+                new List<string> { "Exception is NULL, could not extract any exception detail" } :
                 GetExceptionMessage(exception);
         }
 
@@ -40,6 +40,49 @@ namespace Responsible.Core
                 exceptionMessages.AddRange(innerExceptionMessages);
             }
             return exceptionMessages;
+        }
+
+        /// <summary>
+        /// Checks if the exception or any inner exception is of Type <see cref="OperationCanceledException"/>
+        /// </summary>
+        /// <param name="exception">Exception to use</param>
+        /// <returns></returns>
+        public static bool IsOperationCanceledException(this Exception exception)
+        {
+            if (exception == null)
+            {
+                return false;
+            }
+
+            var exceptionList = GetCombinedExceptions(exception);
+            return exceptionList.Any(x => x.GetType() == typeof(OperationCanceledException));
+        }
+
+        /// <summary>
+        /// Extracts a list of Exceptions from the Given Exception
+        /// </summary>
+        /// <param name="exception">Exception to use</param>
+        /// <returns>List of all the exceptions including inner exception</returns>
+        public static List<Exception> GetCombinedExceptions(this Exception exception)
+        {
+            var exceptions = new List<Exception>();
+            if (exception == null)
+            {
+                return exceptions;
+            }
+
+            exceptions.Add(exception);
+            if (exception.InnerException == null)
+            {
+                return exceptions;
+            }
+
+            var innerExceptions = GetCombinedExceptions(exception.InnerException);
+            if (innerExceptions.Any())
+            {
+                exceptions.AddRange(innerExceptions);
+            }
+            return exceptions;
         }
     }
 }

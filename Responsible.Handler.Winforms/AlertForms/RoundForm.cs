@@ -37,6 +37,9 @@ namespace Responsible.Handler.Winforms.AlertForms
         protected TableLayoutPanel ButtonsTableLayout { get; private set; }
         protected bool IncludeButtonsTableLayoutPanel { get; private set; }
 
+
+        internal Control ParentControl { get; set; }
+        internal Screen CurrentScreen { get; set; }
         internal SystemSound SystemSound { get; set; }
         internal bool CanFormBeClosed { get; set; }
 
@@ -90,10 +93,10 @@ namespace Responsible.Handler.Winforms.AlertForms
         [DllImport("user32.dll")]
         private static extern bool GetWindowRect(HandleRef hwnd, out Rect lpRect);
 
-        private void CentreWindow(IntPtr handle, Size monitorDimensions)
+        private void CentreWindow(object wrapper, IntPtr handle, Size monitorDimensions)
         {
             var rect = new Rect { Left = 0, Right = 0, Top = 0, Bottom = 0 };
-            GetWindowRect(new HandleRef(this, handle), out rect);
+            GetWindowRect(new HandleRef(wrapper, handle), out rect);
 
             var x1Pos = monitorDimensions.Width / 2 - (rect.Right - rect.Left) / 2;
             var x2Pos = rect.Right - rect.Left;
@@ -103,14 +106,25 @@ namespace Responsible.Handler.Winforms.AlertForms
             SetWindowPos(handle, 0, x1Pos, y1Pos, x2Pos, y2Pos, 0);
         }
 
-        private Size GetMonitorDimensions()
+        private void SetMonitorDimensions()
         {
-            return SystemInformation.PrimaryMonitorSize;
+            var screen = Screen.PrimaryScreen;
+            if (ParentControl != null)
+            {
+                screen = Screen.FromControl(ParentControl);
+            }
+
+            CurrentScreen = screen;
         }
 
         protected void CentreWindow()
         {
-            CentreWindow(Handle, GetMonitorDimensions());
+            StartPosition = FormStartPosition.Manual;
+            Location = new Point
+            {
+                X = Math.Max(CurrentScreen.WorkingArea.X, CurrentScreen.WorkingArea.X + (CurrentScreen.WorkingArea.Width - Width) / 2),
+                Y = Math.Max(CurrentScreen.WorkingArea.Y, CurrentScreen.WorkingArea.Y + (CurrentScreen.WorkingArea.Height - Height) / 2)
+            };
         }
 
         #endregion
@@ -133,6 +147,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
             SetRounForm();
             AddContainerPanel();
+            Load += RoundForm_Load;
             Shown += RoundForm_Shown;
             FormClosing += RoundForm_FormClosing;
         }
@@ -305,15 +320,20 @@ namespace Responsible.Handler.Winforms.AlertForms
 
             ContainerPanel.Controls.Add(ImagePanel);
             ContainerPanel.Controls.Add(TitlePanel);
+            SetMonitorDimensions();
         }
 
         #endregion
 
         #region Form Events
 
-        private void RoundForm_Shown(object sender, EventArgs e)
+        private void RoundForm_Load(object sender, EventArgs e)
         {
             PlaySound();
+        }
+
+        private void RoundForm_Shown(object sender, EventArgs e)
+        {
         }
 
         private void RoundForm_FormClosing(object sender, FormClosingEventArgs e)

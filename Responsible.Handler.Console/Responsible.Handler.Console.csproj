@@ -4,7 +4,7 @@
     <TargetFrameworks>net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Naeem Afzal</Authors>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>Handles Responses created by Responsible.Core for Console Applications.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Responsible.Core" Version="3.0.14" />
+    <PackageReference Include="Responsible.Core" Version="3.0.15" />
   </ItemGroup>
 
 </Project>

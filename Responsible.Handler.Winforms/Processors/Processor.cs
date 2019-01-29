@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows.Forms;
 using Responsible.Core;
 
 namespace Responsible.Handler.Winforms.Processors
@@ -33,8 +34,30 @@ namespace Responsible.Handler.Winforms.Processors
             SuccessMessage = successMessage;
         }
 
+        /// <summary>
+        /// Initialise Processor
+        /// </summary>
+        /// <param name="parentControl"></param>
+        /// <param name="operationTitle">Title of the Processor</param>
+        /// <param name="retryable">A flag to allow asking to retry when execution fails</param>
+        /// <param name="showSuccessMessage">Show message when execution passes</param>
+        /// <param name="ignoreResponseMessage">Ignore messages <see cref="IResponse.Messages"/> returned by the response</param>
+        /// <param name="successMessage">The message to show when execution passes - Default message is "Processed successfully"</param>
+        public Processor(Control parentControl, string operationTitle, bool retryable = true, 
+            bool showSuccessMessage = false, bool ignoreResponseMessage = false, 
+            string successMessage = "Processed successfully")
+        {
+            ParentControl = parentControl;
+            OperationTitle = operationTitle;
+            CanRetry = retryable;
+            ReportSuccess = showSuccessMessage;
+            IgnoreResponseMessage = ignoreResponseMessage;
+            SuccessMessage = successMessage;
+        }
+
         #region Private Properties
 
+        internal Control ParentControl { get; set; }
         internal object ProgressObject { get; set; }
 
         #endregion

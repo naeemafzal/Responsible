@@ -29,6 +29,7 @@ namespace Responsible.Handler.Winforms.Processors
             {
                 using (var form = new ActionExecutor
                 {
+                    ParentControl = processor.ParentControl,
                     FormTitle = processor.OperationTitle,
                     CanRetry = processor.CanRetry,
                     ShowSuccessMessage = processor.ReportSuccess,
@@ -69,6 +70,7 @@ namespace Responsible.Handler.Winforms.Processors
             {
                 using (var form = new FuncOutputResponseExecutor
                 {
+                    ParentControl = processor.ParentControl,
                     FormTitle = processor.OperationTitle,
                     CanRetry = processor.CanRetry,
                     ShowSuccessMessage = processor.ReportSuccess,
@@ -109,6 +111,7 @@ namespace Responsible.Handler.Winforms.Processors
             {
                 using (var form = new FuncOutputExecutor<TOutput>()
                 {
+                    ParentControl = processor.ParentControl,
                     FormTitle = processor.OperationTitle,
                     CanRetry = processor.CanRetry,
                     ShowSuccessMessage = processor.ReportSuccess,
@@ -149,6 +152,7 @@ namespace Responsible.Handler.Winforms.Processors
             {
                 using (var form = new FuncOutputResponseExecutor<TOutput>()
                 {
+                    ParentControl = processor.ParentControl,
                     FormTitle = processor.OperationTitle,
                     CanRetry = processor.CanRetry,
                     ShowSuccessMessage = processor.ReportSuccess,

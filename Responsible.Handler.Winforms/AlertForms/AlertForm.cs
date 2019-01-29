@@ -39,7 +39,7 @@ namespace Responsible.Handler.Winforms.AlertForms
         {
             if (e.KeyCode == Keys.F12 && !string.IsNullOrWhiteSpace(ExceptionDetail))
             {
-                SweetAlerts.ShowInfo("Exception Detail", ExceptionDetail);
+                SweetAlerts.ShowInfo(this, "Exception Detail", ExceptionDetail);
             }
         }
 

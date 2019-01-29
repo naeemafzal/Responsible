@@ -185,7 +185,7 @@ namespace Responsible.Core
                 result.Messages = exception.GetExceptionMessages();
             }
 
-            if (exception is OperationCanceledException)
+            if (exception.IsOperationCanceledException())
             {
                 result.Cancelled = true;
                 result.Status = ResponseStatus.BadRequest;
@@ -208,7 +208,7 @@ namespace Responsible.Core
                 Messages = new List<string> { message }
             };
 
-            if (exception is OperationCanceledException)
+            if (exception.IsOperationCanceledException())
             {
                 result.Cancelled = true;
                 result.Status = ResponseStatus.BadRequest;
@@ -231,7 +231,7 @@ namespace Responsible.Core
                 Messages = messages ?? new List<string>()
             };
 
-            if (exception is OperationCanceledException)
+            if (exception.IsOperationCanceledException())
             {
                 result.Cancelled = true;
                 result.Status = ResponseStatus.BadRequest;
@@ -529,7 +529,7 @@ namespace Responsible.Core
                 result.Messages = exception.GetExceptionMessages();
             }
 
-            if (exception is OperationCanceledException)
+            if (exception.IsOperationCanceledException())
             {
                 result.Cancelled = true;
                 result.Status = ResponseStatus.BadRequest;
@@ -554,7 +554,7 @@ namespace Responsible.Core
                 Messages = new List<string> { message }
             };
 
-            if (exception is OperationCanceledException)
+            if (exception.IsOperationCanceledException())
             {
                 result.Cancelled = true;
                 result.Status = ResponseStatus.BadRequest;
@@ -579,7 +579,7 @@ namespace Responsible.Core
                 Messages = messages ?? new List<string>()
             };
 
-            if (exception is OperationCanceledException)
+            if (exception.IsOperationCanceledException())
             {
                 result.Cancelled = true;
                 result.Status = ResponseStatus.BadRequest;
