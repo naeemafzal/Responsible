@@ -79,33 +79,6 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         #region Centering Form
 
-        private struct Rect
-        {
-            public int Left;        // x position of upper-left corner
-            public int Top;         // y position of upper-left corner
-            public int Right;       // x position of lower-right corner
-            public int Bottom;      // y position of lower-right corner
-        }
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int wFlags);
-
-        [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(HandleRef hwnd, out Rect lpRect);
-
-        private void CentreWindow(object wrapper, IntPtr handle, Size monitorDimensions)
-        {
-            var rect = new Rect { Left = 0, Right = 0, Top = 0, Bottom = 0 };
-            GetWindowRect(new HandleRef(wrapper, handle), out rect);
-
-            var x1Pos = monitorDimensions.Width / 2 - (rect.Right - rect.Left) / 2;
-            var x2Pos = rect.Right - rect.Left;
-            var y1Pos = monitorDimensions.Height / 2 - (rect.Bottom - rect.Top) / 2;
-            var y2Pos = rect.Bottom - rect.Top;
-
-            SetWindowPos(handle, 0, x1Pos, y1Pos, x2Pos, y2Pos, 0);
-        }
-
         private void SetMonitorDimensions()
         {
             var screen = Screen.PrimaryScreen;

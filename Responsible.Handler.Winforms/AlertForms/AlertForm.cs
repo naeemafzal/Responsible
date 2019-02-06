@@ -45,6 +45,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         private void AlertForm_Load(object sender, EventArgs e)
         {
+            Visible = false;
             if (!string.IsNullOrWhiteSpace(Rtf) && Rtf.ToLower().Contains("{\\rtf1"))
             {
                 AddMessageBox();
@@ -78,6 +79,7 @@ namespace Responsible.Handler.Winforms.AlertForms
             }
             SetKeyPressEvent(this);
             CentreWindow();
+            Visible = true;
         }
 
         #endregion

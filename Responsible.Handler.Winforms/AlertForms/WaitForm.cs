@@ -52,6 +52,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
         private void AlertForm_Load(object sender, EventArgs e)
         {
+            Visible = false;
             AddCancelButton();
             AddImageBox(FormImage);
             AddTitleLabel(FormTitle);
@@ -59,6 +60,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
             RenderForm();
             CentreWindow();
+            Visible = true;
         }
 
         #endregion
