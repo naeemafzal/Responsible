@@ -11,6 +11,7 @@ namespace Responsible.DependencyResolver
     internal class ResolverContext
     {
         internal List<string> RootAssembliesNames { get; private set; } = new List<string>();
+        internal List<RegisteredFile> RegisteredAssemblies { get; private set; } = new List<RegisteredFile>();
         internal bool ContainerPrepared { get; private set; }
 
         private IContainer _container;
@@ -42,6 +43,7 @@ namespace Responsible.DependencyResolver
                 try
                 {
                     builder.RegisterAssemblyModules(Assembly.LoadFrom(registeredFile.Location));
+                    RegisteredAssemblies.Add(registeredFile);
                 }
                 catch (Exception ex)
                 {
@@ -90,7 +92,7 @@ namespace Responsible.DependencyResolver
                 new List<string>(values.Where(x => !string.IsNullOrWhiteSpace(x)));
         }
 
-        private IEnumerable<RegisteredFile> GetAssembliesDetail()
+        private List<RegisteredFile> GetAssembliesDetail()
         {
             var currentPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var allFiles = GetFilesFromPath(currentPath);
@@ -105,11 +107,11 @@ namespace Responsible.DependencyResolver
                            let lowerNameAssemblyToSelect = fileToSelect.Name.ToLower()
                            where lowerNameAssemblyToSelect.StartsWith(lowerNameToFilter)
                            select fileToSelect;
-            return filtered;
+            return filtered.ToList();
 
         }
 
-        private static IEnumerable<RegisteredFile> GetFilesFromPath(string path)
+        private static List<RegisteredFile> GetFilesFromPath(string path)
         {
             if (path == null)
             {
@@ -130,7 +132,7 @@ namespace Responsible.DependencyResolver
                 Location = !string.IsNullOrWhiteSpace(x.FullName) ? x.FullName : string.Empty
             });
 
-            return result;
+            return result.ToList();
         }
 
         #endregion
@@ -205,6 +207,7 @@ namespace Responsible.DependencyResolver
             ContainerPrepared = false;
             _container = null;
             RootAssembliesNames.Clear();
+            RegisteredAssemblies.Clear();
         }
 
         internal string GetContextDetail()
@@ -212,6 +215,19 @@ namespace Responsible.DependencyResolver
             var builder = new StringBuilder();
             builder.AppendLine($"{nameof(ContainerPrepared)}: {ContainerPrepared}");
             builder.AppendLine($"{nameof(RootAssembliesNames)}: {string.Join(",", RootAssembliesNames)}");
+
+            if (RegisteredAssemblies.Any())
+            {
+                builder.AppendLine("Registered Assemblies");
+                foreach (var registeredFile in RegisteredAssemblies)
+                {
+                    builder.AppendLine($"FileName:{registeredFile.Name} - Location: {registeredFile.Location}");
+                }
+            }
+            else
+            {
+                builder.AppendLine("No Assembly is Registered");
+            }
 
             return builder.ToString();
         }
