@@ -17,7 +17,6 @@ namespace Responsible.Utilities.Extentions
         /// <param name="value"></param>
         /// <param name="other"></param>
         /// <param name="caseSensitive">Define if the comparison is case sensitive</param>
-        /// <param name="trim">Trim inputs for comparison, by default it is false</param>
         /// <returns></returns>
         public static bool IsSameAs(this string value, string other, bool caseSensitive = false)
         {

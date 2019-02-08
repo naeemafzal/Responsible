@@ -176,6 +176,7 @@ namespace Responsible.Handler.Winforms.Processors
         /// <returns><see cref="Processor"/></returns>
         public Processor SuccessMessageShouldBe(string successMessage)
         {
+            IgnoreResponseMessage = true;
             SuccessMessage = successMessage;
             return this;
         }
