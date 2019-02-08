@@ -10,8 +10,8 @@ namespace Responsible.DependencyResolver
 {
     internal class ResolverContext
     {
-        public List<string> RootAssembliesNames { get; private set; } = new List<string>();
-        public bool ContainerPrepared { get; private set; }
+        internal List<string> RootAssembliesNames { get; private set; } = new List<string>();
+        internal bool ContainerPrepared { get; private set; }
 
         private IContainer _container;
 
@@ -37,57 +37,22 @@ namespace Responsible.DependencyResolver
             }
 
             var builder = new ContainerBuilder();
-            foreach (var assembly in GetAssembliesForContainer())
+            foreach (var registeredFile in GetAssembliesDetail())
             {
-                builder.RegisterAssemblyModules(assembly);
+                try
+                {
+                    builder.RegisterAssemblyModules(Assembly.LoadFrom(registeredFile.Location));
+                }
+                catch (Exception ex)
+                {
+                    //Could not register assembly
+                    System.Diagnostics.Trace.WriteLine(
+                        $"{nameof(Resolver)}: Faild to load Assembly - {registeredFile.Name} from {registeredFile.Location} - Exception message: {ex.Message}");
+                }
             }
 
             _container = builder.Build();
             ContainerPrepared = true;
-        }
-
-        private IEnumerable<Assembly> GetAssembliesForContainer()
-        {
-            if (RootAssembliesNames.Any())
-            {
-                var allAssembliesInCurrentDomain = AppDomain.CurrentDomain.GetAssemblies();
-
-                //Filter from given Root assembly names
-                if (RootAssembliesNames.Any())
-                {
-                    var filtered =
-                        (from assemblyToSelect in allAssembliesInCurrentDomain
-                         from nameToFilter in RootAssembliesNames
-                         let lowerNameToFilter = nameToFilter.ToLower()
-                         let lowerNameAssemblyToSelect = assemblyToSelect.FullName.ToLower()
-                         where lowerNameAssemblyToSelect.StartsWith(lowerNameToFilter)
-                         select assemblyToSelect);
-                    return filtered;
-                }
-
-                //Get all assemblies in the current domain
-                return allAssembliesInCurrentDomain;
-            }
-
-            //Get all assemblies in the  execution location
-            var currentPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            if (currentPath == null)
-            {
-                throw new NullReferenceException(
-                    $"Could not load detail from:" +
-                    $" '{nameof(Assembly.GetExecutingAssembly)}' about the current execution location.");
-            }
-
-
-            var folder = new DirectoryInfo(currentPath);
-            var files = new List<FileInfo>();
-
-            var dllFiles = folder.GetFiles("*.dll", SearchOption.TopDirectoryOnly);
-            files.AddRange(dllFiles);
-            var exeFiles = folder.GetFiles("*.exe", SearchOption.TopDirectoryOnly);
-            files.AddRange(exeFiles);
-
-            return files.Select(x => Assembly.LoadFrom(x.FullName));
         }
 
         internal void AssignContainer(IContainer container)
@@ -101,6 +66,13 @@ namespace Responsible.DependencyResolver
                          throw new NullReferenceException("The provided container is null.");
             ContainerPrepared = true;
         }
+
+        internal void Initialise()
+        {
+            PrepareContainer();
+        }
+
+        #region AssemblyRegisteration
 
         internal void SetRootAssemblyNames(params string[] values)
         {
@@ -118,10 +90,52 @@ namespace Responsible.DependencyResolver
                 new List<string>(values.Where(x => !string.IsNullOrWhiteSpace(x)));
         }
 
-        internal void Initialise()
+        private IEnumerable<RegisteredFile> GetAssembliesDetail()
         {
-            PrepareContainer();
+            var currentPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var allFiles = GetFilesFromPath(currentPath);
+            if (!RootAssembliesNames.Any())
+            {
+                return allFiles;
+            }
+
+            var filtered = from fileToSelect in allFiles
+                           from nameToFilter in RootAssembliesNames
+                           let lowerNameToFilter = nameToFilter.ToLower()
+                           let lowerNameAssemblyToSelect = fileToSelect.Name.ToLower()
+                           where lowerNameAssemblyToSelect.StartsWith(lowerNameToFilter)
+                           select fileToSelect;
+            return filtered;
+
         }
+
+        private static IEnumerable<RegisteredFile> GetFilesFromPath(string path)
+        {
+            if (path == null)
+            {
+                return new List<RegisteredFile>();
+            }
+
+            var folder = new DirectoryInfo(path);
+            var files = new List<FileInfo>();
+
+            var dllFiles = folder.GetFiles("*.dll", SearchOption.TopDirectoryOnly);
+            files.AddRange(dllFiles);
+            var exeFiles = folder.GetFiles("*.exe", SearchOption.TopDirectoryOnly);
+            files.AddRange(exeFiles);
+
+            var result = files.Select(x => new RegisteredFile
+            {
+                Name = !string.IsNullOrWhiteSpace(x.Name) ? x.Name : string.Empty,
+                Location = !string.IsNullOrWhiteSpace(x.FullName) ? x.FullName : string.Empty
+            });
+
+            return result;
+        }
+
+        #endregion
+
+        #region Resolvers
 
         internal T Resolve<T>()
         {
@@ -131,6 +145,16 @@ namespace Responsible.DependencyResolver
             }
 
             return Container.Resolve<T>();
+        }
+
+        internal bool TryResolve<T>(out T instance)
+        {
+            if (!ContainerPrepared)
+            {
+                PrepareContainer();
+            }
+
+            return Container.TryResolve(out instance);
         }
 
         internal T ResolveNamed<T>(string name)
@@ -143,10 +167,44 @@ namespace Responsible.DependencyResolver
             return Container.ResolveNamed<T>(name);
         }
 
+        internal bool TryResolveNamed<T>(string name, Type serviceType, out T instance)
+        {
+            if (!ContainerPrepared)
+            {
+                PrepareContainer();
+            }
+
+            try
+            {
+                var success = Container.TryResolveNamed(name, serviceType, out var resolvedObject);
+                if (success)
+                {
+                    instance = (T)resolvedObject;
+                }
+                else
+                {
+                    instance = default(T);
+                }
+
+                return success;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine(
+                    $"{nameof(Resolver)}: Faild to Resolve - {typeof(T).FullName} - Exception Message: {ex.Message}");
+
+                instance = default(T);
+                return false;
+            }
+        }
+
+        #endregion
+
         internal void Reset()
         {
             ContainerPrepared = false;
             _container = null;
+            RootAssembliesNames.Clear();
         }
 
         internal string GetContextDetail()

@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 
 namespace Responsible.DependencyResolver
 {
@@ -52,6 +53,16 @@ namespace Responsible.DependencyResolver
         }
 
         /// <summary>
+        /// Tries to Resolve a type
+        /// </summary>
+        /// <typeparam name="T">Type to resolve</typeparam>
+        /// <returns>True if the type is Resolved</returns>
+        public static bool TryResolve<T>(out T instance)
+        {
+            return ResolverContext.TryResolve(out instance);
+        }
+
+        /// <summary>
         /// Resolve a type by name
         /// </summary>
         /// <typeparam name="T">Type to resolve</typeparam>
@@ -61,6 +72,16 @@ namespace Responsible.DependencyResolver
         public static T ResolveNamed<T>(string name)
         {
             return ResolverContext.ResolveNamed<T>(name);
+        }
+
+        /// <summary>
+        /// Tries to Resolve a type by name
+        /// </summary>
+        /// <typeparam name="T">Type to resolve</typeparam>
+        /// <returns>True if the type is Resolved</returns>
+        public static bool TryResolveNamed<T>(string name, Type serviceType, out T instance)
+        {
+            return ResolverContext.TryResolveNamed(name, serviceType, out instance);
         }
 
         /// <summary>
