@@ -56,6 +56,7 @@ namespace Responsible.DependencyResolver
         /// Tries to Resolve a type
         /// </summary>
         /// <typeparam name="T">Type to resolve</typeparam>
+        /// <param name="instance">Resolved object</param>
         /// <returns>True if the type is Resolved</returns>
         public static bool TryResolve<T>(out T instance)
         {
@@ -77,6 +78,9 @@ namespace Responsible.DependencyResolver
         /// <summary>
         /// Tries to Resolve a type by name
         /// </summary>
+        /// <param name="name">Name used to resolve the type</param>
+        /// <param name="serviceType">The type of the service to resolve</param>
+        /// <param name="instance">Resolved object</param>
         /// <typeparam name="T">Type to resolve</typeparam>
         /// <returns>True if the type is Resolved</returns>
         public static bool TryResolveNamed<T>(string name, Type serviceType, out T instance)
