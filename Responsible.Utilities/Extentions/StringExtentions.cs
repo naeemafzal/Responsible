@@ -37,7 +37,7 @@ namespace Responsible.Utilities.Extentions
 
             return caseSensitive
                 ? string.Equals(value, other, StringComparison.Ordinal)
-                : string.Equals(value, other, StringComparison.CurrentCultureIgnoreCase);
+                : string.Equals(value, other, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -49,12 +49,13 @@ namespace Responsible.Utilities.Extentions
         /// <returns></returns>
         public static bool ContainsText(this string value, string searchText, bool caseSensitive = false)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (value == null)
             {
                 return false;
             }
-
-            return caseSensitive ? value.Contains(searchText) : value.ToLower().Contains(searchText);
+            
+            return caseSensitive ? value.Contains(searchText) : 
+                value.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         /// <summary>
@@ -84,9 +85,10 @@ namespace Responsible.Utilities.Extentions
                 return false;
             }
 
-            return caseSensitive
-                ? predicates.All(value.Contains)
-                : predicates.Select(x => string.IsNullOrWhiteSpace(x) ? x : x.ToLower()).All(value.ToLower().Contains);
+            return predicates.All(predicate =>
+                caseSensitive
+                    ? value.Contains(predicate)
+                    : value.IndexOf(predicate, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         /// <summary>
@@ -128,7 +130,7 @@ namespace Responsible.Utilities.Extentions
 
             return caseSensitive
                 ? value.Any(s => s.IndexOf(searchText, StringComparison.Ordinal) >= 0)
-                : value.Any(s => s.IndexOf(searchText, StringComparison.CurrentCultureIgnoreCase) >= 0);
+                : value.Any(s => s.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         /// <summary>
@@ -147,7 +149,7 @@ namespace Responsible.Utilities.Extentions
 
             return caseSensitive
                 ? value.Count(s => s.IndexOf(searchText, StringComparison.Ordinal) >= 0)
-                : value.Count(s => s.IndexOf(searchText, StringComparison.CurrentCultureIgnoreCase) >= 0);
+                : value.Count(s => s.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

@@ -66,5 +66,21 @@ namespace Responsible.Utilities.Tests
             Assert.IsTrue(result.Any(x => x.Name == WeekDays.Saturday.ToString()), "Does not contain value");
             Assert.IsTrue(result.Any(x => x.Name == WeekDays.Sunday.ToString()), "Does not contain value");
         }
+
+        [TestMethod]
+        public void WeekDay_StringList()
+        {
+            var result = EnumExtentions.EnumStringList<WeekDays>();
+
+            Assert.AreEqual(7, result.Count, "Dictionary count is not same");
+
+            Assert.IsTrue(result.Any(x => x == WeekDays.Monday.ToString()), "Does not contain value");
+            Assert.IsTrue(result.Any(x => x == WeekDays.Tuesday.ToString()), "Does not contain value");
+            Assert.IsTrue(result.Any(x => x == WeekDays.Wednesday.ToString()), "Does not contain value");
+            Assert.IsTrue(result.Any(x => x == WeekDays.Thursday.ToString()), "Does not contain value");
+            Assert.IsTrue(result.Any(x => x == WeekDays.Friday.ToString()), "Does not contain value");
+            Assert.IsTrue(result.Any(x => x == WeekDays.Saturday.ToString()), "Does not contain value");
+            Assert.IsTrue(result.Any(x => x == WeekDays.Sunday.ToString()), "Does not contain value");
+        }
     }
 }

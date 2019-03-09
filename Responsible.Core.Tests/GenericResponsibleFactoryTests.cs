@@ -95,7 +95,6 @@ namespace Responsible.Core.Tests
             Assert.IsTrue(addTitleResponse.Success);
             Assert.AreEqual(title, addTitleResponse.Title);
             Assert.AreEqual(1, addTitleResponse.Value);
-            Assert.IsTrue(addTitleResponse.SingleMessage.Contains(title));
         }
     }
 }
