@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Responsible.Core.Tests
@@ -19,13 +20,24 @@ namespace Responsible.Core.Tests
         }
 
         [TestMethod]
+        public async Task Response_OK_Async()
+        {
+            var okResponse = await ResponseFactory<int>.OkAsync(5);
+
+            Assert.IsNotNull(okResponse, "Response is null");
+            Assert.IsTrue(okResponse.Success, "Success is not true.");
+            Assert.AreEqual(ResponseStatus.Ok, okResponse.Status, "Status is not valid");
+            Assert.AreEqual(5, okResponse.Value, "Values are not equal");
+        }
+
+        [TestMethod]
         public void Response_Error()
         {
             var errorResponse = ResponseFactory<int>.Error(nameof(Response_Error));
 
             Assert.IsNotNull(errorResponse, "Response is null");
             Assert.IsFalse(errorResponse.Success, "Success is not false.");
-            Assert.AreEqual(ResponseStatus.InternalServerError, errorResponse.Status, "Status is not valid");
+            Assert.AreEqual(ResponseStatus.BadRequest, errorResponse.Status, "Status is not valid");
             Assert.AreEqual(0, errorResponse.Value, "Values are not equal");
             Assert.IsNotNull(errorResponse.Messages, "Message list is null");
             Assert.AreEqual(1, errorResponse.Messages.Count(), "Message count is not as expected");
@@ -39,7 +51,7 @@ namespace Responsible.Core.Tests
 
             Assert.IsNotNull(errorResponse, "Response is null");
             Assert.IsFalse(errorResponse.Success, "Success is not false.");
-            Assert.AreEqual(ResponseStatus.InternalServerError, errorResponse.Status, "Status is not valid");
+            Assert.AreEqual(ResponseStatus.BadRequest, errorResponse.Status, "Status is not valid");
             Assert.AreEqual(null, errorResponse.Value, "Values are not equal");
             Assert.IsNotNull(errorResponse.Messages, "Message list is null");
             Assert.AreEqual(1, errorResponse.Messages.Count(), "Message count is not as expected");
@@ -91,6 +103,17 @@ namespace Responsible.Core.Tests
         {
             var title = "Ok_Title";
             var addTitleResponse = ResponseFactory<int>.Ok(1).AddTitle(title);
+
+            Assert.IsTrue(addTitleResponse.Success);
+            Assert.AreEqual(title, addTitleResponse.Title);
+            Assert.AreEqual(1, addTitleResponse.Value);
+        }
+
+        [TestMethod]
+        public async Task Response_Operation_TitleIsAdded_Async()
+        {
+            var title = "Ok_Title";
+            var addTitleResponse = await ResponseFactory<int>.Ok(1).AddTitleAsync(title);
 
             Assert.IsTrue(addTitleResponse.Success);
             Assert.AreEqual(title, addTitleResponse.Title);

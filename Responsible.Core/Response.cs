@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Responsible.Core
 {
@@ -37,6 +38,11 @@ namespace Responsible.Core
             Title = title;
             return this;
         }
+
+        public async Task<IResponse> AddTitleAsync(string title)
+        {
+            return await Task.FromResult(AddTitle(title));
+        }
     }
 
     internal class Response<T> : Response, IResponse<T>
@@ -45,8 +51,18 @@ namespace Responsible.Core
 
         public new IResponse<T> AddTitle(string title)
         {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                title = string.Empty;
+            }
+
             Title = title;
             return this;
+        }
+
+        public new async Task<IResponse<T>> AddTitleAsync(string title)
+        {
+            return await Task.FromResult(AddTitle(title));
         }
     }
 }

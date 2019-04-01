@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Responsible.Core
 {
@@ -57,12 +58,19 @@ namespace Responsible.Core
         /// <param name="title">The Response Title</param>
         /// <returns><see cref="IResponse"/></returns>
         IResponse AddTitle(string title);
+
+        /// <summary>
+        /// Adds a title to Response for Reporting
+        /// </summary>
+        /// <param name="title">The Response Title</param>
+        /// <returns><see cref="IResponse"/></returns>
+        Task<IResponse> AddTitleAsync(string title);
     }
 
     /// <summary>
     ///     Interface for a response object with a value
     /// </summary>
-    public interface IResponse<out T> : IResponse
+    public interface IResponse<T> : IResponse
     {
         /// <summary>
         ///     <para>Resolves to an output of T.</para>
@@ -75,5 +83,12 @@ namespace Responsible.Core
         /// <param name="title">The Response Title</param>
         /// <returns><see cref="IResponse{T}"/></returns>
         new IResponse<T> AddTitle(string title);
+
+        /// <summary>
+        /// Adds a title to Response for Reporting
+        /// </summary>
+        /// <param name="title">The Response Title</param>
+        /// <returns><see cref="IResponse{T}"/></returns>
+        new Task<IResponse<T>> AddTitleAsync(string title);
     }
 }
