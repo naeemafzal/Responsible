@@ -16,7 +16,7 @@ namespace Responsible.Handler.Winforms.Processors
                     return ResponseFactory.Error("The provided action is null", ErrorResponseStatus.BadRequest);
                 }
 
-                await Task.Run(() => action.Invoke());
+                await Task.Run(action.Invoke);
                 return ResponseFactory.Ok();
             }
             catch (Exception ex)
