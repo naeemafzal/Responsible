@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -267,9 +268,20 @@ namespace Responsible.Handler.Winforms.AlertForms
         {
             while (true)
             {
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
                 Visible = true;
                 Response = await ExecuteRequestAsync();
+                stopWatch.Stop();
+                var stopWatchSeconds = stopWatch.Elapsed.TotalSeconds;
+                if (stopWatchSeconds < 1)
+                {
+                    //If process was very quick, add a second delay to avoid sudden flickering
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                }
+
                 Visible = false;
+
                 if (!Response.Success)
                 {
                     if (CanRetry)

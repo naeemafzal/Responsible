@@ -16,7 +16,7 @@ namespace Responsible.Handler.Winforms.Alerts
         {
             var image = GetGifImage(alertType);
             var sound = GetPopupSound(alertType);
-            var isErrorAllert = alertType == AlertType.Error;
+            var isErrorAlert = alertType == AlertType.Error;
 
             var alertForm = new AlertForm
             {
@@ -26,7 +26,7 @@ namespace Responsible.Handler.Winforms.Alerts
                 FormImage = image,
                 FormMessage = message,
                 SystemSound = sound,
-                IsErrorAlert = isErrorAllert,
+                IsErrorAlert = isErrorAlert,
                 ExceptionDetail = exceptionDetail,
                 Rtf = rtf
             };
