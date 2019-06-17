@@ -187,6 +187,41 @@ namespace Responsible.Uow.EntityFramework
             return await Context.Set<TEntity>().SingleOrDefaultAsync();
         }
 
+        /// <summary>
+        /// <para>Gets FirstOrDefault Record By a predicate</para>
+        /// </summary>
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Context.Set<TEntity>().FirstOrDefault(predicate);
+        }
+
+
+        /// <summary>
+        /// <para>Gets FirstOrDefault Record By a predicate</para>
+        /// </summary>
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+        }
+
+
+        /// <summary>
+        /// <para>Gets FirstOrDefault Record</para>
+        /// </summary>
+        public TEntity FirstOrDefault()
+        {
+            return Context.Set<TEntity>().FirstOrDefault();
+        }
+
+
+        /// <summary>
+        /// <para>Gets FirstOrDefault Record</para>
+        /// </summary>
+        public async Task<TEntity> FirstOrDefaultAsync()
+        {
+            return await Context.Set<TEntity>().FirstOrDefaultAsync();
+        }
+
 
         /// <summary>
         /// <para>Gets Records by IQueryable</para>

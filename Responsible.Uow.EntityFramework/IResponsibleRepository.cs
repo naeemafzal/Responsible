@@ -109,6 +109,26 @@ namespace Responsible.Uow.EntityFramework
         Task<TEntity> SingleOrDefaultAsync();
 
         ///<summary>
+        ///<para>Gets FirstOrDefault Record By a predicate</para>
+        ///</summary>
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate);
+
+        ///<summary>
+        ///<para>Gets FirstOrDefault Record By a predicate</para>
+        ///</summary>
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+
+        ///<summary>
+        ///<para>Gets FirstOrDefault Record</para>
+        ///</summary>
+        TEntity FirstOrDefault();
+
+        ///<summary>
+        ///<para>Gets FirstOrDefault Record</para>
+        ///</summary>
+        Task<TEntity> FirstOrDefaultAsync();
+
+        ///<summary>
         ///<para>Gets Records by IQueryable</para>
         ///</summary>
         IEnumerable<TEntity> Query(IQueryable<TEntity> query);

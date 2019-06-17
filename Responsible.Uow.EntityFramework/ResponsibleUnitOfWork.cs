@@ -27,7 +27,6 @@ namespace Responsible.Uow.EntityFramework
             Context = context;
         }
 
-
         /// <summary>
         /// <para>Submits all changes in the context.</para>
         /// </summary>
@@ -50,7 +49,6 @@ namespace Responsible.Uow.EntityFramework
             return await Context.SaveChangesAsync();
         }
 
-
         /// <summary>
         /// <para>Submits all changes in the context.</para>
         /// </summary>
@@ -64,7 +62,6 @@ namespace Responsible.Uow.EntityFramework
 
             return await Context.SaveChangesAsync(cancellationToken);
         }
-
 
         /// <summary>
         /// <para>Submits all changes in the context and returns IResponse</para>
@@ -95,7 +92,6 @@ namespace Responsible.Uow.EntityFramework
                 return ResponseFactory<int>.Exception(ex);
             }
         }
-
 
         /// <summary>
         /// <para>Submits all changes in the context and returns IResponse</para>
@@ -157,7 +153,6 @@ namespace Responsible.Uow.EntityFramework
                 return ResponseFactory<int>.Exception(ex);
             }
         }
-
 
         private IResponse ValidateReadonlyModels()
         {
