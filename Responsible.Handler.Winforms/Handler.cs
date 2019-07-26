@@ -10,7 +10,7 @@ namespace Responsible.Handler.Winforms
     public static class Handler
     {
         /// <summary>
-        /// Handles displaying relevent messages to the user from the inputs
+        /// Handles displaying relevant messages to the user from the inputs
         /// </summary>
         /// <param name="operationTitle">The title of the message box</param>
         /// <param name="response">The <see cref="IResponse"/> to handle</param>

@@ -15,31 +15,16 @@ namespace Responsible.Core
         /// <param name="exception">The exception to extract messages from</param>
         public static List<string> GetExceptionMessages(this Exception exception)
         {
-            return exception == null ?
-                new List<string> { "Exception is NULL, could not extract any exception detail" } :
-                GetExceptionMessage(exception);
-        }
-
-        private static List<string> GetExceptionMessage(Exception exception)
-        {
-            var exceptionMessages = new List<string>();
             if (exception == null)
             {
-                return exceptionMessages;
+                return new List<string> {"Exception is NULL, could not extract any exception detail"};
             }
 
-            exceptionMessages.Add(exception.Message);
-            if (exception.InnerException == null)
-            {
-                return exceptionMessages;
-            }
+            var messages = GetExceptionMessage(exception);
 
-            var innerExceptionMessages = GetExceptionMessage(exception.InnerException);
-            if (innerExceptionMessages.Any())
-            {
-                exceptionMessages.AddRange(innerExceptionMessages);
-            }
-            return exceptionMessages;
+            //Reversing the messages to get the exception messages hierarchy correct
+            messages.Reverse();
+            return messages;
         }
 
         /// <summary>
@@ -55,7 +40,8 @@ namespace Responsible.Core
             }
 
             var exceptionList = GetCombinedExceptions(exception);
-            return exceptionList.Any(x => x.GetType() == typeof(OperationCanceledException));
+            return exceptionList.Any(x => x.GetType() == typeof(OperationCanceledException) ||
+                                          x.GetType() == typeof(System.Threading.Tasks.TaskCanceledException));
         }
 
         /// <summary>
@@ -83,6 +69,33 @@ namespace Responsible.Core
                 exceptions.AddRange(innerExceptions);
             }
             return exceptions;
+        }
+
+        /// <summary>
+        /// Gets messages from the given exception and also the innser exceptions
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public static List<string> GetExceptionMessage(Exception exception)
+        {
+            var exceptionMessages = new List<string>();
+            if (exception == null)
+            {
+                return exceptionMessages;
+            }
+
+            exceptionMessages.Add(exception.Message);
+            if (exception.InnerException == null)
+            {
+                return exceptionMessages;
+            }
+
+            var innerExceptionMessages = GetExceptionMessage(exception.InnerException);
+            if (innerExceptionMessages.Any())
+            {
+                exceptionMessages.AddRange(innerExceptionMessages);
+            }
+            return exceptionMessages;
         }
     }
 }

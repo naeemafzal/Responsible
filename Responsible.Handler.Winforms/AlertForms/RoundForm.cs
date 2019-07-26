@@ -12,6 +12,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 {
     internal abstract class RoundForm : Form
     {
+        private static readonly string EnvironmentNewLinePlaceHolder = "Environment.NewLine_PlaceHolder";
         #region Protected Properties
 
         //Main Container
@@ -452,7 +453,7 @@ namespace Responsible.Handler.Winforms.AlertForms
             }
         }
 
-        protected void AddTextToRichTextBox(string text, Font font, Color color, HorizontalAlignment horizontalAlignment, bool append = true, bool insertAtBegining = false)
+        protected void AddTextToRichTextBox(string text, Font font, Color color, HorizontalAlignment horizontalAlignment, bool append = true, bool insertAtBeginning = false)
         {
             if (!append)
             {
@@ -464,7 +465,9 @@ namespace Responsible.Handler.Winforms.AlertForms
                 return;
             }
 
-            if (insertAtBegining)
+            text = text.Replace("\r\n", EnvironmentNewLinePlaceHolder);
+
+            if (insertAtBeginning)
             {
                 MessagesRichTextBox.SelectionStart = 0;
                 MessagesRichTextBox.SelectionLength = 0;
@@ -474,10 +477,16 @@ namespace Responsible.Handler.Winforms.AlertForms
                 MessagesRichTextBox.SelectionStart = MessagesRichTextBox.Text.Length;
             }
 
+            if (MessagesRichTextBox.Text.Trim().Length > 0)
+            {
+                MessagesRichTextBox.SelectedText = Environment.NewLine;
+            }
+
             MessagesRichTextBox.SelectionFont = font;
             MessagesRichTextBox.SelectionColor = color;
             MessagesRichTextBox.SelectionAlignment = horizontalAlignment;
-            MessagesRichTextBox.SelectedText = text + Environment.NewLine;
+            MessagesRichTextBox.SelectedText = text;
+            MessagesRichTextBox.Rtf = MessagesRichTextBox.Rtf.Replace(EnvironmentNewLinePlaceHolder, @"\par");
 
             //Scroll to end
             MessagesRichTextBox.SelectionStart = MessagesRichTextBox.Text.Length;

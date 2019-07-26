@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Threading;
+using System.Windows.Forms;
 using WindowsForms.App.Logic;
 using WindowsForms.App.Models;
 using Responsible.Handler.Winforms.Processors;
@@ -20,9 +21,11 @@ namespace WindowsForms.App
 
         private void SearchCustomers()
         {
-            using (var process = new Processor(this, "Loading Customers"))
+            var cancellationTokenSource = new CancellationTokenSource();
+            var token = cancellationTokenSource.Token;
+            using (var process = new Processor(this, "Loading Customers").CanBeCanceled(cancellationTokenSource).ShouldReportSuccess())
             {
-                var filterResponse = process.Process(() => CustomerLogic.Filter(SearchTextBox.Text));
+                var filterResponse = process.Process(() => CustomerLogic.FilterAsync(SearchTextBox.Text, token));
                 CustomersDataGridView.DataSource = filterResponse.Value;
             }
         }

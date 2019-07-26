@@ -15,9 +15,16 @@ namespace Responsible.Utilities.Extentions
         /// <param name="exception">The exception to extract messages from</param>
         public static List<string> GetCombinedMessages(this Exception exception)
         {
-            return exception == null ?
-                new List<string> { "Exception is NULL, could not extract any exception detail" } :
-                GetExceptionMessage(exception);
+            if (exception == null)
+            {
+                return new List<string> { "Exception is NULL, could not extract any exception detail" };
+            }
+
+            var messages = GetExceptionMessage(exception);
+
+            //Reversing the messages to get the exception messages hierarchy correct
+            messages.Reverse();
+            return messages;
         }
 
         private static List<string> GetExceptionMessage(Exception exception)

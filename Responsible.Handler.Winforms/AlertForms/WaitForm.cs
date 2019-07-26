@@ -284,18 +284,17 @@ namespace Responsible.Handler.Winforms.AlertForms
 
                 if (!Response.Success)
                 {
+                    if (Response.Cancelled)
+                    {
+                        break;
+                    }
+
                     if (CanRetry)
                     {
                         var buttons = Response.Cancelled ? AlertButtons.Ok : AlertButtons.RetryCancel;
                         var retrySelection = AlertDisplayHandler.Alert(this, FormTitle, Response.Messages.ToList(),
                             Response.Title, SweetAlerts.ExceptionDetail(Response),
                             AlertType.Error, buttons);
-
-                        //Break if operation was cancelled
-                        if (Response.Cancelled)
-                        {
-                            break;
-                        }
 
                         if (retrySelection != DialogResult.Retry) return;
                         if (MessagesRichTextBox != null)
@@ -305,13 +304,11 @@ namespace Responsible.Handler.Winforms.AlertForms
 
                         continue;
                     }
-                    else
-                    {
-                        AlertDisplayHandler.Alert(this, FormTitle, Response.Messages.ToList(),
-                            Response.Title, SweetAlerts.ExceptionDetail(Response),
-                            AlertType.Error, AlertButtons.Ok);
-                        break;
-                    }
+
+                    AlertDisplayHandler.Alert(this, FormTitle, Response.Messages.ToList(),
+                        Response.Title, SweetAlerts.ExceptionDetail(Response),
+                        AlertType.Error, AlertButtons.Ok);
+                    break;
                 }
 
                 //Break if operation was cancelled
