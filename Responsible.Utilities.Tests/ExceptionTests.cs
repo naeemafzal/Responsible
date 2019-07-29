@@ -34,8 +34,8 @@ namespace Responsible.Utilities.Tests
 
             var messages = finalException.GetCombinedMessages();
             Assert.AreEqual(2, messages.Count, "Message count is not same");
-            Assert.AreEqual(ExceptionOneMessage, messages[0], "Message is not same");
-            Assert.AreEqual(ExceptionTwoMessage, messages[1], "Message is not same");
+            Assert.AreEqual(ExceptionOneMessage, messages[1], "Message is not same");
+            Assert.AreEqual(ExceptionTwoMessage, messages[0], "Message is not same");
         }
 
         [TestMethod]
