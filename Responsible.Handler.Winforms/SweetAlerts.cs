@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Responsible.Core;
 using Responsible.Handler.Winforms.Alerts;
+using Responsible.Handler.Winforms.Helpers;
 
 namespace Responsible.Handler.Winforms
 {
@@ -36,7 +36,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, alertType,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, alertType,
                 alertButtons);
         }
 
@@ -61,7 +61,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, alertType,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, alertType,
                 alertButtons);
         }
 
@@ -85,7 +85,7 @@ namespace Responsible.Handler.Winforms
                 messages = new List<string>();
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, messages, string.Empty, string.Empty,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, messages, string.Empty, string.Empty,
                 alertType, alertButtons);
         }
 
@@ -110,7 +110,7 @@ namespace Responsible.Handler.Winforms
                 messages = new List<string>();
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, messages, string.Empty, string.Empty,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, messages, string.Empty, string.Empty,
                 alertType, alertButtons);
         }
 
@@ -132,7 +132,7 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                AlertDisplayHandler.Alert(operationTitle, "Provided response is null.", string.Empty, string.Empty,
+                AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, "Provided response is null.", string.Empty, string.Empty,
                     AlertType.Error, AlertButtons.Ok);
                 return false;
             }
@@ -155,7 +155,7 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                AlertDisplayHandler.Alert(operationTitle, message, response.Title, ExceptionDetail(response),
+                AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, response.Title, ExceptionDetail(response),
                     AlertType.Error, AlertButtons.Ok);
                 return response.Success;
             }
@@ -177,7 +177,7 @@ namespace Responsible.Handler.Winforms
                 }
             }
 
-            AlertDisplayHandler.Alert(operationTitle, message, response.Title, ExceptionDetail(response),
+            AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, response.Title, ExceptionDetail(response),
                 AlertType.Success, AlertButtons.Ok);
             return response.Success;
         }
@@ -197,7 +197,7 @@ namespace Responsible.Handler.Winforms
         {
             if (response == null)
             {
-                AlertDisplayHandler.Alert(parentControl, operationTitle, "Provided response is null.", string.Empty, string.Empty,
+                AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, "Provided response is null.", string.Empty, string.Empty,
                     AlertType.Error, AlertButtons.Ok);
                 return false;
             }
@@ -220,7 +220,7 @@ namespace Responsible.Handler.Winforms
                     message = "An unknown error has occured. The response yield no error detail.";
                 }
 
-                AlertDisplayHandler.Alert(parentControl, operationTitle, message, response.Title, ExceptionDetail(response),
+                AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, response.Title, ExceptionDetail(response),
                     AlertType.Error, AlertButtons.Ok);
                 return response.Success;
             }
@@ -242,13 +242,13 @@ namespace Responsible.Handler.Winforms
                 }
             }
 
-            AlertDisplayHandler.Alert(parentControl, operationTitle, message, response.Title, ExceptionDetail(response),
+            AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, response.Title, ExceptionDetail(response),
                 AlertType.Success, AlertButtons.Ok);
             return response.Success;
         }
 
         #endregion
-        
+
         #region Info
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Info,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, AlertType.Info,
                 AlertButtons.Ok);
         }
 
@@ -290,7 +290,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, AlertType.Info,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, AlertType.Info,
                 AlertButtons.Ok);
         }
 
@@ -312,7 +312,7 @@ namespace Responsible.Handler.Winforms
                 message = AlertDisplayHandler.SingleMessage(messages);
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Info,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, AlertType.Info,
                 AlertButtons.Ok);
         }
 
@@ -335,12 +335,12 @@ namespace Responsible.Handler.Winforms
                 message = AlertDisplayHandler.SingleMessage(messages);
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, AlertType.Info,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, AlertType.Info,
                 AlertButtons.Ok);
         }
 
         #endregion
-        
+
         #region Errors
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Error,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, AlertType.Error,
                 AlertButtons.Ok);
         }
 
@@ -382,7 +382,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, AlertType.Error,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, AlertType.Error,
                 AlertButtons.Ok);
         }
 
@@ -404,7 +404,7 @@ namespace Responsible.Handler.Winforms
                 message = AlertDisplayHandler.SingleMessage(messages);
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Error,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, AlertType.Error,
                 AlertButtons.Ok);
         }
 
@@ -427,12 +427,12 @@ namespace Responsible.Handler.Winforms
                 message = AlertDisplayHandler.SingleMessage(messages);
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, AlertType.Error,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, AlertType.Error,
                 AlertButtons.Ok);
         }
 
         #endregion
-        
+
         #region Successes
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Success,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, AlertType.Success,
                 AlertButtons.Ok);
         }
 
@@ -474,7 +474,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, AlertType.Success,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, AlertType.Success,
                 AlertButtons.Ok);
         }
 
@@ -496,7 +496,7 @@ namespace Responsible.Handler.Winforms
                 message = AlertDisplayHandler.SingleMessage(messages);
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Success,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, AlertType.Success,
                 AlertButtons.Ok);
         }
 
@@ -519,7 +519,7 @@ namespace Responsible.Handler.Winforms
                 message = AlertDisplayHandler.SingleMessage(messages);
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, AlertType.Success,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, AlertType.Success,
                 AlertButtons.Ok);
         }
 
@@ -544,7 +544,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
                 AlertButtons.Ok);
         }
 
@@ -566,7 +566,7 @@ namespace Responsible.Handler.Winforms
                 message = string.Empty;
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
                 AlertButtons.Ok);
         }
 
@@ -588,7 +588,7 @@ namespace Responsible.Handler.Winforms
                 message = AlertDisplayHandler.SingleMessage(messages);
             }
 
-            return AlertDisplayHandler.Alert(operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(), operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
                 AlertButtons.Ok);
         }
 
@@ -611,7 +611,7 @@ namespace Responsible.Handler.Winforms
                 message = AlertDisplayHandler.SingleMessage(messages);
             }
 
-            return AlertDisplayHandler.Alert(parentControl, operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
+            return AlertDisplayHandler.Alert(HelperMethods.GetCurrentlyActiveForm(parentControl), operationTitle, message, string.Empty, string.Empty, AlertType.Warning,
                 AlertButtons.Ok);
         }
 

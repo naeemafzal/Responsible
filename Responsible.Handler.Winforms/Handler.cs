@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Responsible.Core;
+using Responsible.Handler.Winforms.Helpers;
 
 namespace Responsible.Handler.Winforms
 {
@@ -21,7 +22,7 @@ namespace Responsible.Handler.Winforms
         public static void HandleResponse(string operationTitle, IResponse response, bool showSuccessMessage = false,
             bool ignoreResponseMessage = false, string successMessage = "Processed successfully")
         {
-            SweetAlerts.AlertResponse(operationTitle, response, showSuccessMessage,
+            SweetAlerts.AlertResponse(HelperMethods.GetCurrentlyActiveForm(), operationTitle, response, showSuccessMessage,
                 ignoreResponseMessage, successMessage);
         }
     }

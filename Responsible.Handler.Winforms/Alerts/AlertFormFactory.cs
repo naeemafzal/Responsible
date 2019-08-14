@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Media;
 using System.Windows.Forms;
 using Responsible.Handler.Winforms.AlertForms;
+using Responsible.Handler.Winforms.Helpers;
 using Responsible.Handler.Winforms.Properties;
 
 namespace Responsible.Handler.Winforms.Alerts
@@ -20,7 +21,7 @@ namespace Responsible.Handler.Winforms.Alerts
 
             var alertForm = new AlertForm
             {
-                ParentControl = parentControl,
+                ParentControl = HelperMethods.GetCurrentlyActiveForm(parentControl),
                 FormTitle = title,
                 MessagesTitle = messagesTitle,
                 FormImage = image,

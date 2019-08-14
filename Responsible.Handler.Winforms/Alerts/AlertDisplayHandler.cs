@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Responsible.Handler.Winforms.Helpers;
 
 namespace Responsible.Handler.Winforms.Alerts
 {
@@ -13,7 +14,7 @@ namespace Responsible.Handler.Winforms.Alerts
             using (var alertForm = AlertFormFactory.CreateAlertForm(null, title, message, messagesTitle,
                 exceptionDetail, string.Empty, alertType, alertButtons))
             {
-                alertForm.ShowDialog();
+                alertForm.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return alertForm.DialogResult;
             }
         }
@@ -24,7 +25,7 @@ namespace Responsible.Handler.Winforms.Alerts
             using (var alertForm = AlertFormFactory.CreateAlertForm(parentControl, title, message, messagesTitle,
                 exceptionDetail, string.Empty, alertType, alertButtons))
             {
-                alertForm.ShowDialog(parentControl);
+                alertForm.ShowDialog(HelperMethods.GetCurrentlyActiveForm(parentControl));
                 return alertForm.DialogResult;
             }
         }
@@ -35,7 +36,7 @@ namespace Responsible.Handler.Winforms.Alerts
             using (var alertForm = AlertFormFactory.CreateAlertForm(null, title, SingleMessage(messages),
                 messagesTitle, exceptionDetail, string.Empty, alertType, alertButtons))
             {
-                alertForm.ShowDialog();
+                alertForm.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return alertForm.DialogResult;
             }
         }
@@ -46,7 +47,7 @@ namespace Responsible.Handler.Winforms.Alerts
             using (var alertForm = AlertFormFactory.CreateAlertForm(parentControl, title, SingleMessage(messages),
                 messagesTitle, exceptionDetail, string.Empty, alertType, alertButtons))
             {
-                alertForm.ShowDialog(parentControl);
+                alertForm.ShowDialog(HelperMethods.GetCurrentlyActiveForm(parentControl));
                 return alertForm.DialogResult;
             }
         }
@@ -57,7 +58,7 @@ namespace Responsible.Handler.Winforms.Alerts
             using (var alertForm = AlertFormFactory.CreateAlertForm(parentControl, title, SingleMessage(messages), messagesTitle,
                 exceptionDetail, rtf, alertType, alertButtons))
             {
-                alertForm.ShowDialog(parentControl);
+                alertForm.ShowDialog(HelperMethods.GetCurrentlyActiveForm(parentControl));
                 return alertForm.DialogResult;
             }
         }

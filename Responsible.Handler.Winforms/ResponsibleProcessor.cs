@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Responsible.Core;
 using Responsible.Handler.Winforms.Executors;
+using Responsible.Handler.Winforms.Helpers;
 
 namespace Responsible.Handler.Winforms
 {
@@ -39,7 +40,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response;
             }
         }
@@ -70,7 +71,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response;
             }
         }
@@ -101,7 +102,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response as IResponse<TOutput>;
             }
         }
@@ -133,7 +134,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response as IResponse<TOutput>;
             }
         }
@@ -169,7 +170,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response;
             }
         }
@@ -201,7 +202,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response;
             }
         }
@@ -233,7 +234,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response as IResponse<TOutput>;
             }
         }
@@ -266,7 +267,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response as IResponse<TOutput>;
             }
         }
@@ -301,7 +302,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response;
             }
         }
@@ -332,7 +333,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response;
             }
         }
@@ -363,7 +364,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response as IResponse<TOutput>;
             }
         }
@@ -395,7 +396,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response as IResponse<TOutput>;
             }
         }
@@ -431,7 +432,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response;
             }
         }
@@ -463,7 +464,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response;
             }
         }
@@ -495,7 +496,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response as IResponse<TOutput>;
             }
         }
@@ -528,7 +529,7 @@ namespace Responsible.Handler.Winforms
                 FormImage = Properties.Resources.rolling
             })
             {
-                form.ShowDialog();
+                form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                 return form.Response as IResponse<TOutput>;
             }
         }

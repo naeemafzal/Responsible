@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Responsible.Core;
 using Responsible.Handler.Winforms.Alerts;
 using Responsible.Handler.Winforms.Executors;
+using Responsible.Handler.Winforms.Helpers;
 
 namespace Responsible.Handler.Winforms.Processors
 {
@@ -22,7 +23,7 @@ namespace Responsible.Handler.Winforms.Processors
             if (processor == null)
             {
                 var processNullMessage = $"The provided {nameof(processor)} is null.";
-                SweetAlerts.Alert(string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
+                SweetAlerts.Alert(HelperMethods.GetCurrentlyActiveForm(), string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
                 return ResponseFactory.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
@@ -42,7 +43,7 @@ namespace Responsible.Handler.Winforms.Processors
                     ProgressObject = processor.ProgressObject
                 })
                 {
-                    form.ShowDialog();
+                    form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                     return form.Response;
                 }
             }
@@ -63,7 +64,7 @@ namespace Responsible.Handler.Winforms.Processors
             if (processor == null)
             {
                 var processNullMessage = $"The provided {nameof(processor)} is null.";
-                SweetAlerts.Alert(string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
+                SweetAlerts.Alert(HelperMethods.GetCurrentlyActiveForm(), string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
                 return ResponseFactory.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
@@ -83,7 +84,7 @@ namespace Responsible.Handler.Winforms.Processors
                     ProgressObject = processor.ProgressObject
                 })
                 {
-                    form.ShowDialog();
+                    form.ShowDialog(HelperMethods.GetCurrentlyActiveForm());
                     return form.Response;
                 }
             }

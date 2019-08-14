@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 using Responsible.Core;
+using Responsible.Handler.Winforms.Helpers;
 
 namespace Responsible.Handler.Winforms.Processors
 {
@@ -27,6 +28,7 @@ namespace Responsible.Handler.Winforms.Processors
             bool showSuccessMessage = false, bool ignoreResponseMessage = false, 
             string successMessage = "Processed successfully")
         {
+            ParentControl = HelperMethods.GetCurrentlyActiveForm();
             OperationTitle = operationTitle;
             CanRetry = retryable;
             ReportSuccess = showSuccessMessage;
@@ -47,7 +49,7 @@ namespace Responsible.Handler.Winforms.Processors
             bool showSuccessMessage = false, bool ignoreResponseMessage = false, 
             string successMessage = "Processed successfully")
         {
-            ParentControl = parentControl;
+            ParentControl = HelperMethods.GetCurrentlyActiveForm(parentControl);
             OperationTitle = operationTitle;
             CanRetry = retryable;
             ReportSuccess = showSuccessMessage;

@@ -2,6 +2,7 @@
 using Responsible.Core;
 using Responsible.Handler.Winforms.Alerts;
 using Responsible.Handler.Winforms.Executors;
+using Responsible.Handler.Winforms.Helpers;
 
 namespace Responsible.Handler.Winforms.Processors
 {
@@ -21,7 +22,7 @@ namespace Responsible.Handler.Winforms.Processors
             if (processor == null)
             {
                 var processNullMessage = $"The provided {nameof(processor)} is null.";
-                SweetAlerts.Alert(string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
+                SweetAlerts.Alert(HelperMethods.GetCurrentlyActiveForm(), string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
                 return ResponseFactory.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
@@ -29,7 +30,7 @@ namespace Responsible.Handler.Winforms.Processors
             {
                 using (var form = new ActionExecutor
                 {
-                    ParentControl = processor.ParentControl,
+                    ParentControl = HelperMethods.GetCurrentlyActiveForm(processor.ParentControl),
                     FormTitle = processor.OperationTitle,
                     CanRetry = processor.CanRetry,
                     ShowSuccessMessage = processor.ReportSuccess,
@@ -41,7 +42,7 @@ namespace Responsible.Handler.Winforms.Processors
                     ProgressObject = processor.ProgressObject
                 })
                 {
-                    form.ShowDialog();
+                    form.ShowDialog(HelperMethods.GetCurrentlyActiveForm(processor.ParentControl));
                     return form.Response;
                 }
             }
@@ -62,7 +63,7 @@ namespace Responsible.Handler.Winforms.Processors
             if (processor == null)
             {
                 var processNullMessage = $"The provided {nameof(processor)} is null.";
-                SweetAlerts.Alert(string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
+                SweetAlerts.Alert(HelperMethods.GetCurrentlyActiveForm(), string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
                 return ResponseFactory.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
@@ -70,7 +71,7 @@ namespace Responsible.Handler.Winforms.Processors
             {
                 using (var form = new FuncOutputResponseExecutor
                 {
-                    ParentControl = processor.ParentControl,
+                    ParentControl = HelperMethods.GetCurrentlyActiveForm(processor.ParentControl),
                     FormTitle = processor.OperationTitle,
                     CanRetry = processor.CanRetry,
                     ShowSuccessMessage = processor.ReportSuccess,
@@ -82,7 +83,7 @@ namespace Responsible.Handler.Winforms.Processors
                     ProgressObject = processor.ProgressObject
                 })
                 {
-                    form.ShowDialog();
+                    form.ShowDialog(HelperMethods.GetCurrentlyActiveForm(processor.ParentControl));
                     return form.Response;
                 }
             }
@@ -103,7 +104,7 @@ namespace Responsible.Handler.Winforms.Processors
             if (processor == null)
             {
                 var processNullMessage = $"The provided {nameof(processor)} is null.";
-                SweetAlerts.Alert(string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
+                SweetAlerts.Alert(HelperMethods.GetCurrentlyActiveForm(), string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
                 return ResponseFactory<TOutput>.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
@@ -111,7 +112,7 @@ namespace Responsible.Handler.Winforms.Processors
             {
                 using (var form = new FuncOutputExecutor<TOutput>()
                 {
-                    ParentControl = processor.ParentControl,
+                    ParentControl = HelperMethods.GetCurrentlyActiveForm(processor.ParentControl),
                     FormTitle = processor.OperationTitle,
                     CanRetry = processor.CanRetry,
                     ShowSuccessMessage = processor.ReportSuccess,
@@ -123,7 +124,7 @@ namespace Responsible.Handler.Winforms.Processors
                     ProgressObject = processor.ProgressObject
                 })
                 {
-                    form.ShowDialog();
+                    form.ShowDialog(HelperMethods.GetCurrentlyActiveForm(processor.ParentControl));
                     return form.Response as IResponse<TOutput>;
                 }
             }
@@ -144,7 +145,7 @@ namespace Responsible.Handler.Winforms.Processors
             if (processor == null)
             {
                 var processNullMessage = $"The provided {nameof(processor)} is null.";
-                SweetAlerts.Alert(string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
+                SweetAlerts.Alert(HelperMethods.GetCurrentlyActiveForm(), string.Empty, processNullMessage, AlertButtons.Ok, AlertType.Error);
                 return ResponseFactory<TOutput>.Error(processNullMessage, ErrorResponseStatus.BadRequest);
             }
 
@@ -152,7 +153,7 @@ namespace Responsible.Handler.Winforms.Processors
             {
                 using (var form = new FuncOutputResponseExecutor<TOutput>()
                 {
-                    ParentControl = processor.ParentControl,
+                    ParentControl = HelperMethods.GetCurrentlyActiveForm(processor.ParentControl),
                     FormTitle = processor.OperationTitle,
                     CanRetry = processor.CanRetry,
                     ShowSuccessMessage = processor.ReportSuccess,
@@ -164,7 +165,7 @@ namespace Responsible.Handler.Winforms.Processors
                     ProgressObject = processor.ProgressObject
                 })
                 {
-                    form.ShowDialog();
+                    form.ShowDialog(HelperMethods.GetCurrentlyActiveForm(processor.ParentControl));
                     return form.Response as IResponse<TOutput>;
                 }
             }

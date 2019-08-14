@@ -284,6 +284,7 @@ namespace Responsible.Handler.Winforms.AlertForms
 
                 if (!Response.Success)
                 {
+                    //Break if operation was cancelled
                     if (Response.Cancelled)
                     {
                         break;
