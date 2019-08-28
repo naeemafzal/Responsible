@@ -23,7 +23,7 @@ namespace WindowsForms.App
         {
             var cancellationTokenSource = new CancellationTokenSource();
             var token = cancellationTokenSource.Token;
-            using (var process = new Processor(this, "Loading Customers").CanBeCanceled(cancellationTokenSource).ShouldReportSuccess())
+            using (var process = new Processor("Loading Customers").CanBeCanceled(cancellationTokenSource))
             {
                 var filterResponse = process.Process(() => CustomerLogic.FilterAsync(SearchTextBox.Text, token));
                 CustomersDataGridView.DataSource = filterResponse.Value;
@@ -38,7 +38,7 @@ namespace WindowsForms.App
                 Lastname = LastnameTextBox.Text
             };
 
-            using (var process = new Processor(this, "Adding Customers"))
+            using (var process = new Processor("Adding Customers"))
             {
                 var addResponse = process.Process(() => CustomerLogic.Add(customerToAdd));
                 if (addResponse.Success)
