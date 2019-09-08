@@ -8,9 +8,9 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>A Handy package for warapping EntityFrameworkCore in UnitOfWork.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/LICENSE.txt</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Uow.EntityFramework</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Uow.EntityFrameworkCore</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/naeemafzal/Responsible/master/StaticResourcesProject/Responsible-Icon.ico</PackageIconUrl>
-    <RepositoryUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Uow.EntityFramework</RepositoryUrl>
+    <RepositoryUrl>https://github.com/naeemafzal/Responsible/tree/master/Responsible.Uow.EntityFrameworkCore</RepositoryUrl>
     <PackageTags>Entity FrameWork Core Wrapper Responsible Response Responses Handle</PackageTags>
   </PropertyGroup>
 
