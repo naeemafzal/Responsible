@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Responsible.WebApi", "Respo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Responsible.DependencyResolver", "Responsible.DependencyResolver\Responsible.DependencyResolver.csproj", "{5AD9CA74-0737-4B92-B38F-252A84498DBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Responsible.Uow.EntityFrameworkCore", "Responsible.Uow.EntityFrameworkCore\Responsible.Uow.EntityFrameworkCore.csproj", "{6BD33F54-FF91-4F37-AAD2-B480B8E89307}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{5AD9CA74-0737-4B92-B38F-252A84498DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AD9CA74-0737-4B92-B38F-252A84498DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AD9CA74-0737-4B92-B38F-252A84498DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BD33F54-FF91-4F37-AAD2-B480B8E89307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BD33F54-FF91-4F37-AAD2-B480B8E89307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BD33F54-FF91-4F37-AAD2-B480B8E89307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BD33F54-FF91-4F37-AAD2-B480B8E89307}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{394675DB-2865-4152-ACAA-EC6576B9B67F} = {8E967508-2F70-446F-96D9-CA137F6541A2}
 		{36D53AA9-2897-428C-A72E-BAA5B6CF2FF1} = {8E967508-2F70-446F-96D9-CA137F6541A2}
 		{5AD9CA74-0737-4B92-B38F-252A84498DBE} = {8E967508-2F70-446F-96D9-CA137F6541A2}
+		{6BD33F54-FF91-4F37-AAD2-B480B8E89307} = {8E967508-2F70-446F-96D9-CA137F6541A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F02176E-A4D1-4C71-9813-FA319A03FE7A}
