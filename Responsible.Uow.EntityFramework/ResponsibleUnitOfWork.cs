@@ -38,29 +38,17 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Submits all changes in the context.</para>
         /// </summary>
-        public async Task<int> SaveChangesAsync()
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var readonlyValidationResponse = ValidateReadonlyModels();
-            if (!readonlyValidationResponse.Success)
+            if (readonlyValidationResponse.Success) return Context.SaveChangesAsync(cancellationToken);
+
+            if (readonlyValidationResponse.HasException)
             {
-                throw new InvalidOperationException(readonlyValidationResponse.SingleMessage);
+                throw new InvalidOperationException(readonlyValidationResponse.SingleMessage, readonlyValidationResponse.Exception);
             }
+            throw new InvalidOperationException(readonlyValidationResponse.SingleMessage);
 
-            return await Context.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// <para>Submits all changes in the context.</para>
-        /// </summary>
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-        {
-            var readonlyValidationResponse = ValidateReadonlyModels();
-            if (!readonlyValidationResponse.Success)
-            {
-                throw new InvalidOperationException(readonlyValidationResponse.SingleMessage);
-            }
-
-            return await Context.SaveChangesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +84,7 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Submits all changes in the context and returns IResponse</para>
         /// </summary>
-        public async Task<IResponse<int>> SaveChangesResponseAsync(CancellationToken cancellationToken)
+        public async Task<IResponse<int>> SaveChangesResponseAsync(CancellationToken cancellationToken = default)
         {
             try
             {
@@ -124,39 +112,9 @@ namespace Responsible.Uow.EntityFramework
             }
         }
 
-        /// <summary>
-        /// <para>Submits all changes in the context and returns IResponse</para>
-        /// </summary>
-        public async Task<IResponse<int>> SaveChangesResponseAsync()
-        {
-            try
-            {
-                var readonlyValidationResponse = ValidateReadonlyModels();
-                if (!readonlyValidationResponse.Success)
-                {
-                    return ResponseFactory<int>.Convert(readonlyValidationResponse);
-                }
-
-                var save = await Context.SaveChangesAsync();
-                return ResponseFactory<int>.Ok(save);
-            }
-            catch (DbEntityValidationException ex)
-            {
-                var errorMessages = ex.EntityValidationErrors
-                    .SelectMany(x => x.ValidationErrors)
-                    .Select(x => x.ErrorMessage);
-
-                return ResponseFactory<int>.Exception(ex, errorMessages.ToList());
-            }
-            catch (Exception ex)
-            {
-                return ResponseFactory<int>.Exception(ex);
-            }
-        }
-
         private IResponse ValidateReadonlyModels()
         {
-            //Select all the modified entiries
+            //Select all the modified entries
             var modifiedOrAddedEntities = Context.ChangeTracker.Entries()
                 .Where(x => x.State != EntityState.Unchanged)
                 .Select(x => x.Entity).ToList();

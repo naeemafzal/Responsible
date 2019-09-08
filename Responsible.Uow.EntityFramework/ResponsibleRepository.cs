@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Responsible.Uow.EntityFramework
 {
     /// <summary>
-    /// An instance of Repository for EntityframeWork implements <see cref="IResponsibleRepository{TEntity}"/>
+    /// An instance of Repository for EntityFrameWork implements <see cref="IResponsibleRepository{TEntity}"/>
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public class ResponsibleRepository<TEntity> : IResponsibleRepository<TEntity> where TEntity : class
@@ -50,9 +51,9 @@ namespace Responsible.Uow.EntityFramework
         /// as defined in the designer, by the Code First fluent API, or by the DataMember
         /// attribute.
         /// </remarks>
-        public async Task<TEntity> GetAsync(params object[] keyValues)
+        public Task<TEntity> GetAsync(CancellationToken cancellationToken = default, params object[] keyValues)
         {
-            return await Context.Set<TEntity>().FindAsync(keyValues);
+            return Context.Set<TEntity>().FindAsync(cancellationToken, keyValues);
         }
 
 
@@ -70,9 +71,9 @@ namespace Responsible.Uow.EntityFramework
         /// <para>Gets a Record By Id</para>
         /// <para>Must only be used for source with Integer Identity</para>
         /// </summary>
-        public async Task<TEntity> GetAsync(int id)
+        public Task<TEntity> GetAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().FindAsync(id);
+            return Context.Set<TEntity>().FindAsync(cancellationToken, id);
         }
 
 
@@ -90,9 +91,9 @@ namespace Responsible.Uow.EntityFramework
         /// <para>Gets a Record By Id</para>
         /// <para>Must only be used for source with string Identity</para>
         /// </summary>
-        public async Task<TEntity> GetAsync(string id)
+        public Task<TEntity> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().FindAsync(id);
+            return Context.Set<TEntity>().FindAsync(cancellationToken, id);
         }
 
 
@@ -110,9 +111,9 @@ namespace Responsible.Uow.EntityFramework
         /// <para>Gets a Record By Id</para>
         /// <para>Must only be used for source with Guid Identity</para>
         /// </summary>
-        public async Task<TEntity> GetAsync(Guid id)
+        public Task<TEntity> GetAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().FindAsync(id);
+            return Context.Set<TEntity>().FindAsync(cancellationToken, id);
         }
 
 
@@ -128,9 +129,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets All Record</para>
         /// </summary>
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().ToListAsync();
+            return Context.Set<TEntity>().ToListAsync(cancellationToken);
         }
 
 
@@ -146,9 +147,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Finds Record By a predicate</para>
         /// </summary>
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().Where(predicate).ToListAsync();
+            return Context.Set<TEntity>().Where(predicate).ToListAsync(cancellationToken);
         }
 
 
@@ -164,9 +165,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets SingleOrDefault Record By a predicate</para>
         /// </summary>
-        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
+            return Context.Set<TEntity>().SingleOrDefaultAsync(predicate, cancellationToken);
         }
 
 
@@ -182,11 +183,11 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets SingleOrDefault Record</para>
         /// </summary>
-        public async Task<TEntity> SingleOrDefaultAsync()
+        public Task<TEntity> SingleOrDefaultAsync(CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().SingleOrDefaultAsync();
+            return Context.Set<TEntity>().SingleOrDefaultAsync(cancellationToken);
         }
-
+        
         /// <summary>
         /// <para>Gets FirstOrDefault Record By a predicate</para>
         /// </summary>
@@ -199,9 +200,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets FirstOrDefault Record By a predicate</para>
         /// </summary>
-        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+            return Context.Set<TEntity>().FirstOrDefaultAsync(predicate, cancellationToken);
         }
 
 
@@ -217,9 +218,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets FirstOrDefault Record</para>
         /// </summary>
-        public async Task<TEntity> FirstOrDefaultAsync()
+        public Task<TEntity> FirstOrDefaultAsync(CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().FirstOrDefaultAsync();
+            return Context.Set<TEntity>().FirstOrDefaultAsync(cancellationToken);
         }
 
 
@@ -235,9 +236,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets Records by IQueryable</para>
         /// </summary>
-        public async Task<IEnumerable<TEntity>> QueryAsync(IQueryable<TEntity> query)
+        public Task<List<TEntity>> QueryAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
         {
-            return await query.ToListAsync();
+            return query.ToListAsync(cancellationToken);
         }
 
 
@@ -253,9 +254,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets Records by IQueryable</para>
         /// </summary>
-        public async Task<IQueryable<TEntity>> AsQueryableAsync()
+        public Task<IQueryable<TEntity>> AsQueryableAsync(CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => Context.Set<TEntity>().AsQueryable());
+            return Task.Run(() => Context.Set<TEntity>().AsQueryable(), cancellationToken);
         }
 
 
@@ -271,9 +272,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets Count of Record By a predicate</para>
         /// </summary>
-        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().CountAsync(predicate);
+            return Context.Set<TEntity>().CountAsync(predicate, cancellationToken);
         }
 
 
@@ -289,9 +290,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets Count of Record</para>
         /// </summary>
-        public async Task<int> CountAsync()
+        public Task<int> CountAsync(CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().CountAsync();
+            return Context.Set<TEntity>().CountAsync(cancellationToken);
         }
 
 
@@ -307,9 +308,9 @@ namespace Responsible.Uow.EntityFramework
         /// <summary>
         /// <para>Gets True/False matching records by a predicate</para>
         /// </summary>
-        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().AnyAsync(predicate);
+            return Context.Set<TEntity>().AnyAsync(predicate, cancellationToken);
         }
 
 
@@ -320,13 +321,13 @@ namespace Responsible.Uow.EntityFramework
         {
             return Context.Set<TEntity>().Any();
         }
-        
+
         /// <summary>
         /// <para>Gets True/False of Entities list</para>
         /// </summary>
-        public async Task<bool> AnyAsync()
+        public Task<bool> AnyAsync(CancellationToken cancellationToken = default)
         {
-            return await Context.Set<TEntity>().AnyAsync();
+            return Context.Set<TEntity>().AnyAsync(cancellationToken);
         }
 
         /// <summary>
@@ -337,14 +338,14 @@ namespace Responsible.Uow.EntityFramework
         {
             Context.Set<TEntity>().Add(entity);
         }
-        
+
         /// <summary>
         /// <para>Adds a Record</para>
         /// <para>All required properties must be provided</para>
         /// </summary>
-        public async Task AddAsync(TEntity entity)
+        public Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => Context.Set<TEntity>().Add(entity));
+            return Task.Run(() => Context.Set<TEntity>().Add(entity), cancellationToken);
         }
 
 
@@ -362,9 +363,9 @@ namespace Responsible.Uow.EntityFramework
         /// <para>Adds Multiple Record</para>
         /// <para>All required properties must be provided</para>
         /// </summary>
-        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        public Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => Context.Set<TEntity>().AddRange(entities));
+            return Task.Run(() => Context.Set<TEntity>().AddRange(entities), cancellationToken);
         }
 
 
@@ -382,9 +383,9 @@ namespace Responsible.Uow.EntityFramework
         /// <para>Removes a Record</para>
         /// <para>Record must be loaded from database first</para>
         /// </summary>
-        public async Task RemoveAsync(TEntity entity)
+        public Task RemoveAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => Context.Set<TEntity>().Remove(entity));
+            return Task.Run(() => Context.Set<TEntity>().Remove(entity), cancellationToken);
         }
 
 
@@ -402,9 +403,9 @@ namespace Responsible.Uow.EntityFramework
         /// <para>Removes multiple Record</para>
         /// <para>Records must be loaded from database first</para>
         /// </summary>
-        public async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        public Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => Context.Set<TEntity>().RemoveRange(entities));
+            return Task.Run(() => Context.Set<TEntity>().RemoveRange(entities), cancellationToken);
         }
     }
 }

@@ -3,7 +3,5 @@
     /// <summary>
     /// Provides an interface for a ReadOnlyEntity
     /// </summary>
-    public interface IReadOnlyEntity
-    {
-    }
+    public interface IReadOnlyEntity { }
 }

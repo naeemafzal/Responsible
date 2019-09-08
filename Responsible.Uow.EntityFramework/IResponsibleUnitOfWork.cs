@@ -24,12 +24,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Submits all changes in the context.</para>
         ///</summary>
-        Task<int> SaveChangesAsync();
-
-        ///<summary>
-        ///<para>Submits all changes in the context.</para>
-        ///</summary>
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Submits all changes in the context and returns IResponse</para>
@@ -39,11 +34,6 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Submits all changes in the context and returns IResponse</para>
         ///</summary>
-        Task<IResponse<int>> SaveChangesResponseAsync(CancellationToken cancellationToken);
-
-        ///<summary>
-        ///<para>Submits all changes in the context and returns IResponse</para>
-        ///</summary>
-        Task<IResponse<int>> SaveChangesResponseAsync();
+        Task<IResponse<int>> SaveChangesResponseAsync(CancellationToken cancellationToken = default);
     }
 }

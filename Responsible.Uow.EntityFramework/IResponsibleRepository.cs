@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Responsible.Uow.EntityFramework
 {
     /// <summary>
-    /// Provides an interface for a generaic Repository Entities Querying and Updating
+    /// Provides an interface for a generic Repository Entities Querying and Updating
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public interface IResponsibleRepository<TEntity> where TEntity : class
@@ -30,7 +31,7 @@ namespace Responsible.Uow.EntityFramework
         /// as defined in the designer, by the Code First fluent API, or by the DataMember
         /// attribute.
         /// </remarks>
-        Task<TEntity> GetAsync(params object[] keyValues);
+        Task<TEntity> GetAsync(CancellationToken cancellationToken = default, params object[] keyValues);
 
         ///<summary>
         ///<para>Gets a Record By Id</para>
@@ -42,7 +43,7 @@ namespace Responsible.Uow.EntityFramework
         ///<para>Gets a Record By Id</para>
         ///<para>Must only be used for source with Integer Identity</para>
         ///</summary>
-        Task<TEntity> GetAsync(int id);
+        Task<TEntity> GetAsync(int id, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets a Record By Id</para>
@@ -54,7 +55,7 @@ namespace Responsible.Uow.EntityFramework
         ///<para>Gets a Record By Id</para>
         ///<para>Must only be used for source with string Identity</para>
         ///</summary>
-        Task<TEntity> GetAsync(string id);
+        Task<TEntity> GetAsync(string id, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets a Record By Id</para>
@@ -66,7 +67,7 @@ namespace Responsible.Uow.EntityFramework
         ///<para>Gets a Record By Id</para>
         ///<para>Must only be used for source with Guid Identity</para>
         ///</summary>
-        Task<TEntity> GetAsync(Guid id);
+        Task<TEntity> GetAsync(Guid id, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets All Record</para>
@@ -76,7 +77,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets All Record</para>
         ///</summary>
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Finds Record By a predicate</para>
@@ -86,7 +87,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Finds Record By a predicate</para>
         ///</summary>
-        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets SingleOrDefault Record By a predicate</para>
@@ -96,7 +97,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets SingleOrDefault Record By a predicate</para>
         ///</summary>
-        Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets SingleOrDefault Record</para>
@@ -106,7 +107,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets SingleOrDefault Record</para>
         ///</summary>
-        Task<TEntity> SingleOrDefaultAsync();
+        Task<TEntity> SingleOrDefaultAsync(CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets FirstOrDefault Record By a predicate</para>
@@ -116,7 +117,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets FirstOrDefault Record By a predicate</para>
         ///</summary>
-        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets FirstOrDefault Record</para>
@@ -126,7 +127,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets FirstOrDefault Record</para>
         ///</summary>
-        Task<TEntity> FirstOrDefaultAsync();
+        Task<TEntity> FirstOrDefaultAsync(CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets Records by IQueryable</para>
@@ -136,7 +137,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets Records by IQueryable</para>
         ///</summary>
-        Task<IEnumerable<TEntity>> QueryAsync(IQueryable<TEntity> query);
+        Task<List<TEntity>> QueryAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets Records by IQueryable</para>
@@ -146,7 +147,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets Records by IQueryable</para>
         ///</summary>
-        Task<IQueryable<TEntity>> AsQueryableAsync();
+        Task<IQueryable<TEntity>> AsQueryableAsync(CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets Count of Record By a predicate</para>
@@ -156,7 +157,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets Count of Record By a predicate</para>
         ///</summary>
-        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets Count of Record</para>
@@ -166,7 +167,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets Count of Record</para>
         ///</summary>
-        Task<int> CountAsync();
+        Task<int> CountAsync(CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets True/False matching records by a predicate</para>
@@ -176,7 +177,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets True/False matching records by a predicate</para>
         ///</summary>
-        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Gets True/False of Entities list</para>
@@ -186,7 +187,7 @@ namespace Responsible.Uow.EntityFramework
         ///<summary>
         ///<para>Gets True/False of Entities list</para>
         ///</summary>
-        Task<bool> AnyAsync();
+        Task<bool> AnyAsync(CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Adds a Record</para>
@@ -198,7 +199,7 @@ namespace Responsible.Uow.EntityFramework
         ///<para>Adds a Record</para>
         ///<para>All required properties must be provided</para>
         ///</summary>
-        Task AddAsync(TEntity entity);
+        Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Adds Multiple Record</para>
@@ -210,7 +211,7 @@ namespace Responsible.Uow.EntityFramework
         ///<para>Adds Multiple Record</para>
         ///<para>All required properties must be provided</para>
         ///</summary>
-        Task AddRangeAsync(IEnumerable<TEntity> entities);
+        Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Removes a Record</para>
@@ -222,7 +223,7 @@ namespace Responsible.Uow.EntityFramework
         ///<para>Removes a Record</para>
         ///<para>Record must be loaded from database first</para>
         ///</summary>
-        Task RemoveAsync(TEntity entity);
+        Task RemoveAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         ///<summary>
         ///<para>Removes multiple Record</para>
@@ -234,6 +235,6 @@ namespace Responsible.Uow.EntityFramework
         ///<para>Removes multiple Record</para>
         ///<para>Records must be loaded from database first</para>
         ///</summary>
-        Task RemoveRangeAsync(IEnumerable<TEntity> entities);
+        Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     }
 }
