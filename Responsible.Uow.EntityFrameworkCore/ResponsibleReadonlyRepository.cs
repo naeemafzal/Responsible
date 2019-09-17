@@ -53,7 +53,7 @@ namespace Responsible.Uow.EntityFrameworkCore
         /// </remarks>
         public Task<TEntity> GetAsync(CancellationToken cancellationToken = default, params object[] keyValues)
         {
-            return Context.Set<TEntity>().FindAsync(cancellationToken, keyValues);
+            return Context.Set<TEntity>().FindAsync(keyValues, cancellationToken);
         }
 
 
@@ -73,7 +73,7 @@ namespace Responsible.Uow.EntityFrameworkCore
         /// </summary>
         public Task<TEntity> GetAsync(int id, CancellationToken cancellationToken = default)
         {
-            return Context.Set<TEntity>().FindAsync(cancellationToken, id);
+            return GetAsync(cancellationToken, id);
         }
 
 
@@ -93,7 +93,7 @@ namespace Responsible.Uow.EntityFrameworkCore
         /// </summary>
         public Task<TEntity> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            return Context.Set<TEntity>().FindAsync(cancellationToken, id);
+            return GetAsync(cancellationToken, id);
         }
 
 
@@ -113,7 +113,7 @@ namespace Responsible.Uow.EntityFrameworkCore
         /// </summary>
         public Task<TEntity> GetAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return Context.Set<TEntity>().FindAsync(cancellationToken, id);
+            return GetAsync(cancellationToken, id);
         }
 
 
