@@ -104,7 +104,7 @@ namespace Responsible.Core
         ///     Creates Custom Response of <see cref="IResponse"/> with no messages and a given status <see cref="ResponseStatus"/> and
         ///     an optional output value which is set to default of T if not provided
         /// </summary>
-        public static IResponse<T> Custom(ResponseStatus status, T value = default(T))
+        public static IResponse<T> Custom(ResponseStatus status, T value = default)
         {
             var result = new Response<T>
             {
@@ -123,7 +123,7 @@ namespace Responsible.Core
         ///     Creates Custom Response of <see cref="IResponse"/> with no messages and a given status <see cref="ResponseStatus"/> and
         ///     an optional output value which is set to default of T if not provided
         /// </summary>
-        public static async Task<IResponse<T>> CustomAsync(ResponseStatus status, T value = default(T))
+        public static async Task<IResponse<T>> CustomAsync(ResponseStatus status, T value = default)
         {
             return await Task.FromResult(Custom(status, value));
         }
@@ -132,7 +132,7 @@ namespace Responsible.Core
         ///     Creates Custom Response of <see cref="IResponse"/> with a message and a given status <see cref="ResponseStatus"/> and
         ///     an optional output value which is set to default of T if not provided
         /// </summary>
-        public static IResponse<T> Custom(ResponseStatus status, string message, T value = default(T))
+        public static IResponse<T> Custom(ResponseStatus status, string message, T value = default)
         {
             var result = new Response<T>
             {
@@ -151,7 +151,7 @@ namespace Responsible.Core
         ///     Creates Custom Response of <see cref="IResponse"/> with a message and a given status <see cref="ResponseStatus"/> and
         ///     an optional output value which is set to default of T if not provided
         /// </summary>
-        public static async Task<IResponse<T>> CustomAsync(ResponseStatus status, string message, T value = default(T))
+        public static async Task<IResponse<T>> CustomAsync(ResponseStatus status, string message, T value = default)
         {
             return await Task.FromResult(Custom(status, message, value));
         }
@@ -160,7 +160,7 @@ namespace Responsible.Core
         ///     Creates Custom Response of <see cref="IResponse"/> with a list of messages and a given status <see cref="ResponseStatus"/> and
         ///     an optional output value which is set to default of T if not provided
         /// </summary>
-        public static IResponse<T> Custom(ResponseStatus status, List<string> messages, T value = default(T))
+        public static IResponse<T> Custom(ResponseStatus status, List<string> messages, T value = default)
         {
             var result = new Response<T>
             {
@@ -179,7 +179,7 @@ namespace Responsible.Core
         ///     Creates Custom Response of <see cref="IResponse"/> with a list of messages and a given status <see cref="ResponseStatus"/> and
         ///     an optional output value which is set to default of T if not provided
         /// </summary>
-        public static async Task<IResponse<T>> CustomAsync(ResponseStatus status, List<string> messages, T value = default(T))
+        public static async Task<IResponse<T>> CustomAsync(ResponseStatus status, List<string> messages, T value = default)
         {
             return await Task.FromResult(Custom(status, messages, value));
         }

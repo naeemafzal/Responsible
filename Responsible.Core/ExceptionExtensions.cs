@@ -5,9 +5,9 @@ using System.Linq;
 namespace Responsible.Core
 {
     /// <summary>
-    /// Extention methods for an Exception
+    /// Extension methods for an Exception
     /// </summary>
-    public static class ExceptionExtentions
+    public static class ExceptionExtensions
     {
         /// <summary>
         /// Extracts a list of the messages from the given exception and all the inner exceptions.

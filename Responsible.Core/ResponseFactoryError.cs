@@ -29,10 +29,10 @@ namespace Responsible.Core
 
         /// <summary>
         ///     Creates an Error Response of <see cref="IResponse"/> with a message and a given error Status <see cref="ErrorResponseStatus"/>
-        ///     Default error status is <see cref="ErrorResponseStatus.BadRequest"/>
+        ///     Default error status is <see cref="ErrorResponseStatus.InternalServerError"/>
         /// </summary>
         public static IResponse Error(string message,
-            ErrorResponseStatus status = ErrorResponseStatus.BadRequest)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response
             {
@@ -43,20 +43,20 @@ namespace Responsible.Core
 
         /// <summary>
         ///     Creates an Error Response of <see cref="IResponse"/> with a message and a given error Status <see cref="ErrorResponseStatus"/>
-        ///     Default error status is <see cref="ErrorResponseStatus.BadRequest"/>
+        ///     Default error status is <see cref="ErrorResponseStatus.InternalServerError"/>
         /// </summary>
         public static async Task<IResponse> ErrorAsync(string message,
-            ErrorResponseStatus status = ErrorResponseStatus.BadRequest)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return await Task.FromResult(Error(message, status));
         }
 
         /// <summary>
         ///     Creates an Error Response of <see cref="IResponse"/> with messages and a given error Status <see cref="ErrorResponseStatus"/>
-        ///     Default error status is <see cref="ErrorResponseStatus.BadRequest"/>
+        ///     Default error status is <see cref="ErrorResponseStatus.InternalServerError"/>
         /// </summary>
         public static IResponse Error(List<string> messages,
-            ErrorResponseStatus status = ErrorResponseStatus.BadRequest)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return new Response
             {
@@ -67,10 +67,10 @@ namespace Responsible.Core
 
         /// <summary>
         ///     Creates an Error Response of <see cref="IResponse"/> with messages and a given error Status <see cref="ErrorResponseStatus"/>
-        ///     Default error status is <see cref="ErrorResponseStatus.BadRequest"/>
+        ///     Default error status is <see cref="ErrorResponseStatus.InternalServerError"/>
         /// </summary>
         public static async Task<IResponse> ErrorAsync(List<string> messages,
-            ErrorResponseStatus status = ErrorResponseStatus.BadRequest)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return await Task.FromResult(Error(messages, status));
         }
@@ -106,10 +106,38 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message and status of <see cref="ResponseStatus.BadRequest"/> and a default value of T
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
+        /// </summary>
+        public static IResponse<T> Error(T value)
+        {
+            var result = new Response<T>
+            {
+                Status = ResponseStatus.InternalServerError,
+                Messages = new List<string> { "An error has occured" },
+                Value = value
+            };
+
+            //Initialise constructor for IEnumerable items etc List, Dictionary
+            result.Value = TrySettingDefaultForIEnumerable(result.Value);
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
+        /// </summary>
+        public static async Task<IResponse<T>> ErrorAsync(T value)
+        {
+            return await Task.FromResult(Error(value));
+        }
+
+        /// <summary>
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message and status of <see cref="ResponseStatus.InternalServerError"/> and a default value of T
         /// </summary>
         public static IResponse<T> Error(string message,
-            ErrorResponseStatus status = ErrorResponseStatus.BadRequest)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             var result = new Response<T>
             {
@@ -124,19 +152,47 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message and status of <see cref="ResponseStatus.BadRequest"/> and a default value of T
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message and status of <see cref="ResponseStatus.InternalServerError"/> and a default value of T
         /// </summary>
         public static async Task<IResponse<T>> ErrorAsync(string message,
-            ErrorResponseStatus status = ErrorResponseStatus.BadRequest)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return await Task.FromResult(Error(message, status));
         }
 
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a list of messages and status of <see cref="ResponseStatus.BadRequest"/> and a default value of T
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
+        /// </summary>
+        public static IResponse<T> Error(string message, T value,
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        {
+            var result = new Response<T>
+            {
+                Status = (ResponseStatus)status,
+                Messages = new List<string> { message },
+                Value = value
+            };
+
+            //Initialise constructor for IEnumerable items etc List, Dictionary
+            result.Value = TrySettingDefaultForIEnumerable(result.Value);
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
+        /// </summary>
+        public static async Task<IResponse<T>> ErrorAsync(string message, T value,
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        {
+            return await Task.FromResult(Error(message, value, status));
+        }
+
+        /// <summary>
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a list of messages and status of <see cref="ResponseStatus.InternalServerError"/> and a default value of T
         /// </summary>
         public static IResponse<T> Error(List<string> messages,
-            ErrorResponseStatus status = ErrorResponseStatus.BadRequest)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             var result = new Response<T>
             {
@@ -151,12 +207,40 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a list of messages and status of <see cref="ResponseStatus.BadRequest"/> and a default value of T
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a list of messages and status of <see cref="ResponseStatus.InternalServerError"/> and a default value of T
         /// </summary>
         public static async Task<IResponse<T>> ErrorAsync(List<string> messages,
-            ErrorResponseStatus status = ErrorResponseStatus.BadRequest)
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
         {
             return await Task.FromResult(Error(messages, status));
+        }
+
+        /// <summary>
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a list of messages and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
+        /// </summary>
+        public static IResponse<T> Error(List<string> messages, T value,
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        {
+            var result = new Response<T>
+            {
+                Status = (ResponseStatus)status,
+                Messages = messages ?? new List<string>(),
+                Value = value
+            };
+
+            //Initialise constructor for IEnumerable items etc List, Dictionary
+            result.Value = TrySettingDefaultForIEnumerable(result.Value);
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a list of messages and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
+        /// </summary>
+        public static async Task<IResponse<T>> ErrorAsync(List<string> messages, T value,
+            ErrorResponseStatus status = ErrorResponseStatus.InternalServerError)
+        {
+            return await Task.FromResult(Error(messages, value, status));
         }
     }
 }

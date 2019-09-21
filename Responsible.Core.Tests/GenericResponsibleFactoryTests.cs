@@ -37,7 +37,7 @@ namespace Responsible.Core.Tests
 
             Assert.IsNotNull(errorResponse, "Response is null");
             Assert.IsFalse(errorResponse.Success, "Success is not false.");
-            Assert.AreEqual(ResponseStatus.BadRequest, errorResponse.Status, "Status is not valid");
+            Assert.AreEqual(ResponseStatus.InternalServerError, errorResponse.Status, "Status is not valid");
             Assert.AreEqual(0, errorResponse.Value, "Values are not equal");
             Assert.IsNotNull(errorResponse.Messages, "Message list is null");
             Assert.AreEqual(1, errorResponse.Messages.Count(), "Message count is not as expected");
@@ -51,7 +51,7 @@ namespace Responsible.Core.Tests
 
             Assert.IsNotNull(errorResponse, "Response is null");
             Assert.IsFalse(errorResponse.Success, "Success is not false.");
-            Assert.AreEqual(ResponseStatus.BadRequest, errorResponse.Status, "Status is not valid");
+            Assert.AreEqual(ResponseStatus.InternalServerError, errorResponse.Status, "Status is not valid");
             Assert.AreEqual(null, errorResponse.Value, "Values are not equal");
             Assert.IsNotNull(errorResponse.Messages, "Message list is null");
             Assert.AreEqual(1, errorResponse.Messages.Count(), "Message count is not as expected");

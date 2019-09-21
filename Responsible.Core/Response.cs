@@ -28,6 +28,10 @@ namespace Responsible.Core
             }
         }
 
+        public string DetailedError => !HasException
+            ? $"Error Detail:{Environment.NewLine}{SingleMessage}"
+            : $"Error Detail:{Environment.NewLine}{SingleMessage}StackTrace:{Environment.NewLine}{Exception.StackTrace}";
+
         public IResponse AddTitle(string title)
         {
             if (string.IsNullOrWhiteSpace(title))

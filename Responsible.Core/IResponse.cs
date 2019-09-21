@@ -48,9 +48,16 @@ namespace Responsible.Core
         Exception Exception { get; }
 
         /// <summary>
-        ///     <para>Gets all messages as a Single Message, seperated by Environment.NewLine <see cref="Environment.NewLine"/>.</para>
+        ///     <para>Gets all messages as a Single Message, separated by <see cref="Environment.NewLine"/>.</para>
         /// </summary>
         string SingleMessage { get; }
+
+        /// <summary>
+        ///     <para>When Custom Errors are captured, returns the Error messages separated by <see cref="Environment.NewLine"/>.</para>
+        ///     <para>When an Exception is captured, Gets Messages from Exception and all the Inner Exceptions combined with StackTrace 
+        ///     separated by <see cref="Environment.NewLine"/>. Format: {Messages}<see cref="Environment.NewLine"/>{StackTrace}</para>
+        /// </summary>
+        string DetailedError { get; }
 
         /// <summary>
         /// Adds a title to Response for Reporting
