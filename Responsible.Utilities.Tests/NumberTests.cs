@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Responsible.Utilities.Extentions;
+using Responsible.Utilities.Extensions;
 
 namespace Responsible.Utilities.Tests
 {

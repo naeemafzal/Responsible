@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Responsible.Utilities.Extentions
+namespace Responsible.Utilities.Extensions
 {
     /// <summary>
     /// Extension methods for DateTime
     /// </summary>
-    public static class DateTimeExtentions
+    public static class DateTimeExtensions
     {
         /// <summary>
         /// Compares two <see cref="Nullable"/> <see cref="DateTime"/>

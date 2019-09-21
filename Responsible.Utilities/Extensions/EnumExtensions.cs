@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using Responsible.Utilities.ViewModels;
 
-namespace Responsible.Utilities.Extentions
+namespace Responsible.Utilities.Extensions
 {
     /// <summary>
-    /// Extention Methods for an <see cref="Enum"/>
+    /// Extension Methods for an <see cref="Enum"/>
     /// </summary>
-    public static class EnumExtentions
+    public static class EnumExtensions
     {
         /// <summary>
         /// Creates a List of <see cref="RecordIdentity"/> from all the Enum values

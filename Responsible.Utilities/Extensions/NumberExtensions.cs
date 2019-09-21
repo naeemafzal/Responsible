@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Responsible.Utilities.Extentions
+namespace Responsible.Utilities.Extensions
 {
     /// <summary>
-    /// Extention Methods for Numbers
+    /// Extension Methods for Numbers
     /// </summary>
-    public static class NumberExtentions
+    public static class NumberExtensions
     {
         #region Short
 

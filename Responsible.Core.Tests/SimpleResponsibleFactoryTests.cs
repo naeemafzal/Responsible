@@ -67,5 +67,18 @@ namespace Responsible.Core.Tests
             Assert.IsTrue(addTitleResponse.Success);
             Assert.AreEqual(title, addTitleResponse.Title);
         }
+
+        [TestMethod]
+        public void Response_Operation_Exception_DetaildError()
+        {
+            var cancelledResponse = ResponseFactory.Exception(new InvalidOperationException("Invalid Operation Exception"));
+
+            Assert.IsFalse(cancelledResponse.Success);
+            Assert.IsFalse(cancelledResponse.Cancelled);
+            Assert.AreEqual(ResponseStatus.InternalServerError, cancelledResponse.Status);
+            Assert.AreEqual("Invalid Operation Exception", cancelledResponse.Messages.ToList()[0], "Message is not the same");
+            var detailedMessage = $"Error Detail:{Environment.NewLine}{cancelledResponse.SingleMessage}StackTrace:{Environment.NewLine}{cancelledResponse.Exception.StackTrace}";
+            Assert.AreEqual(detailedMessage, cancelledResponse.DetailedError, "Detailed Message is not the same");
+        }
     }
 }

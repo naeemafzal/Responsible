@@ -1,15 +1,14 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Responsible.Utilities.Extentions
+namespace Responsible.Utilities.Extensions
 {
     /// <summary>
-    /// Extention Methods for a String
+    /// Extension Methods for a String
     /// </summary>
-    public static class StringExtentions
+    public static class StringExtensions
     {
         /// <summary>
         /// Compares two string case insensitive

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Responsible.Utilities.Extentions;
+using Responsible.Utilities.Extensions;
 
 namespace Responsible.Utilities.Tests
 {
@@ -21,7 +21,7 @@ namespace Responsible.Utilities.Tests
         [TestMethod]
         public void WeekDay_Distionary()
         {
-            var result = EnumExtentions.EnumDictionary<WeekDays>();
+            var result = EnumExtensions.EnumDictionary<WeekDays>();
 
             Assert.AreEqual(7, result.Count, "Dictionary count is not same");
 
@@ -46,7 +46,7 @@ namespace Responsible.Utilities.Tests
         [TestMethod]
         public void WeekDay_RecordIdentities()
         {
-            var result = EnumExtentions.EnumRecordIdentities<WeekDays>();
+            var result = EnumExtensions.EnumRecordIdentities<WeekDays>();
 
             Assert.AreEqual(7, result.Count, "Dictionary count is not same");
 
@@ -70,7 +70,7 @@ namespace Responsible.Utilities.Tests
         [TestMethod]
         public void WeekDay_StringList()
         {
-            var result = EnumExtentions.EnumStringList<WeekDays>();
+            var result = EnumExtensions.EnumStringList<WeekDays>();
 
             Assert.AreEqual(7, result.Count, "Dictionary count is not same");
 

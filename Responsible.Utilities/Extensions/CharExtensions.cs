@@ -1,9 +1,9 @@
-﻿namespace Responsible.Utilities.Extentions
+﻿namespace Responsible.Utilities.Extensions
 {
     /// <summary>
-    /// Extention Methods for a Char
+    /// Extension Methods for a Char
     /// </summary>
-    public static class CharExtentions
+    public static class CharExtensions
     {
         /// <summary>
         /// Compares two chars case insensitive

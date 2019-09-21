@@ -1,4 +1,4 @@
-﻿namespace Responsible.Utilities.Extentions
+﻿namespace Responsible.Utilities.Extensions
 {
     internal static class Helper
     {
