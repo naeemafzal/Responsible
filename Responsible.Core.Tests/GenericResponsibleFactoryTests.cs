@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -110,14 +111,41 @@ namespace Responsible.Core.Tests
         }
 
         [TestMethod]
-        public async Task Response_Operation_TitleIsAdded_Async()
+        public void Response_Operation_AllStatusesConverted_BoolToNon()
         {
-            var title = "Ok_Title";
-            var addTitleResponse = await ResponseFactory<int>.Ok(1).AddTitleAsync(title);
+            var allStatuses = Enum.GetValues(typeof(ResponseStatus)).Cast<ResponseStatus>().ToList();
+            foreach (var status in allStatuses)
+            {
+                var response = ResponseFactory<bool>.Custom(status);
+                var statusCode = (int)status;
+                var isSuccessCode = (int)statusCode >= 200 && (int)statusCode <= 299;
+                var converted = ResponseFactory.Convert(response);
 
-            Assert.IsTrue(addTitleResponse.Success);
-            Assert.AreEqual(title, addTitleResponse.Title);
-            Assert.AreEqual(1, addTitleResponse.Value);
+                Assert.AreEqual(converted.Success, response.Success);
+                Assert.AreEqual(converted.Status, response.Status);
+
+                Assert.AreEqual(response.Success, isSuccessCode);
+                Assert.AreEqual(response.Status, status);
+            }
+        }
+
+        [TestMethod]
+        public void Response_Operation_AllStatusesConverted_BoolToInt()
+        {
+            var allStatuses = Enum.GetValues(typeof(ResponseStatus)).Cast<ResponseStatus>().ToList();
+            foreach (var status in allStatuses)
+            {
+                var response = ResponseFactory<bool>.Custom(status);
+                var statusCode = (int)status;
+                var isSuccessCode = (int)statusCode >= 200 && (int)statusCode <= 299;
+                var converted = ResponseFactory<int>.Convert(response);
+
+                Assert.AreEqual(converted.Success, response.Success);
+                Assert.AreEqual(converted.Status, response.Status);
+
+                Assert.AreEqual(response.Success, isSuccessCode);
+                Assert.AreEqual(response.Status, status);
+            }
         }
     }
 }

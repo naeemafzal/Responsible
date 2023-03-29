@@ -6,7 +6,7 @@ namespace Responsible.Core
     public partial class ResponseFactory
     {
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse"/> with a message of "An error has occured"
+        ///     Creates an Error Response of <see cref="IResponse"/> with a message of "An error has occurred"
         ///     and with status of InternalServerError <see cref="ResponseStatus.InternalServerError"/>
         /// </summary>
         public static IResponse Error()
@@ -14,12 +14,12 @@ namespace Responsible.Core
             return new Response
             {
                 Status = ResponseStatus.InternalServerError,
-                Messages = new List<string> { "An error has occured" }
+                Messages = new List<string> { "An error has occurred" }
             };
         }
 
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse"/> with a message of "An error has occured"
+        ///     Creates an Error Response of <see cref="IResponse"/> with a message of "An error has occurred"
         ///     and with status of InternalServerError <see cref="ResponseStatus.InternalServerError"/>
         /// </summary>
         public static async Task<IResponse> ErrorAsync()
@@ -79,7 +79,7 @@ namespace Responsible.Core
     public partial class ResponseFactory<T>
     {
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occurred"
         ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a default value of T
         /// </summary>
         public static IResponse<T> Error()
@@ -87,7 +87,7 @@ namespace Responsible.Core
             var result = new Response<T>
             {
                 Status = ResponseStatus.InternalServerError,
-                Messages = new List<string> { "An error has occured" },
+                Messages = new List<string> { "An error has occurred" },
             };
 
             //Initialise constructor for IEnumerable items etc List, Dictionary
@@ -97,7 +97,7 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occurred"
         ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a default value of T
         /// </summary>
         public static async Task<IResponse<T>> ErrorAsync()
@@ -106,7 +106,7 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occurred"
         ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
         /// </summary>
         public static IResponse<T> Error(T value)
@@ -114,7 +114,7 @@ namespace Responsible.Core
             var result = new Response<T>
             {
                 Status = ResponseStatus.InternalServerError,
-                Messages = new List<string> { "An error has occured" },
+                Messages = new List<string> { "An error has occurred" },
                 Value = value
             };
 
@@ -125,7 +125,7 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     Creates an Error Response of <see cref="IResponse{T}"/> with a message of "An error has occurred"
         ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
         /// </summary>
         public static async Task<IResponse<T>> ErrorAsync(T value)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Responsible.Core
 {
@@ -67,11 +66,17 @@ namespace Responsible.Core
         IResponse AddTitle(string title);
 
         /// <summary>
-        /// Adds a title to Response for Reporting
+        ///     <para>Execution Time</para>
+        ///     <para>ExecutionTime can be used to record how long a response has taken.</para>
         /// </summary>
-        /// <param name="title">The Response Title</param>
+        TimeSpan? ExecutionTime { get; }
+
+        /// <summary>
+        /// Adds ExecutionTime to Response for Reporting
+        /// </summary>
+        /// <param name="executionTime">The Response ExecutionTime</param>
         /// <returns><see cref="IResponse"/></returns>
-        Task<IResponse> AddTitleAsync(string title);
+        IResponse AddExecutionTime(TimeSpan executionTime);
     }
 
     /// <summary>
@@ -92,10 +97,10 @@ namespace Responsible.Core
         new IResponse<T> AddTitle(string title);
 
         /// <summary>
-        /// Adds a title to Response for Reporting
+        /// Adds ExecutionTime to Response for Reporting
         /// </summary>
-        /// <param name="title">The Response Title</param>
+        /// <param name="executionTime">The Response ExecutionTime</param>
         /// <returns><see cref="IResponse{T}"/></returns>
-        new Task<IResponse<T>> AddTitleAsync(string title);
+        new IResponse<T> AddExecutionTime(TimeSpan executionTime);
     }
 }

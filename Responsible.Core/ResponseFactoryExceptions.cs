@@ -7,7 +7,7 @@ namespace Responsible.Core
     public partial class ResponseFactory
     {
         /// <summary>
-        ///     Creates an Exception Response of <see cref="IResponse"/> with a message of "A system error occured."
+        ///     Creates an Exception Response of <see cref="IResponse"/> with a message of "A system error occurred."
         ///     Error status is <see cref="ResponseStatus.InternalServerError"/>
         ///     No exception is captured in the Response
         /// </summary>
@@ -16,14 +16,14 @@ namespace Responsible.Core
             var result = new Response
             {
                 Status = ResponseStatus.InternalServerError,
-                Messages = new List<string> {"A system error occured."}
+                Messages = new List<string> {"A system error occurred."}
             };
 
             return result;
         }
 
         /// <summary>
-        ///     Creates an Exception Response of <see cref="IResponse"/> with a message of "A system error occured."
+        ///     Creates an Exception Response of <see cref="IResponse"/> with a message of "A system error occurred."
         ///     Error status is <see cref="ResponseStatus.InternalServerError"/>
         ///     No exception is captured in the Response
         /// </summary>
@@ -81,7 +81,7 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates Exception Response of <see cref="IResponse"/> with a message of "A system error occured" when includeExceptionMessage is set to false
+        ///     Creates Exception Response of <see cref="IResponse"/> with a message of "A system error occurred" when includeExceptionMessage is set to false
         ///     The error message is extracted from Exception when includeExceptionMessage is set to true
         ///     The error messages are extracted from Exception and inner exceptions when includeExceptionMessage and includeInnerExceptionMessages is set to true
         ///     Error status is <see cref="ResponseStatus.InternalServerError"/>
@@ -102,7 +102,7 @@ namespace Responsible.Core
                 Exception = exception,
                 Messages = includeExceptionMessage
                     ? new List<string> {exception.Message}
-                    : new List<string> {"A system error occured"}
+                    : new List<string> {"A system error occurred"}
             };
 
             if (includeExceptionMessage && includeInnerExceptionMessages)
@@ -120,7 +120,7 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates Exception Response of <see cref="IResponse"/> with a message of "A system error occured" when includeExceptionMessage is set to false
+        ///     Creates Exception Response of <see cref="IResponse"/> with a message of "A system error occurred" when includeExceptionMessage is set to false
         ///     The error message is extracted from Exception when includeExceptionMessage is set to true
         ///     The error messages are extracted from Exception and inner exceptions when includeExceptionMessage and includeInnerExceptionMessages is set to true
         ///     Error status is <see cref="ResponseStatus.InternalServerError"/>
@@ -202,7 +202,7 @@ namespace Responsible.Core
     public partial class ResponseFactory<T>
     {
         /// <summary>
-        ///     Creates a NotImplemented Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     Creates a NotImplemented Response of <see cref="IResponse{T}"/> with a message of "An error has occurred"
         ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a default value of T
         ///     Exception is not captured
         /// </summary>
@@ -211,7 +211,7 @@ namespace Responsible.Core
             var result = new Response<T>
             {
                 Status = ResponseStatus.InternalServerError,
-                Messages = new List<string> {"An error has occured"}
+                Messages = new List<string> {"An error has occurred"}
             };
 
             //Initialise constructor for IEnumerable items etc List, Dictionary
@@ -221,7 +221,7 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates a NotImplemented Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     Creates a NotImplemented Response of <see cref="IResponse{T}"/> with a message of "An error has occurred"
         ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a default value of T
         ///     Exception is not captured
         /// </summary>
@@ -231,7 +231,7 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates a NotImplemented Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     Creates a NotImplemented Response of <see cref="IResponse{T}"/> with a message of "An error has occurred"
         ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
         ///     Exception is not captured
         /// </summary>
@@ -240,7 +240,7 @@ namespace Responsible.Core
             var result = new Response<T>
             {
                 Status = ResponseStatus.InternalServerError,
-                Messages = new List<string> { "An error has occured" },
+                Messages = new List<string> { "An error has occurred" },
                 Value = value
             };
 
@@ -251,7 +251,7 @@ namespace Responsible.Core
         }
 
         /// <summary>
-        ///     Creates a NotImplemented Response of <see cref="IResponse{T}"/> with a message of "An error has occured"
+        ///     Creates a NotImplemented Response of <see cref="IResponse{T}"/> with a message of "An error has occurred"
         ///     and status of <see cref="ResponseStatus.InternalServerError"/> and a value of T
         ///     Exception is not captured
         /// </summary>
@@ -380,7 +380,7 @@ namespace Responsible.Core
 
         /// <summary>
         ///     Creates an Exception Response of <see cref="IResponse{T}"/> with Messages from Exception and all the inner exceptions by default.
-        ///     Creates Exception Response with default message of "An error has occured" when includeExceptionMessage is false
+        ///     Creates Exception Response with default message of "An error has occurred" when includeExceptionMessage is false
         ///     Exception is obtained in the <see cref="IResponse.Exception"/> with the default value of T"
         /// </summary>
         public static IResponse<T> Exception(Exception exception, bool includeExceptionMessage = true,
@@ -398,7 +398,7 @@ namespace Responsible.Core
                 Exception = exception,
                 Messages = includeExceptionMessage
                     ? new List<string> {exception.Message}
-                    : new List<string> {"A system error occured"}
+                    : new List<string> {"A system error occurred"}
             };
 
             if (includeExceptionMessage && includeInnerExceptionMessages)
@@ -420,7 +420,7 @@ namespace Responsible.Core
 
         /// <summary>
         ///     Creates an Exception Response of <see cref="IResponse{T}"/> with Messages from Exception and all the inner exceptions by default.
-        ///     Creates Exception Response with default message of "An error has occured" when includeExceptionMessage is false
+        ///     Creates Exception Response with default message of "An error has occurred" when includeExceptionMessage is false
         ///     Exception is obtained in the <see cref="IResponse.Exception"/> with the default value of T"
         /// </summary>
         public static async Task<IResponse<T>> ExceptionAsync(Exception exception, bool includeExceptionMessage = true,
@@ -431,7 +431,7 @@ namespace Responsible.Core
 
         /// <summary>
         ///     Creates an Exception Response of <see cref="IResponse{T}"/> with Messages from Exception and all the inner exceptions by default.
-        ///     Creates Exception Response with default message of "An error has occured" when includeExceptionMessage is false
+        ///     Creates Exception Response with default message of "An error has occurred" when includeExceptionMessage is false
         ///     Exception is obtained in the <see cref="IResponse.Exception"/> with the value of T"
         /// </summary>
         public static IResponse<T> Exception(Exception exception, T value, bool includeExceptionMessage = true,
@@ -450,7 +450,7 @@ namespace Responsible.Core
                 Value = value,
                 Messages = includeExceptionMessage
                     ? new List<string> { exception.Message }
-                    : new List<string> { "A system error occured" }
+                    : new List<string> { "A system error occurred" }
             };
 
             if (includeExceptionMessage && includeInnerExceptionMessages)
@@ -472,7 +472,7 @@ namespace Responsible.Core
 
         /// <summary>
         ///     Creates an Exception Response of <see cref="IResponse{T}"/> with Messages from Exception and all the inner exceptions by default.
-        ///     Creates Exception Response with default message of "An error has occured" when includeExceptionMessage is false
+        ///     Creates Exception Response with default message of "An error has occurred" when includeExceptionMessage is false
         ///     Exception is obtained in the <see cref="IResponse.Exception"/> with the value of T"
         /// </summary>
         public static async Task<IResponse<T>> ExceptionAsync(Exception exception, T value, bool includeExceptionMessage = true,

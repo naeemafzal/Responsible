@@ -49,7 +49,7 @@ namespace Responsible.DependencyResolver
                 {
                     //Could not register assembly
                     System.Diagnostics.Trace.WriteLine(
-                        $"{nameof(Resolver)}: Faild to load Assembly - {registeredFile.Name} from {registeredFile.Location} - Exception message: {ex.Message}");
+                        $"{nameof(Resolver)}: Failed to load Assembly - {registeredFile.Name} from {registeredFile.Location} - Exception message: {ex.Message}");
                 }
             }
 
@@ -81,7 +81,7 @@ namespace Responsible.DependencyResolver
             if (ContainerPrepared)
             {
                 throw new InvalidOperationException(
-                    "Unable to set Root Assembly names when Context is alread built.");
+                    "Unable to set Root Assembly names when Context is already built.");
             }
 
             if (values == null) return;

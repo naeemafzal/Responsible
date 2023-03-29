@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Responsible.Core
 {
@@ -28,24 +27,44 @@ namespace Responsible.Core
             }
         }
 
-        public string DetailedError => !HasException
-            ? $"Error Detail:{Environment.NewLine}{SingleMessage}"
-            : $"Error Detail:{Environment.NewLine}{SingleMessage}StackTrace:{Environment.NewLine}{Exception.StackTrace}";
+        public string DetailedError
+        {
+            get
+            {
+                if (Success)
+                {
+                    return string.Empty;
+                }
+
+                if (!HasException)
+                {
+                    return !string.IsNullOrWhiteSpace(SingleMessage)
+                        ? $"Error Detail:{Environment.NewLine}{SingleMessage}"
+                        : string.Empty;
+                }
+
+                var joinedMessages = string.Join(Environment.NewLine, Exception.GetExceptionMessages());
+                return $"Error Detail:{Environment.NewLine}{joinedMessages}{Environment.NewLine}StackTrace:{Environment.NewLine}{Exception.StackTrace}";
+            }
+        }
 
         public IResponse AddTitle(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
             {
-                title = string.Empty;
+                return this;
             }
 
             Title = title;
             return this;
         }
 
-        public async Task<IResponse> AddTitleAsync(string title)
+        public TimeSpan? ExecutionTime { get; internal set; }
+
+        public IResponse AddExecutionTime(TimeSpan executionTime)
         {
-            return await Task.FromResult(AddTitle(title));
+            ExecutionTime = executionTime;
+            return this;
         }
     }
 
@@ -64,9 +83,10 @@ namespace Responsible.Core
             return this;
         }
 
-        public new async Task<IResponse<T>> AddTitleAsync(string title)
+        public new IResponse<T> AddExecutionTime(TimeSpan executionTime)
         {
-            return await Task.FromResult(AddTitle(title));
+            ExecutionTime = executionTime;
+            return this;
         }
     }
 }

@@ -11,6 +11,12 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse Custom(ResponseStatus status)
         {
+            var validateStatusCasteResponse = ValidateStatusCaste(status);
+            if (!validateStatusCasteResponse.Success)
+            {
+                return validateStatusCasteResponse;
+            }
+
             return new Response
             {
                 Status = status,
@@ -31,10 +37,16 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse Custom(ResponseStatus status, string message)
         {
+            var validateStatusCasteResponse = ValidateStatusCaste(status);
+            if (!validateStatusCasteResponse.Success)
+            {
+                return validateStatusCasteResponse;
+            }
+
             return new Response
             {
                 Status = status,
-                Messages = new List<string> { message }
+                Messages = !string.IsNullOrWhiteSpace(message) ? new List<string> { message } : new List<string>()
             };
         }
 
@@ -51,10 +63,18 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse Custom(ResponseStatus status, List<string> messages)
         {
+            var validateStatusCasteResponse = ValidateStatusCaste(status);
+            if (!validateStatusCasteResponse.Success)
+            {
+                return validateStatusCasteResponse;
+            }
+
             return new Response
             {
                 Status = status,
-                Messages = messages ?? new List<string>()
+                Messages = messages != null && messages.Any(x => !string.IsNullOrWhiteSpace(x))
+                    ? messages.Where(x => !string.IsNullOrWhiteSpace(x))
+                    : new List<string>()
             };
         }
 
@@ -82,10 +102,11 @@ namespace Responsible.Core
                 Exception = response.Exception,
                 Messages = response.Messages == null || !response.Messages.Any()
                     ? new List<string>()
-                    : response.Messages.ToList(),
+                    : response.Messages.Where(x => !string.IsNullOrWhiteSpace(x)).ToList(),
                 Status = response.Status,
                 Cancelled = response.Cancelled,
-                Title = response.Title
+                Title = response.Title,
+                ExecutionTime = response.ExecutionTime
             };
         }
 
@@ -106,6 +127,12 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse<T> Custom(ResponseStatus status, T value = default)
         {
+            var validateStatusCasteResponse = ValidateStatusCaste(status, value);
+            if (!validateStatusCasteResponse.Success)
+            {
+                return validateStatusCasteResponse;
+            }
+
             var result = new Response<T>
             {
                 Status = status,
@@ -134,10 +161,16 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse<T> Custom(ResponseStatus status, string message, T value = default)
         {
+            var validateStatusCasteResponse = ValidateStatusCaste(status, value);
+            if (!validateStatusCasteResponse.Success)
+            {
+                return validateStatusCasteResponse;
+            }
+
             var result = new Response<T>
             {
                 Status = status,
-                Messages = new List<string> { message },
+                Messages = !string.IsNullOrWhiteSpace(message) ? new List<string> { message } : new List<string>(),
                 Value = value
             };
 
@@ -162,10 +195,18 @@ namespace Responsible.Core
         /// </summary>
         public static IResponse<T> Custom(ResponseStatus status, List<string> messages, T value = default)
         {
+            var validateStatusCasteResponse = ValidateStatusCaste(status, value);
+            if (!validateStatusCasteResponse.Success)
+            {
+                return validateStatusCasteResponse;
+            }
+
             var result = new Response<T>
             {
                 Status = status,
-                Messages = messages ?? new List<string>(),
+                Messages = messages == null || !messages.Any()
+                    ? new List<string>()
+                    : messages.Where(x => !string.IsNullOrWhiteSpace(x)).ToList(),
                 Value = value
             };
 
@@ -200,14 +241,14 @@ namespace Responsible.Core
                 Exception = response.Exception,
                 Messages = response.Messages == null || !response.Messages.Any()
                     ? new List<string>()
-                    : response.Messages.ToList(),
+                    : response.Messages.Where(x => !string.IsNullOrWhiteSpace(x)).ToList(),
                 Status = response.Status,
                 Cancelled = response.Cancelled,
-                Title = response.Title
+                Title = response.Title,
+                ExecutionTime = response.ExecutionTime
             };
 
-            var sameTypeConversion = response as Response<T>;
-            if (sameTypeConversion != null)
+            if (response is Response<T> sameTypeConversion)
             {
                 result.Value = sameTypeConversion.Value;
             }
@@ -243,11 +284,12 @@ namespace Responsible.Core
                 Exception = response.Exception,
                 Messages = response.Messages == null || !response.Messages.Any()
                     ? new List<string>()
-                    : response.Messages.ToList(),
+                    : response.Messages.Where(x => !string.IsNullOrWhiteSpace(x)).ToList(),
                 Status = response.Status,
                 Value = value,
                 Cancelled = response.Cancelled,
-                Title = response.Title
+                Title = response.Title,
+                ExecutionTime = response.ExecutionTime
             };
 
             //Initialise constructor for IEnumerable items etc List, Dictionary
