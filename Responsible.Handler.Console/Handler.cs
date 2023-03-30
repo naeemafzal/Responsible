@@ -9,7 +9,7 @@ namespace Responsible.Handler.Console
     public static class Handler
     {
         /// <summary>
-        /// Handles displaying relevent messages to the user from the inputs
+        /// Handles displaying relevant messages to the user from the inputs
         /// </summary>
         /// <param name="operationTitle">The title to print before message</param>
         /// <param name="response">The <see cref="IResponse"/> to handle</param>
@@ -22,7 +22,7 @@ namespace Responsible.Handler.Console
             var consoleTextColour = System.Console.ForegroundColor;
             if (response == null)
             {
-                WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}Provided response is null.", ConsoleColor.Red, consoleTextColour);
+                WriteColourFullMessages($"{operationTitle}:{Environment.NewLine}Provided response is null.", ConsoleColor.Red, consoleTextColour);
                 return false;
             }
 
@@ -32,10 +32,10 @@ namespace Responsible.Handler.Console
             {
                 if (string.IsNullOrWhiteSpace(message))
                 {
-                    message = "An unknown error has occured. The response yield no error detail.";
+                    message = "An unknown error has occurred. The response yield no error detail.";
                 }
 
-                WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}{message}", ConsoleColor.Red, consoleTextColour);
+                WriteColourFullMessages($"{operationTitle}:{Environment.NewLine}{message}", ConsoleColor.Red, consoleTextColour);
                 return false;
             }
 
@@ -49,7 +49,7 @@ namespace Responsible.Handler.Console
                 message = successMessage;
             }
 
-            WriteColourfullMessages($"{operationTitle}:{Environment.NewLine}{message}", ConsoleColor.Green, consoleTextColour);
+            WriteColourFullMessages($"{operationTitle}:{Environment.NewLine}{message}", ConsoleColor.Green, consoleTextColour);
             return true;
         }
 
@@ -63,7 +63,7 @@ namespace Responsible.Handler.Console
         {
             var consoleTextColour = System.Console.ForegroundColor;
             var messageColour = isErrorMessage ? ConsoleColor.Red : ConsoleColor.Green;
-            WriteColourfullMessages($"{title}:{Environment.NewLine}{message}", messageColour, consoleTextColour);
+            WriteColourFullMessages($"{title}:{Environment.NewLine}{message}", messageColour, consoleTextColour);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Responsible.Handler.Console
         {
             var consoleTextColour = System.Console.ForegroundColor;
             var messageColour = isErrorMessage ? ConsoleColor.Red : ConsoleColor.Green;
-            WriteColourfullMessages(message, messageColour, consoleTextColour);
+            WriteColourFullMessages(message, messageColour, consoleTextColour);
         }
 
         /// <summary>
@@ -85,14 +85,14 @@ namespace Responsible.Handler.Console
         public static void WriteMessage(string message)
         {
             var consoleTextColour = System.Console.ForegroundColor;
-            WriteColourfullMessages(message, ConsoleColor.Green, consoleTextColour);
+            WriteColourFullMessages(message, ConsoleColor.Green, consoleTextColour);
         }
 
-        private static void WriteColourfullMessages(string message, ConsoleColor textColour, ConsoleColor defaulColour)
+        private static void WriteColourFullMessages(string message, ConsoleColor textColour, ConsoleColor defaultColour)
         {
             System.Console.ForegroundColor = textColour;
             System.Console.WriteLine(message);
-            System.Console.ForegroundColor = defaulColour;
+            System.Console.ForegroundColor = defaultColour;
         }
     }
 }
